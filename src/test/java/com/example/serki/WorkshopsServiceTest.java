@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -31,13 +33,33 @@ class WorkshopsServiceTest {
     }
 
     @Test
-    public void nameOfTest(){
+    public void showAllWorkshops(){
     //given
+        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
 
-    //when
-
+        //when
+        workshopsRepo.save(workshops1);
+        workshopsRepo.save(workshops2);
+        List<Workshops> list = workshopsRepo.findAll();
     //then
+        assertThat(list.size()).isEqualTo(2);
     }
+
+    @Test
+    public void showSpecificWorkshopByName(){
+    //given
+        Workshops workshops1 = new Workshops("MARKETING", "blebleble", Collections.emptyList());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
+    //when
+        workshopsRepo.save(workshops1);
+        workshopsRepo.save(workshops2);
+        Optional<Workshops> workshop = workshopsRepo.findByName("MARKETING");
+
+        //then
+        assertThat(workshop.get()).isEqualTo(workshops1);
+    }
+
 
 
 }
