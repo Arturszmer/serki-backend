@@ -17,6 +17,11 @@ public class Workshops  {
     public Workshops() {
     }
 
+    public Workshops(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Workshops(String name, String description, List<WorkshopsSubCathegories> workshopsCathegories) {
         this.name = name;
         this.description = description;

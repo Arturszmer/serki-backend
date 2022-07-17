@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface WorkshopsRepo extends JpaRepository<Workshops, Long> {
 
     Optional<Workshops> findByName(String name);
-    String showDescription(String name);
 }

@@ -1,23 +1,34 @@
 package com.example.serki;
 
-import com.example.serki.models.Workshops;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("workshopsLayout")
 public class WorkshopsController {
-    WorkshopsService workshopsService;
+    private final WorkshopsService workshopsService;
+    private final Mapper mapper;
 
-    public WorkshopsController(WorkshopsService workshopsService) {
+    public WorkshopsController(WorkshopsService workshopsService, Mapper mapper) {
         this.workshopsService = workshopsService;
+        this.mapper = mapper;
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<WorkshopsDTO> addWorkshop (@RequestBody WorkshopsDTO workshops){
-//        Workshops workshops1 = workshopsService.addWorkshop(workshops);
-//        return new ResponseEntity<>(workshops1, HttpStatus.OK);
-//    }
+    @GetMapping("/show")
+    @ResponseBody
+    public List<WorkshopsDTO> getWorkShops(){
+        return workshopsService.workshopsList().stream()
+                .map(mapper::workshopsToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+        public WorkshopsDTO create(@RequestBody WorkshopsDTO workshopsDTO){
+        WorkshopsDTO workshopsDTO1 = workshopsService.addWorkshop(workshopsDTO);
+        return workshopsDTO1;
+    }
 
 }
