@@ -49,7 +49,7 @@ class WorkshopsServiceTest {
         workshopsRepo.save(workshops2);
         List<Workshops> list = workshopsRepo.findAll();
     //then
-        assertThat(list.size()).isEqualTo(2);
+        assertThat(list.size()).isEqualTo(1);
     }
 
     @Test
