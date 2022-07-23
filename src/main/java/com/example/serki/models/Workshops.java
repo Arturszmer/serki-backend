@@ -2,6 +2,7 @@ package com.example.serki.models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Workshops  {
@@ -12,10 +13,17 @@ public class Workshops  {
     private String name;
     private String description;
     private String imgUrl;
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<WorkshopsSubCathegories> workshopsCathegories;
 
     public Workshops() {
+    }
+
+    public Workshops(String name, String description, String imgUrl) {
+        this.name = name;
+        this.description = description;
+        this.imgUrl = imgUrl;
     }
 
     public Workshops(String name, String description, String imgUrl, List<WorkshopsSubCathegories> workshopsCathegories) {
@@ -75,5 +83,18 @@ public class Workshops  {
                 ", description='" + description + '\'' +
                 ", workshopsCathegories=" + workshopsCathegories +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Workshops workshops = (Workshops) o;
+        return id == workshops.id && Objects.equals(name, workshops.name) && Objects.equals(description, workshops.description) && Objects.equals(imgUrl, workshops.imgUrl) && Objects.equals(workshopsCathegories, workshops.workshopsCathegories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, imgUrl, workshopsCathegories);
     }
 }

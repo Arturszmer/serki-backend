@@ -2,6 +2,7 @@ package com.example.serki.models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class WorkshopsSubCathegories {
@@ -43,5 +44,18 @@ public class WorkshopsSubCathegories {
                 "name='" + name + '\'' +
                 ", typeOfTrainings=" + typeOfTrainings +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkshopsSubCathegories that = (WorkshopsSubCathegories) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeOfTrainings, that.typeOfTrainings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, typeOfTrainings);
     }
 }

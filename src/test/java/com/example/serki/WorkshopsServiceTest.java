@@ -38,7 +38,7 @@ class WorkshopsServiceTest {
         WorkshopsSubCathegories workshopsSubCathegories = new WorkshopsSubCathegories("Java", Collections.emptyList());
         workshopsSubCathegoriesRepo.save(workshopsSubCathegories);
         List<WorkshopsSubCathegories> list = workshopsSubCathegoriesRepo.findAll();
-        Workshops workshops = new Workshops("IT", "blebleble", list);
+        Workshops workshops = new Workshops("IT", "blebleble", "image", list);
 
     //when
         workshopsRepo.save(workshops);
@@ -51,14 +51,13 @@ class WorkshopsServiceTest {
     public void showAllWorkshops(){
     //given
         Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
-        Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
-
+        Workshops workshops2 = new Workshops("MARKETING", "blebleble2", Collections.emptyList());
         //when
-        workshopsRepo.save(workshops1);
-        workshopsRepo.save(workshops2);
-        List<Workshops> list = workshopsRepo.findAll();
+        Workshops save1 = workshopsRepo.save(workshops1);
+        save1.setWorkshopsCathegories(Collections.singletonList(new WorkshopsSubCathegories("Java", Collections.emptyList())));
+
     //then
-        assertThat(list.size()).isEqualTo(2);
+        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new WorkshopsSubCathegories("Java", Collections.emptyList())));
     }
 
     @Test
@@ -74,6 +73,21 @@ class WorkshopsServiceTest {
         //then
         assertThat(workshop.get()).isEqualTo(workshops1);
     }
+
+    @Test
+    public void findByImageName(){
+    //given
+        Workshops workshops1 = new Workshops("MARKETING", "blebleble", "image1", Collections.emptyList());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
+    //when
+        workshopsRepo.save(workshops1);
+        workshopsRepo.save(workshops2);
+    //then
+        Optional<Workshops> workshop = workshopsRepo.findByImgUrl("image1");
+        assertThat(workshop.get()).isEqualTo(workshops1);
+
+    }
+
 
 
 

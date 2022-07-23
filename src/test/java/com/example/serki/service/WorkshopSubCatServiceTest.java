@@ -25,7 +25,7 @@ class WorkshopSubCatServiceTest {
     }
 
     @Test
-    public void AddNewWorkshopSubCathegory(){
+    public void addNewWorkshopSubCathegory(){
     //given
         WorkshopsSubCathegories workshopsSubCathegories = new WorkshopsSubCathegories("Java", Collections.emptyList());
 
