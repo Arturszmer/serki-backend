@@ -1,4 +1,4 @@
-package com.example.serki;
+package com.example.serki.repository;
 
 import com.example.serki.models.Workshops;
 import org.springframework.data.jpa.repository.JpaRepository;

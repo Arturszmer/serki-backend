@@ -1,5 +1,8 @@
-package com.example.serki;
+package com.example.serki.controller;
 
+import com.example.serki.DTO.Mapper;
+import com.example.serki.DTO.WorkshopsDTO;
+import com.example.serki.service.WorkshopsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +34,7 @@ public class WorkshopsController {
         WorkshopsDTO workshopsDTO1 = workshopsService.addWorkshop(workshopsDTO);
         return workshopsDTO1;
     }
+
+
 
 }

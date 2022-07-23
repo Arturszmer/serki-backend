@@ -1,6 +1,10 @@
 package com.example.serki;
 
 import com.example.serki.models.Workshops;
+import com.example.serki.models.WorkshopsSubCathegories;
+import com.example.serki.repository.WorkshopsRepo;
+import com.example.serki.repository.WorkshopsSubCathegoriesRepo;
+import org.hibernate.jdbc.Work;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,8 @@ class WorkshopsServiceTest {
 
     @Autowired
     WorkshopsRepo workshopsRepo;
+    @Autowired
+    WorkshopsSubCathegoriesRepo workshopsSubCathegoriesRepo;
 
     @BeforeEach
     public void setup(){
@@ -29,13 +35,16 @@ class WorkshopsServiceTest {
     @Test
     public void addNewWorkshop(){
     //given
-        Workshops workshops = new Workshops("IT", "blebleble", Collections.emptyList());
+        WorkshopsSubCathegories workshopsSubCathegories = new WorkshopsSubCathegories("Java", Collections.emptyList());
+        workshopsSubCathegoriesRepo.save(workshopsSubCathegories);
+        List<WorkshopsSubCathegories> list = workshopsSubCathegoriesRepo.findAll();
+        Workshops workshops = new Workshops("IT", "blebleble", list);
 
     //when
         workshopsRepo.save(workshops);
     //then
-        List<Workshops> list = workshopsRepo.findAll();
-        assertThat(list.size()).isEqualTo(1);
+        List<Workshops> list1 = workshopsRepo.findAll();
+        assertThat(list1.size()).isEqualTo(1);
     }
 
     @Test

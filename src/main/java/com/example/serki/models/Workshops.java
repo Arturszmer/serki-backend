@@ -11,10 +11,18 @@ public class Workshops  {
     private long id;
     private String name;
     private String description;
+    private String imgUrl;
     @OneToMany
     private List<WorkshopsSubCathegories> workshopsCathegories;
 
     public Workshops() {
+    }
+
+    public Workshops(String name, String description, String imgUrl, List<WorkshopsSubCathegories> workshopsCathegories) {
+        this.name = name;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.workshopsCathegories = workshopsCathegories;
     }
 
     public Workshops(String name, String description) {
@@ -50,6 +58,14 @@ public class Workshops  {
 
     public void setWorkshopsCathegories(List<WorkshopsSubCathegories> workshopsCathegories) {
         this.workshopsCathegories = workshopsCathegories;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override

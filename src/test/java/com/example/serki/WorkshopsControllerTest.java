@@ -1,6 +1,8 @@
 package com.example.serki;
 
 import com.example.serki.models.Workshops;
+import com.example.serki.repository.WorkshopsRepo;
+import com.example.serki.service.WorkshopsService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

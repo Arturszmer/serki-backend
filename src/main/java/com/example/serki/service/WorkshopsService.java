@@ -1,6 +1,9 @@
-package com.example.serki;
+package com.example.serki.service;
 
+import com.example.serki.DTO.Mapper;
+import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.models.Workshops;
+import com.example.serki.repository.WorkshopsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +42,8 @@ public class WorkshopsService {
         Workshops save = workshopsRepo.save(workshops);
         return mapper.workshopsToDTO(save);
     }
+
+
 
 
 }
