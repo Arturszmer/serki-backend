@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("workshopsLayout")
 public class WorkshopsController {
     private final WorkshopsService workshopsService;
