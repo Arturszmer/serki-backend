@@ -5,6 +5,7 @@ import com.example.serki.models.Workshops;
 import com.example.serki.models.SubCathegories;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,24 +18,24 @@ public class Mapper {
         String imgUrl = workshops.getImgUrl();
         List<SubCatDTO> list = workshops.getWorkshopsCathegories()
                 .stream()
-                .map(this::workshopsSubCatToDTO)
+                .map(this::subCatToDTO)
                 .collect(Collectors.toList());
         return new WorkshopsDTO(name, descriptions, imgUrl, list);
     }
     public Workshops workshopsDTOToWorkshops(WorkshopsDTO workshopsDTO){
             return new Workshops(workshopsDTO.getName(), workshopsDTO.getDescription(), workshopsDTO.getImgUrl(), workshopsDTO.getList()
                     .stream()
-                    .map(this::workshopsSubCatDTOtoWorkshopsSubCat)
+                    .map(this::subCatDTOtoSubCat)
                     .collect(Collectors.toList()));
     }
 
-    public SubCatDTO workshopsSubCatToDTO(SubCathegories subCathegories){
+    public SubCatDTO subCatToDTO(SubCathegories subCathegories){
         String name = subCathegories.getName();
-        List<TypeOfTraining> typeOfTrainings = subCathegories.getTypeOfTrainings();
+        List<TypeOfTraining> typeOfTrainings = Collections.emptyList();
         return new SubCatDTO(name, typeOfTrainings);
     }
 
-    public SubCathegories workshopsSubCatDTOtoWorkshopsSubCat(SubCatDTO subCatDTO){
+    public SubCathegories subCatDTOtoSubCat(SubCatDTO subCatDTO){
         return new SubCathegories(subCatDTO.getName(), subCatDTO.getTypeOfTrainings());
     }
 

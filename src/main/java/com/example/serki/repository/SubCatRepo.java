@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubCatRepo extends JpaRepository<SubCathegories, Long> {
 
+    SubCathegories findSubCathegoriesByName(String name);
 }
