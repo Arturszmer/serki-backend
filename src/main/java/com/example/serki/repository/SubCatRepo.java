@@ -1,10 +1,10 @@
 package com.example.serki.repository;
 
-import com.example.serki.models.WorkshopsSubCathegories;
+import com.example.serki.models.SubCathegories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WorkshopsSubCathegoriesRepo extends JpaRepository<WorkshopsSubCathegories, Long> {
+public interface SubCatRepo extends JpaRepository<SubCathegories, Long> {
 
 }

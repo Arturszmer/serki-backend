@@ -1,27 +1,25 @@
 package com.example.serki.DTO;
 
-import com.example.serki.models.WorkshopsSubCathegories;
-
 import java.util.List;
 
 public class WorkshopsDTO {
     private String name;
     private String description;
     private String imgUrl;
-    private List<WorkshopsSubCatDTO> list;
+    private List<SubCatDTO> list;
 
-    public WorkshopsDTO(String name, String description, String imgUrl, List<WorkshopsSubCatDTO> list) {
+    public WorkshopsDTO(String name, String description, String imgUrl, List<SubCatDTO> list) {
         this.name = name;
         this.description = description;
         this.imgUrl = imgUrl;
         this.list = list;
     }
 
-    public List<WorkshopsSubCatDTO> getList() {
+    public List<SubCatDTO> getList() {
         return list;
     }
 
-    public void setList(List<WorkshopsSubCatDTO> list) {
+    public void setList(List<SubCatDTO> list) {
         this.list = list;
     }
 

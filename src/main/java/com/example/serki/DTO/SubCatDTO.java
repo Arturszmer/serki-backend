@@ -4,12 +4,12 @@ import com.example.serki.models.TypeOfTraining;
 
 import java.util.List;
 
-public class WorkshopsSubCatDTO {
+public class SubCatDTO {
 
     private String name;
     private List<TypeOfTraining> typeOfTrainings;
 
-    public WorkshopsSubCatDTO(String name, List<TypeOfTraining> typeOfTrainings) {
+    public SubCatDTO(String name, List<TypeOfTraining> typeOfTrainings) {
         this.name = name;
         this.typeOfTrainings = typeOfTrainings;
     }

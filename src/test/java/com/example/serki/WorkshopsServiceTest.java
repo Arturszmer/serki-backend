@@ -1,10 +1,9 @@
 package com.example.serki;
 
 import com.example.serki.models.Workshops;
-import com.example.serki.models.WorkshopsSubCathegories;
+import com.example.serki.models.SubCathegories;
 import com.example.serki.repository.WorkshopsRepo;
-import com.example.serki.repository.WorkshopsSubCathegoriesRepo;
-import org.hibernate.jdbc.Work;
+import com.example.serki.repository.SubCatRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ class WorkshopsServiceTest {
     @Autowired
     WorkshopsRepo workshopsRepo;
     @Autowired
-    WorkshopsSubCathegoriesRepo workshopsSubCathegoriesRepo;
+    SubCatRepo subCatRepo;
 
     @BeforeEach
     public void setup(){
@@ -35,9 +34,9 @@ class WorkshopsServiceTest {
     @Test
     public void addNewWorkshop(){
     //given
-        WorkshopsSubCathegories workshopsSubCathegories = new WorkshopsSubCathegories("Java", Collections.emptyList());
-        workshopsSubCathegoriesRepo.save(workshopsSubCathegories);
-        List<WorkshopsSubCathegories> list = workshopsSubCathegoriesRepo.findAll();
+        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
+        subCatRepo.save(subCathegories);
+        List<SubCathegories> list = subCatRepo.findAll();
         Workshops workshops = new Workshops("IT", "blebleble", "image", list);
 
     //when
@@ -54,10 +53,10 @@ class WorkshopsServiceTest {
         Workshops workshops2 = new Workshops("MARKETING", "blebleble2", Collections.emptyList());
         //when
         Workshops save1 = workshopsRepo.save(workshops1);
-        save1.setWorkshopsCathegories(Collections.singletonList(new WorkshopsSubCathegories("Java", Collections.emptyList())));
+        save1.setWorkshopsCathegories(Collections.singletonList(new SubCathegories("Java", Collections.emptyList())));
 
     //then
-        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new WorkshopsSubCathegories("Java", Collections.emptyList())));
+        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new SubCathegories("Java", Collections.emptyList())));
     }
 
     @Test

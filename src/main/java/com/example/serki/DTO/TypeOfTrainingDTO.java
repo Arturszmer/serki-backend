@@ -1,9 +1,5 @@
 package com.example.serki.DTO;
 
-import com.example.serki.models.WorkshopsSubCathegories;
-
-import java.util.List;
-
 public class TypeOfTrainingDTO {
 
     private String name;

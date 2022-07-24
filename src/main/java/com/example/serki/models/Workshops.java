@@ -15,7 +15,7 @@ public class Workshops  {
     private String imgUrl;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<WorkshopsSubCathegories> workshopsCathegories;
+    private List<SubCathegories> workshopsCathegories;
 
     public Workshops() {
     }
@@ -26,7 +26,7 @@ public class Workshops  {
         this.imgUrl = imgUrl;
     }
 
-    public Workshops(String name, String description, String imgUrl, List<WorkshopsSubCathegories> workshopsCathegories) {
+    public Workshops(String name, String description, String imgUrl, List<SubCathegories> workshopsCathegories) {
         this.name = name;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -38,7 +38,7 @@ public class Workshops  {
         this.description = description;
     }
 
-    public Workshops(String name, String description, List<WorkshopsSubCathegories> workshopsCathegories) {
+    public Workshops(String name, String description, List<SubCathegories> workshopsCathegories) {
         this.name = name;
         this.description = description;
         this.workshopsCathegories = workshopsCathegories;
@@ -60,11 +60,11 @@ public class Workshops  {
         this.description = description;
     }
 
-    public List<WorkshopsSubCathegories> getWorkshopsCathegories() {
+    public List<SubCathegories> getWorkshopsCathegories() {
         return workshopsCathegories;
     }
 
-    public void setWorkshopsCathegories(List<WorkshopsSubCathegories> workshopsCathegories) {
+    public void setWorkshopsCathegories(List<SubCathegories> workshopsCathegories) {
         this.workshopsCathegories = workshopsCathegories;
     }
 

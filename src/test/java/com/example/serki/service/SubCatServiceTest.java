@@ -1,7 +1,7 @@
 package com.example.serki.service;
 
-import com.example.serki.models.WorkshopsSubCathegories;
-import com.example.serki.repository.WorkshopsSubCathegoriesRepo;
+import com.example.serki.models.SubCathegories;
+import com.example.serki.repository.SubCatRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class WorkshopSubCatServiceTest {
+class SubCatServiceTest {
 
     @Autowired
-    WorkshopsSubCathegoriesRepo workshopsSubCatRepo;
+    SubCatRepo workshopsSubCatRepo;
 
     @BeforeEach
     public void delete(){
@@ -27,12 +27,12 @@ class WorkshopSubCatServiceTest {
     @Test
     public void addNewWorkshopSubCathegory(){
     //given
-        WorkshopsSubCathegories workshopsSubCathegories = new WorkshopsSubCathegories("Java", Collections.emptyList());
+        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
 
     //when
-        workshopsSubCatRepo.save(workshopsSubCathegories);
+        workshopsSubCatRepo.save(subCathegories);
     //then
-        List<WorkshopsSubCathegories> list = workshopsSubCatRepo.findAll();
+        List<SubCathegories> list = workshopsSubCatRepo.findAll();
         assertThat(list.size()).isEqualTo(1);
     }
 

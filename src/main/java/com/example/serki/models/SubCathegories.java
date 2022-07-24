@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class WorkshopsSubCathegories {
+public class SubCathegories {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,12 +14,12 @@ public class WorkshopsSubCathegories {
     @OneToMany(mappedBy = "name", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<TypeOfTraining> typeOfTrainings;
 
-    public WorkshopsSubCathegories(String name, List<TypeOfTraining> typeOfTrainings) {
+    public SubCathegories(String name, List<TypeOfTraining> typeOfTrainings) {
         this.name = name;
         this.typeOfTrainings = typeOfTrainings;
     }
 
-    public WorkshopsSubCathegories() {
+    public SubCathegories() {
     }
 
     public String getName() {
@@ -50,7 +50,7 @@ public class WorkshopsSubCathegories {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WorkshopsSubCathegories that = (WorkshopsSubCathegories) o;
+        SubCathegories that = (SubCathegories) o;
         return id == that.id && Objects.equals(name, that.name) && Objects.equals(typeOfTrainings, that.typeOfTrainings);
     }
 
