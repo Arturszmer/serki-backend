@@ -32,10 +32,10 @@ public class DBprod implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Workshops it = new Workshops("IT", "sifjaiwjdsidj", "image", Collections.emptyList());
-        Workshops marketing = new Workshops("MARKETING", "gesasc", "image", Collections.emptyList());
-        Workshops medic = new Workshops("MEDIC", "hhhhhh223", "image", Collections.emptyList());
-        Workshops sales = new Workshops("SALES", "sdw", "image", Collections.emptyList());
+        Workshops it = new Workshops("IT", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/programming%20evolution.jpg?itok=WTj9-yNz", Collections.emptyList());
+        Workshops marketing = new Workshops("MARKETING", "It was popularised in the 1960s with the release of Letraset sheets", "https://digitalx.pl/content-marketing-manager-specialist-kto-to-zakres-obowiazkow/", Collections.emptyList());
+        Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", Collections.emptyList());
+        Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "https://www.lec4you.com/2019/11/17/10crazy_salesstats/", Collections.emptyList());
 
         Workshops saveIt = workshopsRepo.save(it);
         Workshops saveMarketing = workshopsRepo.save(marketing);
