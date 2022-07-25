@@ -37,9 +37,28 @@ public class WorkshopsController {
 
     @PostMapping("/add")
     @ResponseBody
-        public WorkshopsDTO create(@RequestBody WorkshopsDTO workshopsDTO){
-        WorkshopsDTO workshopsDTO1 = workshopsService.addWorkshop(workshopsDTO);
-        return workshopsDTO1;
+        public WorkshopsDTO createWorkshop(@RequestBody WorkshopsDTO workshopsDTO){
+        WorkshopsDTO created = workshopsService.addWorkshop(workshopsDTO);
+        created.setList(getWorkshopsSubCat());
+        return created;
+    }
+
+    @GetMapping("/workshopsSubCat")
+    @ResponseBody
+    public List<SubCatDTO> getWorkshopsSubCat(){
+        return subCatService.workshopsSubCathegoriesList().stream()
+                .map(mapper::subCatToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{category}/{subCategory}")
+
+
+
+    @PostMapping("/workshopsSubCat/add/{workshopName}")
+    public SubCatDTO createSubWorkshops(@RequestBody SubCatDTO subCatDTO, @PathVariable String workshopName) throws NameAlreadyExistException, WorkshopsNotExistException {
+        SubCatDTO created = subCatService.addWorkshopSubCat(subCatDTO, workshopName);
+        return created;
     }
 
 
