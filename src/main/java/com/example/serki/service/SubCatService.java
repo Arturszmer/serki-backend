@@ -11,6 +11,8 @@ import com.example.serki.repository.WorkshopsRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class SubCatService {
@@ -22,7 +24,13 @@ public class SubCatService {
     public SubCatService(Mapper mapper, SubCatRepo subCatRepo, WorkshopsRepo workshopsRepo) {
         this.mapper = mapper;
         this.subCatRepo = subCatRepo;
+        this.workshopsRepo = workshopsRepo;
     }
+
+    public List<SubCathegories> workshopsSubCathegoriesList(){
+        return subCatRepo.findAll();
+    }
+
 
     public SubCatDTO addWorkshopSubCat(SubCatDTO subCatDTO, String workshopName){
         if (workshopsRepo.findByName(workshopName).isEmpty()){

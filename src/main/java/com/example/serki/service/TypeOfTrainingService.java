@@ -5,7 +5,6 @@ import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.TypeOfTrainingsRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +27,7 @@ public class TypeOfTrainingService {
         return typeOfTrainingsRepo.findAll();
     }
 
-    public Optional<TypeOfTraining> showSpecifictypeOfTraining(String name){
+    public Optional<TypeOfTraining> showSpecificTypeOfTraining(String name){
         return typeOfTrainingsRepo.findByName(name);
     }
 
