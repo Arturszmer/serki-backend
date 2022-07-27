@@ -5,6 +5,7 @@ import com.example.serki.models.Workshops;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
 import com.example.serki.repository.SubCatRepo;
+import com.example.serki.service.SubCatService;
 import com.example.serki.service.WorkshopsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,12 +29,14 @@ public class DBprod implements CommandLineRunner {
     TypeOfTrainingsRepo typeOfTrainingsRepo;
     @Autowired
     WorkshopsService workshopsService;
+    @Autowired
+    SubCatService subCatService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
-        Workshops it = new Workshops("IT", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/programming%20evolution.jpg?itok=WTj9-yNz", Collections.emptyList());
-        Workshops marketing = new Workshops("MARKETING", "It was popularised in the 1960s with the release of Letraset sheets", "https://digitalx.pl/wp-content/uploads/2020/12/content-marketing-manager.jpg", Collections.emptyList());
+        Workshops it = new Workshops("IT", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/programming%20evolution.jpg?itok=WTj9-yNz");
+        Workshops marketing = new Workshops("MARKETING", "It was popularised in the 1960s with the release of Letraset sheets", "https://digitalx.pl/wp-content/uploads/2020/12/content-marketing-manager.jpg");
         Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", Collections.emptyList());
         Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "https://classicbusinessonline.com/wp-content/uploads/2022/02/Sales.jpg", Collections.emptyList());
 
@@ -51,6 +54,13 @@ public class DBprod implements CommandLineRunner {
         subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
+
+        List<SubCathegories> listSub = subCatRepo.findAll();
+
+        saveIt.setWorkshopsCathegories(listSub.stream().toList());
+
+        workshopsRepo.save(saveIt);
+
 
         //        saveIt.setWorkshopsCathegories(Collections.singletonList(new SubCathegories("C#", Collections.emptyList())));
 

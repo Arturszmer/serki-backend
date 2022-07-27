@@ -51,14 +51,9 @@ public class WorkshopsController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{category}/{subCategory}")
-
-
-
     @PostMapping("/workshopsSubCat/add/{workshopName}")
     public SubCatDTO createSubWorkshops(@RequestBody SubCatDTO subCatDTO, @PathVariable String workshopName) throws NameAlreadyExistException, WorkshopsNotExistException {
-        SubCatDTO created = subCatService.addWorkshopSubCat(subCatDTO, workshopName);
-        return created;
+        return subCatService.addWorkshopSubCat(subCatDTO, workshopName);
     }
 
 

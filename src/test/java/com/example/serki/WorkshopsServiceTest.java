@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +87,23 @@ class WorkshopsServiceTest {
         assertThat(workshop.get()).isEqualTo(workshops1);
 
     }
+    @Test
+    public void addSubCatToWorkshops(){
+    //given
+        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
+        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
+    //when
+        workshopsRepo.save(workshops2);
+        subCatRepo.save(subCathegories);
+        List<SubCathegories> listSubCat = subCatRepo.findAll();
+        workshops2.setWorkshopsCathegories(listSubCat.stream().toList());
+        //then
+        Optional<Workshops> workshop = workshopsRepo.findByName("IT");
+        assertThat(workshop.get()).isEqualTo(workshops2);
+
+    }
+
+
 
 
 
