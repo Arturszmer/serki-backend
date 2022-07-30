@@ -11,7 +11,7 @@ public class SubCathegories {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    @OneToMany(mappedBy = "name", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<TypeOfTraining> typeOfTrainings;
 
     public SubCathegories(String name, List<TypeOfTraining> typeOfTrainings) {

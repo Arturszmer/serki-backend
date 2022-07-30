@@ -1,6 +1,7 @@
 package com.example.serki;
 
 import com.example.serki.models.SubCathegories;
+import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
@@ -49,18 +50,32 @@ public class DBprod implements CommandLineRunner {
         SubCathegories csharp = new SubCathegories("C#", Collections.emptyList());
         SubCathegories js = new SubCathegories("JS", Collections.emptyList());
         SubCathegories python = new SubCathegories("Python", Collections.emptyList());
+        SubCathegories googleAds = new SubCathegories("Google Ads", Collections.emptyList());
 
         subCatRepo.save(java);
         subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
 
-        List<SubCathegories> listSub = subCatRepo.findAll();
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
+        TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum");
+        TypeOfTraining springJava = new TypeOfTraining("Spring", 5000.00,  16.0, "Spring PageMaker including versions of Lorem Ipsum");
 
-        saveIt.setWorkshopsCathegories(listSub.stream().toList());
+        typeOfTrainingsRepo.save(basicJava);
+        typeOfTrainingsRepo.save(advanceJava);
+        typeOfTrainingsRepo.save(springJava);
 
+        List<TypeOfTraining> listTotJava = typeOfTrainingsRepo.findAll();
+        java.setTypeOfTrainings(listTotJava.stream().toList());
+
+        List<SubCathegories> listSubIt = subCatRepo.findAll();
+        saveIt.setWorkshopsCathegories(listSubIt.stream().toList());
         workshopsRepo.save(saveIt);
 
+        subCatRepo.save(googleAds);
+        List<SubCathegories> listSubMarketing = Collections.singletonList(subCatRepo.findSubCathegoriesByName("Google Ads"));
+        saveMarketing.setWorkshopsCathegories(listSubMarketing);
+        workshopsRepo.save(saveMarketing);
 
         //        saveIt.setWorkshopsCathegories(Collections.singletonList(new SubCathegories("C#", Collections.emptyList())));
 

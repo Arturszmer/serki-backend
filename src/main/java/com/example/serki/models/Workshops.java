@@ -13,7 +13,7 @@ public class Workshops  {
     private String name;
     private String description;
     private String imgUrl;
-
+    //dodać mapped by i zobaczyć jakie tabele się wygenerują (na beldungu jest opis tej operacji)
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<SubCathegories> workshopsCathegories;
 

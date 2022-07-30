@@ -1,4 +1,4 @@
-package com.example.serki;
+package com.example.serki.service;
 
 import com.example.serki.models.Workshops;
 import com.example.serki.models.SubCathegories;
