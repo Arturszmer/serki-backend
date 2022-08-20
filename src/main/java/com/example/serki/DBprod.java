@@ -1,6 +1,6 @@
 package com.example.serki;
 
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TypeOfTrainingsRepo;
@@ -10,14 +10,11 @@ import com.example.serki.service.SubCatService;
 import com.example.serki.service.WorkshopsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Component
 @Profile("prod")
@@ -47,17 +44,17 @@ public class DBprod implements CommandLineRunner {
         Workshops saveMedic = workshopsRepo.save(medic);
         Workshops saveSales = workshopsRepo.save(sales);
 
-        SubCathegories java = new SubCathegories("Java", Collections.emptyList());
-        SubCathegories csharp = new SubCathegories("C#", Collections.emptyList());
-        SubCathegories js = new SubCathegories("JS", Collections.emptyList());
-        SubCathegories python = new SubCathegories("Python", Collections.emptyList());
-        SubCathegories googleAds = new SubCathegories("Google Ads", Collections.emptyList());
+        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
+        SubCathegory csharp = new SubCathegory("C#", Collections.emptyList());
+        SubCathegory js = new SubCathegory("JS", Collections.emptyList());
+        SubCathegory python = new SubCathegory("Python", Collections.emptyList());
+        SubCathegory googleAds = new SubCathegory("Google Ads", Collections.emptyList());
 
-        SubCathegories saveJava = subCatRepo.save(java);
+        SubCathegory saveJava = subCatRepo.save(java);
         subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
-        List<SubCathegories> listSubIt = subCatRepo.findAll();
+        List<SubCathegory> listSubIt = subCatRepo.findAll();
         saveIt.setWorkshopsCathegories(listSubIt.stream().toList());
         workshopsRepo.save(saveIt);
 
@@ -74,14 +71,5 @@ public class DBprod implements CommandLineRunner {
         subCatRepo.save(saveJava);
 
         workshopsRepo.save(saveIt);
-
-
-//        subCatRepo.save(googleAds);
-//        List<SubCathegories> listSubMarketing = Collections.singletonList(subCatRepo.findSubCathegoriesByName("Google Ads"));
-//        saveMarketing.setWorkshopsCathegories(listSubMarketing);
-//        workshopsRepo.save(saveMarketing);
-
-        //        saveIt.setWorkshopsCathegories(Collections.singletonList(new SubCathegories("C#", Collections.emptyList())));
-
     }
 }

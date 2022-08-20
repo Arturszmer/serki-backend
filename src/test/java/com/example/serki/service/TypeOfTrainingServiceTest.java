@@ -1,8 +1,7 @@
 package com.example.serki.service;
 
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.models.TypeOfTraining;
-import com.example.serki.models.Workshops;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
@@ -34,12 +32,13 @@ class TypeOfTrainingServiceTest {
     }
 
     @Test
-    public void addNewTypeOfTraing(){
+    public void addNewTypeOfTraining(){
         //given
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
 
         //when
         typeOfTrainingsRepo.save(basicJava);
+
         //then
         List<TypeOfTraining> list1 = typeOfTrainingsRepo.findAll();
         assertThat(list1.size()).isEqualTo(1);
@@ -47,14 +46,17 @@ class TypeOfTrainingServiceTest {
     @Test
     public void addNewTypeOfTrainingToSubCat(){
         //given
-        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
-        SubCathegories subCatJava = subCatRepo.save(subCathegories);
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
+        SubCathegory subCathegory = new SubCathegory("Java", Collections.emptyList());
+        SubCathegory subCatJava = subCatRepo.save(subCathegory);
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
         typeOfTrainingsRepo.save(basicJava);
-        List<TypeOfTraining> list1 = typeOfTrainingsRepo.findAll();
+        List<TypeOfTraining> typeOfTrainings = typeOfTrainingsRepo.findAll();
+
         //when
-        subCatJava.setTypeOfTrainings(list1);
+        subCatJava.setTypeOfTrainings(typeOfTrainings);
+
         //then
         assertThat(basicJava.equals(subCatJava.getTypeOfTrainings()));
+
     }
 }

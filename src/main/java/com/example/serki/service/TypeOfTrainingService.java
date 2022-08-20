@@ -5,7 +5,7 @@ import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.Exceptions.NameAlreadyExistException;
 import com.example.serki.Exceptions.SubCatNotExist;
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
@@ -38,7 +38,7 @@ public class TypeOfTrainingService {
             throw new SubCatNotExist();
         }
 
-        SubCathegories subCathegory = subCatRepo.findSubCathegoriesByName(subCatName).orElseThrow();
+        SubCathegory subCathegory = subCatRepo.findSubCathegoriesByName(subCatName).orElseThrow();
 
         if(subCathegory.getTypeOfTrainings().stream()
                 .anyMatch(subcat -> subcat.getName()
