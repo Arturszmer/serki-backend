@@ -33,6 +33,7 @@ public class SubCatService {
 
 
     public SubCatDTO addWorkshopSubCat(SubCatDTO subCatDTO, String workshopName){
+
         if (workshopsRepo.findByName(workshopName).isEmpty()){
             throw new WorkshopsNotExistException();
         }

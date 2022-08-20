@@ -5,6 +5,7 @@ import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.DTO.SubCatDTO;
 import com.example.serki.Exceptions.NameAlreadyExistException;
+import com.example.serki.Exceptions.SubCatNotExist;
 import com.example.serki.Exceptions.WorkshopsNotExistException;
 import com.example.serki.service.SubCatService;
 import com.example.serki.service.TypeOfTrainingService;
@@ -76,9 +77,20 @@ public class WorkshopsController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("typeOfTraining/add/{subCatName}")
+    @GetMapping("/workshopsSubCat/typeOfTraining/{subCatName}")
     @ResponseBody
-    public TypeOfTrainingDTO createTypeOfTraining(@RequestBody TypeOfTrainingDTO typeOfTrainingDTO, @PathVariable String subCatName){
+    public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName){
+        Optional<SubCatDTO> specificTypeOfTraining = subCatService.workshopsSubCathegoriesList()
+                .stream()
+                .map(mapper::subCatToDTO)
+                .filter(f -> f.getName().equals(subCatName))
+                .findFirst();
+        return specificTypeOfTraining.get().getTypeOfTrainings();
+
+    }
+
+    @PostMapping("typeOfTraining/add/{subCatName}")
+    public TypeOfTrainingDTO createTypeOfTraining(@RequestBody TypeOfTrainingDTO typeOfTrainingDTO, @PathVariable String subCatName) throws NameAlreadyExistException, SubCatNotExist {
         return typeOfTrainingService.addTypeOfTraining(typeOfTrainingDTO, subCatName);
     }
 

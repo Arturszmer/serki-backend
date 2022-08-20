@@ -24,4 +24,12 @@ public class RuntimeExceptionHandler{
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler(value = {SubCatNotExist.class})
+    public ResponseEntity<ErrorMessage> handleNameExistException(SubCatNotExist ex){
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorMessage.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
 }

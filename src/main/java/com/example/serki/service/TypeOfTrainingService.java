@@ -3,6 +3,8 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TypeOfTrainingDTO;
+import com.example.serki.Exceptions.NameAlreadyExistException;
+import com.example.serki.Exceptions.SubCatNotExist;
 import com.example.serki.models.SubCathegories;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
@@ -32,14 +34,23 @@ public class TypeOfTrainingService {
 
     public TypeOfTrainingDTO addTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO, String subCatName){
 
-        SubCathegories subCathegories = subCatRepo.findSubCathegoriesByName(subCatName);
+        if(subCatRepo.findSubCathegoriesByName(subCatName).isEmpty()){
+            throw new SubCatNotExist();
+        }
 
+        SubCathegories subCathegory = subCatRepo.findSubCathegoriesByName(subCatName).orElseThrow();
+
+        if(subCathegory.getTypeOfTrainings().stream()
+                .anyMatch(subcat -> subcat.getName()
+                        .equals(typeOfTrainingDTO.getName()))){
+            throw new NameAlreadyExistException();
+        }
         TypeOfTraining typeOfTraining = mapper.typeOfTrainingDTOtoTypeOfTraining(typeOfTrainingDTO);
-        TypeOfTraining save = typeOfTrainingsRepo.save(typeOfTraining);
-        subCathegories.getTypeOfTrainings().add(save);
-        subCatRepo.save(subCathegories);
+        TypeOfTraining saveJ = typeOfTrainingsRepo.save(typeOfTraining);
+        subCathegory.getTypeOfTrainings().add(saveJ);
+        subCatRepo.save(subCathegory);
 
-        return mapper.typeOfTrainingToDTO(save);
+        return mapper.typeOfTrainingToDTO(saveJ);
 
     }
 }

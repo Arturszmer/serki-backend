@@ -31,12 +31,18 @@ public class Mapper {
 
     public SubCatDTO subCatToDTO(SubCathegories subCathegories){
         String name = subCathegories.getName();
-        List<TypeOfTraining> typeOfTrainings = Collections.emptyList();
+        List<TypeOfTrainingDTO> typeOfTrainings = subCathegories.getTypeOfTrainings()
+                .stream()
+                .map(this::typeOfTrainingToDTO)
+                .collect(Collectors.toList());
         return new SubCatDTO(name, typeOfTrainings);
     }
 
     public SubCathegories subCatDTOtoSubCat(SubCatDTO subCatDTO){
-        return new SubCathegories(subCatDTO.getName(), subCatDTO.getTypeOfTrainings());
+        return new SubCathegories(subCatDTO.getName(), subCatDTO.getTypeOfTrainings()
+                .stream()
+                .map(this::typeOfTrainingDTOtoTypeOfTraining)
+                .collect(Collectors.toList()));
     }
 
 
