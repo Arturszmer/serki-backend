@@ -7,9 +7,9 @@ import java.util.List;
 public class SubCatDTO {
 
     private String name;
-    private List<TypeOfTraining> typeOfTrainings;
+    private List<TypeOfTrainingDTO> typeOfTrainings;
 
-    public SubCatDTO(String name, List<TypeOfTraining> typeOfTrainings) {
+    public SubCatDTO(String name, List<TypeOfTrainingDTO> typeOfTrainings) {
         this.name = name;
         this.typeOfTrainings = typeOfTrainings;
     }
@@ -22,11 +22,11 @@ public class SubCatDTO {
         this.name = name;
     }
 
-    public List<TypeOfTraining> getTypeOfTrainings() {
+    public List<TypeOfTrainingDTO> getTypeOfTrainings() {
         return typeOfTrainings;
     }
 
-    public void setTypeOfTrainings(List<TypeOfTraining> typeOfTrainings) {
+    public void setTypeOfTrainings(List<TypeOfTrainingDTO> typeOfTrainings) {
         this.typeOfTrainings = typeOfTrainings;
     }
 

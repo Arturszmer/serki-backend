@@ -1,6 +1,5 @@
 package com.example.serki;
 
-import com.example.serki.repository.WorkshopsRepo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

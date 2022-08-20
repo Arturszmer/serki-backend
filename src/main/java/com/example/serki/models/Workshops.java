@@ -13,9 +13,9 @@ public class Workshops  {
     private String name;
     private String description;
     private String imgUrl;
-
+    //dodać mapped by i zobaczyć jakie tabele się wygenerują (na beldungu jest opis tej operacji)
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<SubCathegories> workshopsCathegories;
+    private List<SubCathegory> workshopsCathegories;
 
     public Workshops() {
     }
@@ -26,7 +26,7 @@ public class Workshops  {
         this.imgUrl = imgUrl;
     }
 
-    public Workshops(String name, String description, String imgUrl, List<SubCathegories> workshopsCathegories) {
+    public Workshops(String name, String description, String imgUrl, List<SubCathegory> workshopsCathegories) {
         this.name = name;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -38,7 +38,7 @@ public class Workshops  {
         this.description = description;
     }
 
-    public Workshops(String name, String description, List<SubCathegories> workshopsCathegories) {
+    public Workshops(String name, String description, List<SubCathegory> workshopsCathegories) {
         this.name = name;
         this.description = description;
         this.workshopsCathegories = workshopsCathegories;
@@ -60,11 +60,11 @@ public class Workshops  {
         this.description = description;
     }
 
-    public List<SubCathegories> getWorkshopsCathegories() {
+    public List<SubCathegory> getWorkshopsCathegories() {
         return workshopsCathegories;
     }
 
-    public void setWorkshopsCathegories(List<SubCathegories> workshopsCathegories) {
+    public void setWorkshopsCathegories(List<SubCathegory> workshopsCathegories) {
         this.workshopsCathegories = workshopsCathegories;
     }
 

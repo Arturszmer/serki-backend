@@ -4,7 +4,7 @@ import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.SubCatDTO;
 import com.example.serki.Exceptions.NameAlreadyExistException;
 import com.example.serki.Exceptions.WorkshopsNotExistException;
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.WorkshopsRepo;
@@ -27,12 +27,13 @@ public class SubCatService {
         this.workshopsRepo = workshopsRepo;
     }
 
-    public List<SubCathegories> workshopsSubCathegoriesList(){
+    public List<SubCathegory> workshopsSubCathegoriesList(){
         return subCatRepo.findAll();
     }
 
 
     public SubCatDTO addWorkshopSubCat(SubCatDTO subCatDTO, String workshopName){
+
         if (workshopsRepo.findByName(workshopName).isEmpty()){
             throw new WorkshopsNotExistException();
         }
@@ -42,7 +43,7 @@ public class SubCatService {
                         .equalsIgnoreCase(subCatDTO.getName()))){
             throw new NameAlreadyExistException();
         }
-        SubCathegories save1 = subCatRepo.save(mapper.subCatDTOtoSubCat(subCatDTO));
+        SubCathegory save1 = subCatRepo.save(mapper.subCatDTOtoSubCat(subCatDTO));
         workshops.getWorkshopsCathegories().add(save1);
         workshopsRepo.save(workshops);
 

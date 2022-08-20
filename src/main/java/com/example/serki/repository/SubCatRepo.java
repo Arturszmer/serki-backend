@@ -1,11 +1,13 @@
 package com.example.serki.repository;
 
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface SubCatRepo extends JpaRepository<SubCathegories, Long> {
+import java.util.Optional;
 
-    SubCathegories findSubCathegoriesByName(String name);
+@Repository
+public interface SubCatRepo extends JpaRepository<SubCathegory, Long> {
+
+    Optional<SubCathegory> findSubCathegoriesByName(String name);
 }

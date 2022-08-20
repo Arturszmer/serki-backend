@@ -1,11 +1,11 @@
 package com.example.serki.DTO;
 
+import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,14 +29,20 @@ public class Mapper {
                     .collect(Collectors.toList()));
     }
 
-    public SubCatDTO subCatToDTO(SubCathegories subCathegories){
-        String name = subCathegories.getName();
-        List<TypeOfTraining> typeOfTrainings = Collections.emptyList();
+    public SubCatDTO subCatToDTO(SubCathegory subCathegory){
+        String name = subCathegory.getName();
+        List<TypeOfTrainingDTO> typeOfTrainings = subCathegory.getTypeOfTrainings()
+                .stream()
+                .map(this::typeOfTrainingToDTO)
+                .collect(Collectors.toList());
         return new SubCatDTO(name, typeOfTrainings);
     }
 
-    public SubCathegories subCatDTOtoSubCat(SubCatDTO subCatDTO){
-        return new SubCathegories(subCatDTO.getName(), subCatDTO.getTypeOfTrainings());
+    public SubCathegory subCatDTOtoSubCat(SubCatDTO subCatDTO){
+        return new SubCathegory(subCatDTO.getName(), subCatDTO.getTypeOfTrainings()
+                .stream()
+                .map(this::typeOfTrainingDTOtoTypeOfTraining)
+                .collect(Collectors.toList()));
     }
 
 
@@ -45,14 +51,31 @@ public class Mapper {
         double price = typeOfTraining.getPrice();
         double duration = typeOfTraining.getDuration();
         String description = typeOfTraining.getDescription();
-        return new TypeOfTrainingDTO(name, price, duration, description);
+        List<TrainerDTO> trainers = typeOfTraining.getTrainer()
+                .stream()
+                .map(this::trainerToDTO)
+                .collect(Collectors.toList());
+        return new TypeOfTrainingDTO(name, price, duration, description, trainers);
     }
     public TypeOfTraining typeOfTrainingDTOtoTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO){
         return new TypeOfTraining(typeOfTrainingDTO.getName(),
                 typeOfTrainingDTO.getPrice(),
                 typeOfTrainingDTO.getDuration(),
-                typeOfTrainingDTO.getDescription());
+                typeOfTrainingDTO.getDescription(),
+                typeOfTrainingDTO.getTrainers()
+                        .stream()
+                        .map(this::trainerDTOtoTrainer)
+                        .toList());
     }
 
+    public TrainerDTO trainerToDTO(Trainer trainer){
+        String name = trainer.getName();
+        String bio = trainer.getBio();
+        return new TrainerDTO(name, bio);
+    }
+
+    public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
+        return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
+    }
 }
 

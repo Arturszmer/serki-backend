@@ -2,7 +2,6 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.WorkshopsDTO;
-import com.example.serki.models.SubCathegories;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.WorkshopsRepo;

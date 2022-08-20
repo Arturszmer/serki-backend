@@ -1,7 +1,7 @@
-package com.example.serki;
+package com.example.serki.service;
 
 import com.example.serki.models.Workshops;
-import com.example.serki.models.SubCathegories;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.repository.WorkshopsRepo;
 import com.example.serki.repository.SubCatRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,38 +33,41 @@ class WorkshopsServiceTest {
 
     @Test
     public void addNewWorkshop(){
-    //given
-        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
-        subCatRepo.save(subCathegories);
-        List<SubCathegories> list = subCatRepo.findAll();
+        //given
+        SubCathegory subCathegory = new SubCathegory("Java", Collections.emptyList());
+        subCatRepo.save(subCathegory);
+        List<SubCathegory> list = subCatRepo.findAll();
         Workshops workshops = new Workshops("IT", "blebleble", "image", list);
 
-    //when
+        //when
         workshopsRepo.save(workshops);
-    //then
+
+        //then
         List<Workshops> list1 = workshopsRepo.findAll();
         assertThat(list1.size()).isEqualTo(1);
     }
 
     @Test
     public void showAllWorkshops(){
-    //given
+        //given
         Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
         Workshops workshops2 = new Workshops("MARKETING", "blebleble2", Collections.emptyList());
+
         //when
         Workshops save1 = workshopsRepo.save(workshops1);
-        save1.setWorkshopsCathegories(Collections.singletonList(new SubCathegories("Java", Collections.emptyList())));
+        save1.setWorkshopsCathegories(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
 
-    //then
-        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new SubCathegories("Java", Collections.emptyList())));
+        //then
+        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
     }
 
     @Test
     public void showSpecificWorkshopByName(){
-    //given
+        //given
         Workshops workshops1 = new Workshops("MARKETING", "blebleble", Collections.emptyList());
         Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
-    //when
+
+        //when
         workshopsRepo.save(workshops1);
         workshopsRepo.save(workshops2);
         Optional<Workshops> workshop = workshopsRepo.findByName("MARKETING");
@@ -76,26 +78,28 @@ class WorkshopsServiceTest {
 
     @Test
     public void findByImageName(){
-    //given
+        //given
         Workshops workshops1 = new Workshops("MARKETING", "blebleble", "image1", Collections.emptyList());
         Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
-    //when
+
+        //when
         workshopsRepo.save(workshops1);
         workshopsRepo.save(workshops2);
-    //then
+
+        //then
         Optional<Workshops> workshop = workshopsRepo.findByImgUrl("image1");
         assertThat(workshop.get()).isEqualTo(workshops1);
 
     }
     @Test
     public void addSubCatToWorkshops(){
-    //given
+        //given
         Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
-        SubCathegories subCathegories = new SubCathegories("Java", Collections.emptyList());
-    //when
+        SubCathegory subCathegory = new SubCathegory("Java", Collections.emptyList());
+         //when
         workshopsRepo.save(workshops2);
-        subCatRepo.save(subCathegories);
-        List<SubCathegories> listSubCat = subCatRepo.findAll();
+        subCatRepo.save(subCathegory);
+        List<SubCathegory> listSubCat = subCatRepo.findAll();
         workshops2.setWorkshopsCathegories(listSubCat.stream().toList());
         //then
         Optional<Workshops> workshop = workshopsRepo.findByName("IT");
