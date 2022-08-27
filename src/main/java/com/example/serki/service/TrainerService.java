@@ -18,12 +18,10 @@ public class TrainerService {
 
     private final Mapper mapper;
     private final TrainerRepo trainerRepo;
-    private final TypeOfTrainingsRepo typeOfTrainingsRepo;
 
-    public TrainerService(Mapper mapper, TrainerRepo trainerRepo, TypeOfTrainingsRepo typeOfTrainingsRepo) {
+    public TrainerService(Mapper mapper, TrainerRepo trainerRepo) {
         this.mapper = mapper;
         this.trainerRepo = trainerRepo;
-        this.typeOfTrainingsRepo = typeOfTrainingsRepo;
     }
 
     public TrainerDTO addTrainer(TrainerDTO trainerDTO) {

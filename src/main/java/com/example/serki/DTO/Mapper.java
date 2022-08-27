@@ -6,7 +6,6 @@ import com.example.serki.models.Workshops;
 import com.example.serki.models.SubCathegory;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 

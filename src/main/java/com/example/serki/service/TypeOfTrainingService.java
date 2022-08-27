@@ -9,8 +9,6 @@ import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,8 +64,12 @@ public class TypeOfTrainingService {
                 .orElseThrow(TypeOfTrainingNotExist::new);
 
         isTrainerAsigned(trainerAssignmentDTO, typeOfTraining);
-        typeOfTraining.getTrainer().add(trainer);
+        assignTrainer(trainer, typeOfTraining);
         typeOfTrainingsRepo.save(typeOfTraining);
+    }
+
+    private void assignTrainer(Trainer trainer, TypeOfTraining typeOfTraining) {
+        typeOfTraining.assign(trainer);
     }
 
     private void isNameOfTrainingExist(TypeOfTrainingDTO typeOfTrainingDTO, SubCathegory subCathegory) {

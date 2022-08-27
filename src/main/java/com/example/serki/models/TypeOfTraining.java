@@ -69,7 +69,7 @@ public class TypeOfTraining {
     }
 
     public List<Trainer> getTrainer() {
-        return trainer;
+        return Collections.unmodifiableList(trainer);
     }
 
     public void setTrainer(List<Trainer> trainer) {
@@ -99,5 +99,9 @@ public class TypeOfTraining {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, price, duration, description, trainer);
+    }
+
+    public void assign(Trainer trainer) {
+        this.trainer.add(trainer);
     }
 }
