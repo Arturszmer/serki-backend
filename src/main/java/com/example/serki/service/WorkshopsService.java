@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @Transactional
 public class WorkshopsService {
@@ -31,7 +33,7 @@ public class WorkshopsService {
     public List<WorkshopsDTO> workshopsList(){
         return workshopsRepo.findAll().stream()
                 .map(mapper::workshopsToDTO)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public List<SubCatDTO> getSubCatDTOS(String workshopName) {
@@ -42,24 +44,9 @@ public class WorkshopsService {
                 .get();
     }
 
-//    public WorkshopsDTO addWorkshop (Workshops workshops){
-//        WorkshopsDTO workshops1 = mapper.workshopsToDTO(workshops);
-//        workshopsRepo.save(workshops1);
-//        return ;
-//    }
-
-    public Optional<Workshops> showSpecificWorkshop(String name){
-        return workshopsRepo.findByName(name);
-    }
-
     public WorkshopsDTO addWorkshop(WorkshopsDTO workshopsDTO){
         Workshops workshops = mapper.workshopsDTOToWorkshops(workshopsDTO);
         Workshops save = workshopsRepo.save(workshops);
         return mapper.workshopsToDTO(save);
     }
-
-    public void addSubCatList(){
-        subCatRepo.findAll();
-    }
-
 }

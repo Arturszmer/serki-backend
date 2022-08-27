@@ -32,16 +32,16 @@ public class TypeOfTrainingService {
     }
 
     public List<TypeOfTrainingDTO> typeOfTrainings(){
-        return typeOfTrainingsRepo.findAll().stream()
+        return typeOfTrainingsRepo.findAll()
+                .stream()
                 .map(mapper::typeOfTrainingToDTO)
                 .collect(Collectors.toList());
     }
 
-
-
     public TypeOfTrainingDTO addTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO, String subCatName){
 
-        SubCathegory subCathegory = subCatRepo.findSubCathegoriesByName(subCatName).orElseThrow(SubCatNotExist::new);
+        SubCathegory subCathegory = subCatRepo.findSubCathegoriesByName(subCatName)
+                                                .orElseThrow(SubCatNotExist::new);
 
         if(subCathegory.getTypeOfTrainings().stream()
                 .anyMatch(subcat -> subcat.getName()
