@@ -8,6 +8,8 @@ import com.example.serki.service.SubCatService;
 import com.example.serki.service.TrainerService;
 import com.example.serki.service.TypeOfTrainingService;
 import com.example.serki.service.WorkshopsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,13 +42,13 @@ public class WorkshopsController {
 
     @GetMapping("/show")
     @ResponseBody
-    public List<WorkshopsDTO> getWorkShops(){
+    public List<WorkshopsDTO> getWorkShops() {
         return workshopsService.workshopsList();
     }
 
     @PostMapping("/add")
     @ResponseBody
-    public WorkshopsDTO createWorkshop(@RequestBody WorkshopsDTO workshopsDTO){
+    public WorkshopsDTO createWorkshop(@RequestBody WorkshopsDTO workshopsDTO) {
         WorkshopsDTO created = workshopsService.addWorkshop(workshopsDTO);
         created.setList(getAllWorkshopsSubCat());
         return created;
@@ -54,9 +56,10 @@ public class WorkshopsController {
 
     @GetMapping("/workshopsSubCat")
     @ResponseBody
-    public List<SubCatDTO> getAllWorkshopsSubCat(){
+    public List<SubCatDTO> getAllWorkshopsSubCat() {
         return subCatService.workshopsSubCathegoriesList();
     }
+
     @GetMapping("/workshopsSubCat/{workshopName}")
     @ResponseBody
     public List<SubCatDTO> getWorkshopsSubCat(@PathVariable String workshopName) {
@@ -70,13 +73,13 @@ public class WorkshopsController {
 
     @GetMapping("/typeOfTrainings/show")
     @ResponseBody
-    public List<TypeOfTrainingDTO> getTypeOfTrainings(){
+    public List<TypeOfTrainingDTO> getTypeOfTrainings() {
         return typeOfTrainingService.typeOfTrainings();
     }
 
     @GetMapping("/workshopsSubCat/typeOfTraining/{subCatName}")
     @ResponseBody
-    public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName){
+    public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName) {
         return subCatService.getTypeOfTrainingDTOS(subCatName);
     }
 
@@ -86,12 +89,19 @@ public class WorkshopsController {
     }
 
     @PostMapping("trainers/add")
-    public TrainerDTO addTrainer(@RequestBody TrainerDTO trainerDTO){
+    public TrainerDTO addTrainer(@RequestBody TrainerDTO trainerDTO) {
         return trainerService.addTrainer(trainerDTO);
     }
 
     @GetMapping("trainers")
-    public List<TrainerDTO> showTrainers(){
+    public List<TrainerDTO> showTrainers() {
         return trainerService.showAllTrainers();
+    }
+
+
+    @PostMapping("trainerAssignment")
+    public ResponseEntity<Void> addTrainerToTraining(@RequestBody TrainerAssignmentDTO trainerAssignmentDTO) {
+        typeOfTrainingService.addTrainerToTraining(trainerAssignmentDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

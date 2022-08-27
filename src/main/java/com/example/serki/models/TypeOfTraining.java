@@ -1,8 +1,7 @@
 package com.example.serki.models;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class TypeOfTraining {
@@ -30,6 +29,7 @@ public class TypeOfTraining {
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.trainer = new ArrayList<>();
     }
 
 
@@ -69,7 +69,7 @@ public class TypeOfTraining {
     }
 
     public List<Trainer> getTrainer() {
-        return trainer;
+        return Collections.unmodifiableList(trainer);
     }
 
     public void setTrainer(List<Trainer> trainer) {
@@ -99,5 +99,9 @@ public class TypeOfTraining {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, price, duration, description, trainer);
+    }
+
+    public void assign(Trainer trainer) {
+        this.trainer.add(trainer);
     }
 }

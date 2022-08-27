@@ -1,9 +1,11 @@
 package com.example.serki;
 
+import com.example.serki.DTO.TrainerAssignmentDTO;
 import com.example.serki.DTO.TrainerDTO;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TrainerRepo;
+import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
 import com.example.serki.service.WorkshopsService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,22 +78,20 @@ class WorkshopsControllerTest {
         String jsonString = objectMapper.writeValueAsString(trainerDTO);
         // when
         this.mockMvc.perform(post("/workshopsLayout/trainers/add")
-                        .contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonString))
                 .andExpect(status().isOk());
         // then
-        assertThat(trainerRepo.findByName("Konstanty")).isNotEmpty();
+        assertThat(trainerRepo.findByName("Konstanty")).isNotNull();
     }
-
     @Test
     public void showTrainer() throws Exception {
         // given
         Trainer trainer = new Trainer("Konstanty", "Java Master");
         trainerRepo.save(trainer);
-
         // when
         String contentAsString = mockMvc.perform(get("/workshopsLayout/trainers")).andReturn().getResponse().getContentAsString();
         List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
-
         // then
         assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
     }
