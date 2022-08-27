@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TrainerService {
@@ -30,5 +32,9 @@ public class TrainerService {
         return mapper.trainerToDTO(save);
     }
 
-
+    public List<TrainerDTO> showAllTrainers() {
+        return trainerRepo.findAll().stream()
+                .map(mapper::trainerToDTO)
+                .toList();
+    }
 }

@@ -1,8 +1,6 @@
 package com.example.serki.models;
 
 import javax.persistence.*;
-import java.util.Objects;
-
 
 @Entity
 public class Trainer {
@@ -47,18 +45,5 @@ public class Trainer {
                 "name='" + name + '\'' +
                 ", specialization='" + bio + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Trainer trainer = (Trainer) o;
-        return id == trainer.id && Objects.equals(name, trainer.name) && Objects.equals(bio, trainer.bio);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, bio);
     }
 }

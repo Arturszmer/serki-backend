@@ -1,7 +1,5 @@
 package com.example.serki.DTO;
 
-import com.example.serki.models.Trainer;
-
 import java.util.List;
 
 public class TypeOfTrainingDTO {
@@ -12,14 +10,12 @@ public class TypeOfTrainingDTO {
     private String description;
     private List<TrainerDTO> trainers;
 
-
     public TypeOfTrainingDTO(String name, double price, double duration, String description, List<TrainerDTO> trainers) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
         this.trainers = trainers;
-
     }
 
     public String getName() {

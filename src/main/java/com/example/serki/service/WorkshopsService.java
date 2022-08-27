@@ -1,6 +1,7 @@
 package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
+import com.example.serki.DTO.SubCatDTO;
 import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.SubCatRepo;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,8 +28,18 @@ public class WorkshopsService {
         this.subCatRepo = subCatRepo;
     }
 
-    public List<Workshops> workshopsList(){
-        return workshopsRepo.findAll();
+    public List<WorkshopsDTO> workshopsList(){
+        return workshopsRepo.findAll().stream()
+                .map(mapper::workshopsToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<SubCatDTO> getSubCatDTOS(String workshopName) {
+        return workshopsList().stream()
+                .filter(f -> f.getName().equals(workshopName))
+                .findFirst()
+                .map(WorkshopsDTO::getList)
+                .get();
     }
 
 //    public WorkshopsDTO addWorkshop (Workshops workshops){

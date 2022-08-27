@@ -1,10 +1,10 @@
 package com.example.serki;
 
 import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.models.Trainer;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.WorkshopsRepo;
-import com.example.serki.service.TrainerService;
 import com.example.serki.service.WorkshopsService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,10 +19,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -33,8 +36,6 @@ class WorkshopsControllerTest {
 
     @Autowired
     WorkshopsService workshopsServiceMock;
-    @Autowired
-    TrainerService trainerService;
     @Autowired
     TrainerRepo trainerRepo;
     @Autowired
@@ -62,7 +63,7 @@ class WorkshopsControllerTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/workshopsLayout/show"))
                 .andDo(MockMvcResultHandlers.print()).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
-        List<Workshops> workshopsList = objectMapper.readValue(contentAsString, new TypeReference<List<Workshops>>() {
+        List<Workshops> workshopsList = objectMapper.readValue(contentAsString, new TypeReference<>() {
         });
         assertThat(workshopsList.size()).isEqualTo(2);
     }
@@ -78,5 +79,19 @@ class WorkshopsControllerTest {
                 .andExpect(status().isOk());
         // then
         assertThat(trainerRepo.findByName("Konstanty")).isNotEmpty();
+    }
+
+    @Test
+    public void showTrainer() throws Exception {
+        // given
+        Trainer trainer = new Trainer("Konstanty", "Java Master");
+        trainerRepo.save(trainer);
+
+        // when
+        String contentAsString = mockMvc.perform(get("/workshopsLayout/trainers")).andReturn().getResponse().getContentAsString();
+        List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
+
+        // then
+        assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
     }
 }
