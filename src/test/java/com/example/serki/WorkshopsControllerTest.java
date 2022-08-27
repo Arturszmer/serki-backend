@@ -5,6 +5,7 @@ import com.example.serki.DTO.TrainerDTO;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TrainerRepo;
+import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
 import com.example.serki.service.WorkshopsService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -83,17 +84,14 @@ class WorkshopsControllerTest {
         // then
         assertThat(trainerRepo.findByName("Konstanty")).isNotNull();
     }
-
     @Test
     public void showTrainer() throws Exception {
         // given
         Trainer trainer = new Trainer("Konstanty", "Java Master");
         trainerRepo.save(trainer);
-
         // when
         String contentAsString = mockMvc.perform(get("/workshopsLayout/trainers")).andReturn().getResponse().getContentAsString();
         List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
-
         // then
         assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
     }

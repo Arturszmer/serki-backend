@@ -6,6 +6,7 @@ import com.example.serki.models.Workshops;
 import com.example.serki.models.SubCathegory;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,6 +77,12 @@ public class Mapper {
 
     public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
         return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
+    }
+
+    public TrainerAssignmentDTO trainerAssignmentToDTO(TypeOfTraining typeOfTraining, Trainer trainer){
+            String trainerName = trainer.getName();
+            String typeOfTrainingName = typeOfTraining.getName();
+            return new TrainerAssignmentDTO(trainerName, typeOfTrainingName);
     }
 }
 

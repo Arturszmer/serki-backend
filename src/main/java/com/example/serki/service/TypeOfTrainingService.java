@@ -7,6 +7,7 @@ import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
+import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class TypeOfTrainingService {
 
+    private final TrainerRepo trainerRepo;
     private final Mapper mapper;
     private final TypeOfTrainingsRepo typeOfTrainingsRepo;
     private final SubCatRepo subCatRepo;
@@ -34,21 +36,21 @@ public class TypeOfTrainingService {
         this.subCatRepo = subCatRepo;
     }
 
-    public List<TypeOfTrainingDTO> typeOfTrainings(){
+    public List<TypeOfTrainingDTO> typeOfTrainings() {
         return typeOfTrainingsRepo.findAll()
                 .stream()
                 .map(mapper::typeOfTrainingToDTO)
                 .collect(Collectors.toList());
     }
 
-    public TypeOfTrainingDTO addTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO, String subCatName){
+    public TypeOfTrainingDTO addTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO, String subCatName) {
 
         SubCathegory subCathegory = subCatRepo.findSubCathegoriesByName(subCatName)
-                                                .orElseThrow(SubCatNotExist::new);
+                .orElseThrow(SubCatNotExist::new);
 
-        if(subCathegory.getTypeOfTrainings().stream()
+        if (subCathegory.getTypeOfTrainings().stream()
                 .anyMatch(subcat -> subcat.getName()
-                        .equals(typeOfTrainingDTO.getName()))){
+                        .equals(typeOfTrainingDTO.getName()))) {
             throw new NameAlreadyExistException();
         }
         TypeOfTraining typeOfTraining = mapper.typeOfTrainingDTOtoTypeOfTraining(typeOfTrainingDTO);
@@ -59,4 +61,22 @@ public class TypeOfTrainingService {
         return mapper.typeOfTrainingToDTO(saveToRepo);
 
     }
+
+    public void addTrainerToTraining(TrainerAssignmentDTO trainerAssignmentDTO){
+
+        Trainer trainer = trainerRepo.findByName(trainerAssignmentDTO.getTrainerName())
+                .orElseThrow(TrainerIsNotExist::new);
+        TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainerAssignmentDTO.getTypeOfTrainingName())
+                .orElseThrow(TypeOfTrainingNotExist::new);
+
+        if (typeOfTraining.getTrainer()
+                .stream()
+                .anyMatch(trainerName -> trainerName.getName()
+                        .equals(trainerAssignmentDTO.getTrainerName()))){
+            throw new TrainerIsAssigned();
+        }
+        typeOfTraining.getTrainer().add(trainer);
+        typeOfTrainingsRepo.save(typeOfTraining);
+    }
 }
+
