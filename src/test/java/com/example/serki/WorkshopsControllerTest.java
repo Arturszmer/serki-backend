@@ -60,7 +60,7 @@ class WorkshopsControllerTest {
         workshopsRepo.save(workshops1);
         workshopsRepo.save(workshops2);
     //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/workshopsLayout/show"))
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/workshops"))
                 .andDo(MockMvcResultHandlers.print()).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
         List<Workshops> workshopsList = objectMapper.readValue(contentAsString, new TypeReference<>() {
@@ -74,7 +74,7 @@ class WorkshopsControllerTest {
         TrainerDTO trainerDTO = new TrainerDTO("Konstanty", "Java Master");
         String jsonString = objectMapper.writeValueAsString(trainerDTO);
         // when
-        this.mockMvc.perform(post("/workshopsLayout/trainers/add")
+        this.mockMvc.perform(post("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings")
                         .contentType(MediaType.APPLICATION_JSON).content(jsonString))
                 .andExpect(status().isOk());
         // then
@@ -88,7 +88,7 @@ class WorkshopsControllerTest {
         trainerRepo.save(trainer);
 
         // when
-        String contentAsString = mockMvc.perform(get("/workshopsLayout/trainers")).andReturn().getResponse().getContentAsString();
+        String contentAsString = mockMvc.perform(get("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings")).andReturn().getResponse().getContentAsString();
         List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
 
         // then
