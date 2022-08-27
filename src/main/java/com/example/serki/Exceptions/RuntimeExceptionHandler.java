@@ -32,4 +32,29 @@ public class RuntimeExceptionHandler{
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {TrainerIsAssigned.class})
+    public ResponseEntity<ErrorMessage> handleTrainerIsAssigned(TrainerIsAssigned ex){
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        errorMessage.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {TrainerIsNotExist.class})
+    public ResponseEntity<ErrorMessage> handleTrainerIsNotExist(TrainerIsNotExist ex){
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorMessage.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {TypeOfTrainingNotExist.class})
+    public ResponseEntity<ErrorMessage> handleTypeOfTrainingNotExist(TypeOfTrainingNotExist ex){
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorMessage.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+
 }

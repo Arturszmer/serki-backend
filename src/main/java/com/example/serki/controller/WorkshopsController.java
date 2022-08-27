@@ -8,6 +8,8 @@ import com.example.serki.service.SubCatService;
 import com.example.serki.service.TrainerService;
 import com.example.serki.service.TypeOfTrainingService;
 import com.example.serki.service.WorkshopsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

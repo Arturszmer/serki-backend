@@ -1,20 +1,19 @@
 package com.example.serki.service;
 
 
-import com.example.serki.DTO.Mapper;
-import com.example.serki.DTO.SubCatDTO;
-import com.example.serki.DTO.TypeOfTrainingDTO;
-import com.example.serki.Exceptions.NameAlreadyExistException;
-import com.example.serki.Exceptions.SubCatNotExist;
+import com.example.serki.DTO.*;
+import com.example.serki.Exceptions.*;
 import com.example.serki.models.SubCathegory;
+import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +24,11 @@ public class TypeOfTrainingService {
     private final TypeOfTrainingsRepo typeOfTrainingsRepo;
     private final SubCatRepo subCatRepo;
 
-    public TypeOfTrainingService(Mapper mapper, TypeOfTrainingsRepo typeOfTrainingsRepo, SubCatRepo subCatRepo) {
+    public TypeOfTrainingService(TrainerRepo trainerRepo,
+                                 Mapper mapper,
+                                 TypeOfTrainingsRepo typeOfTrainingsRepo,
+                                 SubCatRepo subCatRepo) {
+        this.trainerRepo = trainerRepo;
         this.mapper = mapper;
         this.typeOfTrainingsRepo = typeOfTrainingsRepo;
         this.subCatRepo = subCatRepo;
@@ -49,11 +52,11 @@ public class TypeOfTrainingService {
             throw new NameAlreadyExistException();
         }
         TypeOfTraining typeOfTraining = mapper.typeOfTrainingDTOtoTypeOfTraining(typeOfTrainingDTO);
-        TypeOfTraining saveJ = typeOfTrainingsRepo.save(typeOfTraining);
-        subCathegory.getTypeOfTrainings().add(saveJ);
+        TypeOfTraining saveToRepo = typeOfTrainingsRepo.save(typeOfTraining);
+        subCathegory.getTypeOfTrainings().add(saveToRepo);
         subCatRepo.save(subCathegory);
 
-        return mapper.typeOfTrainingToDTO(saveJ);
+        return mapper.typeOfTrainingToDTO(saveToRepo);
 
     }
 }
