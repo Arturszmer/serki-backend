@@ -48,11 +48,7 @@ public class TypeOfTrainingService {
         SubCathegory subCathegory = subCatRepo.findSubCathegoriesByName(subCatName)
                 .orElseThrow(SubCatNotExist::new);
 
-        if (subCathegory.getTypeOfTrainings().stream()
-                .anyMatch(subcat -> subcat.getName()
-                        .equals(typeOfTrainingDTO.getName()))) {
-            throw new NameAlreadyExistException();
-        }
+        isNameOfTrainingExist(typeOfTrainingDTO, subCathegory);
         TypeOfTraining typeOfTraining = mapper.typeOfTrainingDTOtoTypeOfTraining(typeOfTrainingDTO);
         TypeOfTraining saveToRepo = typeOfTrainingsRepo.save(typeOfTraining);
         subCathegory.getTypeOfTrainings().add(saveToRepo);
@@ -69,14 +65,26 @@ public class TypeOfTrainingService {
         TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainerAssignmentDTO.getTypeOfTrainingName())
                 .orElseThrow(TypeOfTrainingNotExist::new);
 
+        isTrainerAsigned(trainerAssignmentDTO, typeOfTraining);
+        typeOfTraining.getTrainer().add(trainer);
+        typeOfTrainingsRepo.save(typeOfTraining);
+    }
+
+    private void isNameOfTrainingExist(TypeOfTrainingDTO typeOfTrainingDTO, SubCathegory subCathegory) {
+        if (subCathegory.getTypeOfTrainings().stream()
+                .anyMatch(subcat -> subcat.getName()
+                        .equals(typeOfTrainingDTO.getName()))) {
+            throw new NameAlreadyExistException();
+        }
+    }
+
+    private void isTrainerAsigned(TrainerAssignmentDTO trainerAssignmentDTO, TypeOfTraining typeOfTraining) {
         if (typeOfTraining.getTrainer()
                 .stream()
                 .anyMatch(trainerName -> trainerName.getName()
                         .equals(trainerAssignmentDTO.getTrainerName()))){
             throw new TrainerIsAssigned();
         }
-        typeOfTraining.getTrainer().add(trainer);
-        typeOfTrainingsRepo.save(typeOfTraining);
     }
 }
 

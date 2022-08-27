@@ -59,6 +59,4 @@ class TypeOfTrainingServiceTest {
         //then
         assertThat(basicJava.equals(subCatJava.getTypeOfTrainings()));
     }
-
-    
 }

@@ -99,7 +99,7 @@ public class WorkshopsController {
     }
 
 
-    @PostMapping("trainer/assignment")
+    @PostMapping("trainerAssignment")
     public ResponseEntity<Void> addTrainerToTraining(@RequestBody TrainerAssignmentDTO trainerAssignmentDTO) {
         typeOfTrainingService.addTrainerToTraining(trainerAssignmentDTO);
         return new ResponseEntity<>(HttpStatus.OK);

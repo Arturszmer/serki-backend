@@ -78,11 +78,5 @@ public class Mapper {
     public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
         return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
     }
-
-    public TrainerAssignmentDTO trainerAssignmentToDTO(TypeOfTraining typeOfTraining, Trainer trainer){
-            String trainerName = trainer.getName();
-            String typeOfTrainingName = typeOfTraining.getName();
-            return new TrainerAssignmentDTO(trainerName, typeOfTrainingName);
-    }
 }
 
