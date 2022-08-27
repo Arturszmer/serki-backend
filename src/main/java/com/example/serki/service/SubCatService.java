@@ -2,6 +2,7 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.SubCatDTO;
+import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.Exceptions.NameAlreadyExistException;
 import com.example.serki.Exceptions.WorkshopsNotExistException;
 import com.example.serki.models.SubCathegory;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,10 +30,19 @@ public class SubCatService {
         this.workshopsRepo = workshopsRepo;
     }
 
-    public List<SubCathegory> workshopsSubCathegoriesList(){
-        return subCatRepo.findAll();
+    public List<SubCatDTO> workshopsSubCathegoriesList(){
+        return subCatRepo.findAll().stream()
+                .map(mapper::subCatToDTO)
+                .collect(Collectors.toList());
     }
 
+    public List<TypeOfTrainingDTO> getTypeOfTrainingDTOS(String subCatName) {
+        Optional<SubCatDTO> specificTypeOfTraining = workshopsSubCathegoriesList()
+                .stream()
+                .filter(f -> f.getName().equals(subCatName))
+                .findFirst();
+        return specificTypeOfTraining.get().getTypeOfTrainings();
+    }
 
     public SubCatDTO addWorkshopSubCat(SubCatDTO subCatDTO, String workshopName){
 

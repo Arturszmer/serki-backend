@@ -10,6 +10,7 @@ import com.example.serki.service.TypeOfTrainingService;
 import com.example.serki.service.WorkshopsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,7 +25,12 @@ public class WorkshopsController {
     private final TrainerService trainerService;
     private final Mapper mapper;
 
-    public WorkshopsController(WorkshopsService workshopsService, SubCatService subCatService, TypeOfTrainingService typeOfTrainingService, TrainerService trainerService, Mapper mapper) {
+    public WorkshopsController(
+            WorkshopsService workshopsService,
+            SubCatService subCatService,
+            TypeOfTrainingService typeOfTrainingService,
+            TrainerService trainerService,
+            Mapper mapper) {
         this.workshopsService = workshopsService;
         this.subCatService = subCatService;
         this.typeOfTrainingService = typeOfTrainingService;
@@ -35,9 +41,7 @@ public class WorkshopsController {
     @GetMapping("/show")
     @ResponseBody
     public List<WorkshopsDTO> getWorkShops(){
-        return workshopsService.workshopsList().stream()
-                .map(mapper::workshopsToDTO)
-                .collect(Collectors.toList());
+        return workshopsService.workshopsList();
     }
 
     @PostMapping("/add")
@@ -51,19 +55,12 @@ public class WorkshopsController {
     @GetMapping("/workshopsSubCat")
     @ResponseBody
     public List<SubCatDTO> getAllWorkshopsSubCat(){
-        return subCatService.workshopsSubCathegoriesList().stream()
-                .map(mapper::subCatToDTO)
-                .collect(Collectors.toList());
+        return subCatService.workshopsSubCathegoriesList();
     }
     @GetMapping("/workshopsSubCat/{workshopName}")
     @ResponseBody
     public List<SubCatDTO> getWorkshopsSubCat(@PathVariable String workshopName) {
-        return workshopsService.workshopsList().stream()
-                .map(mapper::workshopsToDTO)
-                .filter(f -> f.getName().equals(workshopName))
-                .findFirst()
-                .map(WorkshopsDTO::getList)
-                .get();
+        return workshopsService.getSubCatDTOS(workshopName);
     }
 
     @PostMapping("/workshopsSubCat/add/{workshopName}")
@@ -74,21 +71,13 @@ public class WorkshopsController {
     @GetMapping("/typeOfTrainings/show")
     @ResponseBody
     public List<TypeOfTrainingDTO> getTypeOfTrainings(){
-        return typeOfTrainingService.typeOfTrainings().stream()
-                .map(mapper::typeOfTrainingToDTO)
-                .collect(Collectors.toList());
+        return typeOfTrainingService.typeOfTrainings();
     }
 
     @GetMapping("/workshopsSubCat/typeOfTraining/{subCatName}")
     @ResponseBody
     public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName){
-        Optional<SubCatDTO> specificTypeOfTraining = subCatService.workshopsSubCathegoriesList()
-                .stream()
-                .map(mapper::subCatToDTO)
-                .filter(f -> f.getName().equals(subCatName))
-                .findFirst();
-        return specificTypeOfTraining.get().getTypeOfTrainings();
-
+        return subCatService.getTypeOfTrainingDTOS(subCatName);
     }
 
     @PostMapping("typeOfTraining/add/{subCatName}")
@@ -101,6 +90,8 @@ public class WorkshopsController {
         return trainerService.addTrainer(trainerDTO);
     }
 
-
-
+    @GetMapping("trainers")
+    public List<TrainerDTO> showTrainers(){
+        return trainerService.showAllTrainers();
+    }
 }

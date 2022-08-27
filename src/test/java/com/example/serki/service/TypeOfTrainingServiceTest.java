@@ -43,6 +43,7 @@ class TypeOfTrainingServiceTest {
         List<TypeOfTraining> list1 = typeOfTrainingsRepo.findAll();
         assertThat(list1.size()).isEqualTo(1);
     }
+
     @Test
     public void addNewTypeOfTrainingToSubCat(){
         //given
@@ -57,6 +58,5 @@ class TypeOfTrainingServiceTest {
 
         //then
         assertThat(basicJava.equals(subCatJava.getTypeOfTrainings()));
-
     }
 }
