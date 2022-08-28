@@ -55,7 +55,7 @@ public class DBprod implements CommandLineRunner {
         subCatRepo.save(js);
         subCatRepo.save(python);
         List<SubCathegory> listSubIt = subCatRepo.findAll();
-        saveIt.setWorkshopsCathegories(listSubIt.stream().toList());
+        saveIt.setWorkshopsCategories(listSubIt.stream().toList());
         workshopsRepo.save(saveIt);
 
         TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");

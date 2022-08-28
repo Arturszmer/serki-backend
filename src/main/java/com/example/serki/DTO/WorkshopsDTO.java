@@ -1,5 +1,6 @@
 package com.example.serki.DTO;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WorkshopsDTO {
@@ -16,7 +17,7 @@ public class WorkshopsDTO {
     }
 
     public List<SubCatDTO> getList() {
-        return list;
+        return Collections.unmodifiableList(list);
     }
 
     public void setList(List<SubCatDTO> list) {

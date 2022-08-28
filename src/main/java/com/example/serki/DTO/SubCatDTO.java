@@ -2,6 +2,7 @@ package com.example.serki.DTO;
 
 import com.example.serki.models.TypeOfTraining;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SubCatDTO {
@@ -23,7 +24,7 @@ public class SubCatDTO {
     }
 
     public List<TypeOfTrainingDTO> getTypeOfTrainings() {
-        return typeOfTrainings;
+        return Collections.unmodifiableList(typeOfTrainings);
     }
 
     public void setTypeOfTrainings(List<TypeOfTrainingDTO> typeOfTrainings) {

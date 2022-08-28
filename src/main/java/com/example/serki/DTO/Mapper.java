@@ -16,7 +16,7 @@ public class Mapper {
         String name = workshops.getName();
         String descriptions = workshops.getDescription();
         String imgUrl = workshops.getImgUrl();
-        List<SubCatDTO> list = workshops.getWorkshopsCathegories()
+        List<SubCatDTO> list = workshops.getWorkshopsCategories()
                 .stream()
                 .map(this::subCatToDTO)
                 .collect(Collectors.toList());

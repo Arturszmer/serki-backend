@@ -50,13 +50,13 @@ public class SubCatService {
             throw new WorkshopsNotExistException();
         }
         Workshops workshops = workshopsRepo.findByName(workshopName).orElseThrow();
-        if (workshops.getWorkshopsCathegories().stream()
+        if (workshops.getWorkshopsCategories().stream()
                 .anyMatch(subCathegories -> subCathegories.getName()
                         .equalsIgnoreCase(subCatDTO.getName()))){
             throw new NameAlreadyExistException();
         }
         SubCathegory save1 = subCatRepo.save(mapper.subCatDTOtoSubCat(subCatDTO));
-        workshops.getWorkshopsCathegories().add(save1);
+        workshops.getWorkshopsCategories().add(save1);
         workshopsRepo.save(workshops);
 
         return mapper.subCatToDTO(save1);

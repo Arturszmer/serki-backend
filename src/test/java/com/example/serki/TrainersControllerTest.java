@@ -87,9 +87,8 @@ public class TrainersControllerTest {
                         .content(jsonString))
                 .andExpect(status().isNotFound());
     }
-
     @Test
-    public void trainerIsAsigned() throws Exception {
+    public void trainerIsAssigned() throws Exception {
         // given
         String trainerName = "Artur";
         aTrainerWithName(trainerName);
@@ -108,22 +107,18 @@ public class TrainersControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isBadRequest());
-
         // then
         assertThat(trainersAssignedToTraining(trainingName))
                 .containsExactlyInAnyOrder("Artur");
     }
-
     private void aTrainingWithName(String trainingName) {
         TypeOfTraining typeOfTraining = new TypeOfTraining(trainingName,10,10,"fff");
         typeOfTrainingsRepo.save(typeOfTraining);
     }
-
     private void aTrainerWithName(String trainerName) {
         Trainer trainer = new Trainer(trainerName, "nie taki młody przyszłościowy programista");
         trainerRepo.save(trainer);
     }
-
     private List<String> trainersAssignedToTraining(String trainingName) {
         return typeOfTrainingsRepo.findByName(trainingName).stream()
                 .flatMap(t -> t.getTrainer()
