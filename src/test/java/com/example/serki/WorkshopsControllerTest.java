@@ -1,6 +1,7 @@
 package com.example.serki;
 
 import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
@@ -102,25 +103,30 @@ class WorkshopsControllerTest {
         assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
     }
 
-//    @Test
-//    public void showTypeOfTrainings() throws Exception{
-//        // given
-//        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
-//        workshopsRepo.save(workshops1);
-//        // and
-//        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
-//        subCatRepo.save(java);
-//        List<SubCathegory> subCathegoryList = subCatRepo.findAll();
-//        // and
-//        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
-//        typeOfTrainingsRepo.save(basicJava);
-//
-//
-//        // when
-//
-//        // then
-//
-//    }
+    @Test
+    public void showTypeOfTrainings() throws Exception{
+        // given
+        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
+        workshopsRepo.save(workshops1);
+        // and
+        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
+        subCatRepo.save(java);
+        List<SubCathegory> subCathegoryList = subCatRepo.findAll();
+        // and
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
+        typeOfTrainingsRepo.save(basicJava);
+        List<TypeOfTraining> typeOfTrainingList = typeOfTrainingsRepo.findAll();
+        java.setTypeOfTrainings(typeOfTrainingList);
+        workshops1.setWorkshopsCategories(subCathegoryList);
+        // when
+        String contentAsString = mockMvc.perform(get("/workshop/IT/SubCat/{SubCatName}/typesOfTrainings"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        List<WorkshopsDTO> workshopsDTOS = Arrays.asList(objectMapper.readValue(contentAsString, WorkshopsDTO[].class));
+        // then
+        assertThat(workshopsDTOS.get(0).getName()).isEqualTo("IT");
+    }
 
 //    @Test
 //    public void showTrainer2() throws Exception {
