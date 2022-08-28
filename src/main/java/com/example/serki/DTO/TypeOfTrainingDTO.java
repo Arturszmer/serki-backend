@@ -1,5 +1,6 @@
 package com.example.serki.DTO;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TypeOfTrainingDTO {
@@ -51,7 +52,7 @@ public class TypeOfTrainingDTO {
     }
 
     public List<TrainerDTO> getTrainers() {
-        return trainers;
+        return Collections.unmodifiableList(trainers);
     }
 
     public void setTrainers(List<TrainerDTO> trainers) {

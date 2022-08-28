@@ -1,6 +1,7 @@
 package com.example.serki.models;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +14,9 @@ public class Workshops  {
     private String name;
     private String description;
     private String imgUrl;
-    //dodać mapped by i zobaczyć jakie tabele się wygenerują (na beldungu jest opis tej operacji)
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<SubCathegory> workshopsCathegories;
+    private List<SubCathegory> workshopsCategories;
 
     public Workshops() {
     }
@@ -26,11 +27,11 @@ public class Workshops  {
         this.imgUrl = imgUrl;
     }
 
-    public Workshops(String name, String description, String imgUrl, List<SubCathegory> workshopsCathegories) {
+    public Workshops(String name, String description, String imgUrl, List<SubCathegory> workshopsCategories) {
         this.name = name;
         this.description = description;
         this.imgUrl = imgUrl;
-        this.workshopsCathegories = workshopsCathegories;
+        this.workshopsCategories = workshopsCategories;
     }
 
     public Workshops(String name, String description) {
@@ -41,7 +42,7 @@ public class Workshops  {
     public Workshops(String name, String description, List<SubCathegory> workshopsCathegories) {
         this.name = name;
         this.description = description;
-        this.workshopsCathegories = workshopsCathegories;
+        this.workshopsCategories = workshopsCathegories;
     }
 
     public String getName() {
@@ -60,12 +61,12 @@ public class Workshops  {
         this.description = description;
     }
 
-    public List<SubCathegory> getWorkshopsCathegories() {
-        return workshopsCathegories;
+    public List<SubCathegory> getWorkshopsCategories() {
+        return Collections.unmodifiableList(workshopsCategories);
     }
 
-    public void setWorkshopsCathegories(List<SubCathegory> workshopsCathegories) {
-        this.workshopsCathegories = workshopsCathegories;
+    public void setWorkshopsCategories(List<SubCathegory> workshopsCategories) {
+        this.workshopsCategories = workshopsCategories;
     }
 
     public String getImgUrl() {
@@ -81,7 +82,7 @@ public class Workshops  {
         return "Workshops{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", workshopsCathegories=" + workshopsCathegories +
+                ", workshopsCategories=" + workshopsCategories +
                 '}';
     }
 
@@ -90,11 +91,11 @@ public class Workshops  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Workshops workshops = (Workshops) o;
-        return id == workshops.id && Objects.equals(name, workshops.name) && Objects.equals(description, workshops.description) && Objects.equals(imgUrl, workshops.imgUrl) && Objects.equals(workshopsCathegories, workshops.workshopsCathegories);
+        return id == workshops.id && Objects.equals(name, workshops.name) && Objects.equals(description, workshops.description) && Objects.equals(imgUrl, workshops.imgUrl) && Objects.equals(workshopsCategories, workshops.workshopsCategories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, imgUrl, workshopsCathegories);
+        return Objects.hash(id, name, description, imgUrl, workshopsCategories);
     }
 }

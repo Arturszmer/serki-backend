@@ -1,6 +1,7 @@
 package com.example.serki.models;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +32,7 @@ public class SubCathegory {
     }
 
     public List<TypeOfTraining> getTypeOfTrainings() {
-        return typeOfTrainings;
+        return Collections.unmodifiableList(typeOfTrainings);
     }
 
     public void setTypeOfTrainings(List<TypeOfTraining> typeOfTrainings) {

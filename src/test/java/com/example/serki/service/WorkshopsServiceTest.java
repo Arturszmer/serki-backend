@@ -55,10 +55,10 @@ class WorkshopsServiceTest {
 
         //when
         Workshops save1 = workshopsRepo.save(workshops1);
-        save1.setWorkshopsCathegories(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
+        save1.setWorkshopsCategories(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
 
         //then
-        assertThat(save1.getWorkshopsCathegories()).isEqualTo(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
+        assertThat(save1.getWorkshopsCategories()).isEqualTo(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
     }
 
     @Test
@@ -100,7 +100,7 @@ class WorkshopsServiceTest {
         workshopsRepo.save(workshops2);
         subCatRepo.save(subCathegory);
         List<SubCathegory> listSubCat = subCatRepo.findAll();
-        workshops2.setWorkshopsCathegories(listSubCat.stream().toList());
+        workshops2.setWorkshopsCategories(listSubCat.stream().toList());
         //then
         Optional<Workshops> workshop = workshopsRepo.findByName("IT");
         assertThat(workshop.get()).isEqualTo(workshops2);
