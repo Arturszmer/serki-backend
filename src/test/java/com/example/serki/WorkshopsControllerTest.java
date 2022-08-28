@@ -1,9 +1,11 @@
 package com.example.serki;
 
-import com.example.serki.DTO.TrainerAssignmentDTO;
 import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
+import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
+import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
@@ -44,6 +46,10 @@ class WorkshopsControllerTest {
     @Autowired
     WorkshopsRepo workshopsRepo;
     @Autowired
+    SubCatRepo subCatRepo;
+    @Autowired
+    TypeOfTrainingsRepo typeOfTrainingsRepo;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
@@ -55,7 +61,7 @@ class WorkshopsControllerTest {
     }
 
     @Test
-    public void shouldShowDTOList() throws Exception {
+    public void shouldShowWorkshopsList() throws Exception {
     //given
         Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
         Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
@@ -63,7 +69,7 @@ class WorkshopsControllerTest {
         workshopsRepo.save(workshops1);
         workshopsRepo.save(workshops2);
     //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/workshopsLayout/show"))
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/workshops"))
                 .andDo(MockMvcResultHandlers.print()).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
         List<Workshops> workshopsList = objectMapper.readValue(contentAsString, new TypeReference<>() {
@@ -77,7 +83,7 @@ class WorkshopsControllerTest {
         TrainerDTO trainerDTO = new TrainerDTO("Konstanty", "Java Master");
         String jsonString = objectMapper.writeValueAsString(trainerDTO);
         // when
-        this.mockMvc.perform(post("/workshopsLayout/trainers/add")
+        this.mockMvc.perform(post("/trainers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk());
@@ -90,9 +96,46 @@ class WorkshopsControllerTest {
         Trainer trainer = new Trainer("Konstanty", "Java Master");
         trainerRepo.save(trainer);
         // when
-        String contentAsString = mockMvc.perform(get("/workshopsLayout/trainers")).andReturn().getResponse().getContentAsString();
+        String contentAsString = mockMvc.perform(get("/trainers")).andReturn().getResponse().getContentAsString();
         List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
         // then
         assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
     }
+
+//    @Test
+//    public void showTypeOfTrainings() throws Exception{
+//        // given
+//        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
+//        workshopsRepo.save(workshops1);
+//        // and
+//        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
+//        subCatRepo.save(java);
+//        List<SubCathegory> subCathegoryList = subCatRepo.findAll();
+//        // and
+//        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
+//        typeOfTrainingsRepo.save(basicJava);
+//
+//
+//        // when
+//
+//        // then
+//
+//    }
+
+//    @Test
+//    public void showTrainer2() throws Exception {
+//        // given
+//        Trainer trainer = new Trainer("Konstanty", "Java Master");
+//        trainerRepo.save(trainer);
+//
+//        // when
+//        String contentAsString = mockMvc.perform(get("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings"))
+//                .andReturn()
+//                .getResponse()
+//                .getContentAsString();
+//        List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
+//
+//        // then
+//        assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
+//    }
 }

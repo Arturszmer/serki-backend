@@ -32,7 +32,7 @@ public class SubCathegory {
     }
 
     public List<TypeOfTraining> getTypeOfTrainings() {
-        return Collections.unmodifiableList(typeOfTrainings);
+        return typeOfTrainings;
     }
 
     public void setTypeOfTrainings(List<TypeOfTraining> typeOfTrainings) {

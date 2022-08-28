@@ -69,7 +69,7 @@ public class TypeOfTraining {
     }
 
     public List<Trainer> getTrainer() {
-        return Collections.unmodifiableList(trainer);
+        return trainer;
     }
 
     public void setTrainer(List<Trainer> trainer) {

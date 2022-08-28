@@ -48,7 +48,7 @@ public class TrainersControllerTest {
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
 
         // when
-        this.mockMvc.perform(post("/workshopsLayout/trainerAssignment")
+        this.mockMvc.perform(post("/workshops/trainerAssignment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk());
@@ -67,7 +67,7 @@ public class TrainersControllerTest {
         TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO("Artur", trainingName);
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
         // expect
-        this.mockMvc.perform(post("/workshopsLayout/trainerAssignment")
+        this.mockMvc.perform(post("/workshops/trainerAssignment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isNotFound());
@@ -82,7 +82,7 @@ public class TrainersControllerTest {
         TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, "Barbakan");
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
         // expect
-        this.mockMvc.perform(post("/workshopsLayout/trainerAssignment")
+        this.mockMvc.perform(post("/workshops/trainerAssignment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isNotFound());
@@ -99,11 +99,11 @@ public class TrainersControllerTest {
         TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, trainingName);
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
         // and
-        this.mockMvc.perform(post("/workshopsLayout/trainerAssignment")
+        this.mockMvc.perform(post("/workshops/trainerAssignment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString));
         // when
-        this.mockMvc.perform(post("/workshopsLayout/trainerAssignment")
+        this.mockMvc.perform(post("/workshops/trainerAssignment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isBadRequest());

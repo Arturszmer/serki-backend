@@ -62,7 +62,7 @@ public class Workshops  {
     }
 
     public List<SubCathegory> getWorkshopsCategories() {
-        return Collections.unmodifiableList(workshopsCategories);
+        return workshopsCategories;
     }
 
     public void setWorkshopsCategories(List<SubCathegory> workshopsCategories) {
