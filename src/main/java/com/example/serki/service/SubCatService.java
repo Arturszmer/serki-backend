@@ -6,12 +6,14 @@ import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.Exceptions.NameAlreadyExistException;
 import com.example.serki.Exceptions.WorkshopsNotExistException;
 import com.example.serki.models.SubCathegory;
+import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.WorkshopsRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,12 +38,18 @@ public class SubCatService {
                 .collect(Collectors.toList());
     }
 
-    public List<TypeOfTrainingDTO> getTypeOfTrainingDTOS(String subCatName) {
-        Optional<SubCatDTO> specificTypeOfTraining = workshopsSubCathegoriesList()
-                .stream()
-                .filter(f -> f.getName().equals(subCatName))
-                .findFirst();
-        return specificTypeOfTraining.get().getTypeOfTrainings();
+    public List<TypeOfTrainingDTO> getTypeOfTrainingDTOS(String subCatName, String workshopName) {
+        List<TypeOfTraining> typeOfTrainingList = workshopsRepo.findByName(workshopName)
+                .map(Workshops::getWorkshopsCategories)
+                .flatMap(subCathegories -> subCathegories.stream()
+                        .filter(f -> f.getName().equals(subCatName))
+                        .findFirst())
+                .map(SubCathegory::getTypeOfTrainings)
+                .orElse(Collections.emptyList());
+        return typeOfTrainingList.stream()
+                .map(mapper::typeOfTrainingToDTO)
+                .toList();
+
     }
 
     public SubCatDTO addWorkshopSubCat(SubCatDTO subCatDTO, String workshopName){

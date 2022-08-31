@@ -54,13 +54,13 @@ public class WorkshopsController {
 
 
 
-    @GetMapping("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings")
+    @GetMapping("/workshop/{workshopName}/SubCat/{subCatName}/typesOfTrainings")
     @ResponseBody
-    public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName){
-        return subCatService.getTypeOfTrainingDTOS(subCatName);
+    public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName, @PathVariable String workshopName){
+        return subCatService.getTypeOfTrainingDTOS(subCatName, workshopName);
     }
 
-    @PostMapping("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings")
+    @PostMapping("/workshop/{workshopName}/SubCat/{subCatName}/typesOfTrainings")
     public TypeOfTrainingDTO createTypeOfTraining(@RequestBody TypeOfTrainingDTO typeOfTrainingDTO,
                                                   @PathVariable String subCatName)
             throws NameAlreadyExistException, SubCatNotExist {
