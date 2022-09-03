@@ -37,7 +37,7 @@ public class DBprod implements CommandLineRunner {
         Workshops it = new Workshops("IT", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/programming%20evolution.jpg?itok=WTj9-yNz");
         Workshops marketing = new Workshops("MARKETING", "It was popularised in the 1960s with the release of Letraset sheets", "https://digitalx.pl/wp-content/uploads/2020/12/content-marketing-manager.jpg");
         Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", Collections.emptyList());
-        Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "", Collections.emptyList());
+        Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "https://www.corerxpharma.com/wp-content/uploads/2021/07/CoreRx-Investment.jpg", Collections.emptyList());
 
         Workshops saveIt = workshopsRepo.save(it);
         Workshops saveMarketing = workshopsRepo.save(marketing);
