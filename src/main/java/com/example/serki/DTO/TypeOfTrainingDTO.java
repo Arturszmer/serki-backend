@@ -31,32 +31,16 @@ public class TypeOfTrainingDTO {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public double getDuration() {
         return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<TrainerDTO> getTrainers() {
         return Collections.unmodifiableList(trainers);
-    }
-
-    public void setTrainers(List<TrainerDTO> trainers) {
-        this.trainers = trainers;
     }
 
     @Override
