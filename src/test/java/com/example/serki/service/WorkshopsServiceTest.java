@@ -79,8 +79,8 @@ class WorkshopsServiceTest {
     @Test
     public void findByImageName(){
         //given
-        Workshops workshops1 = new Workshops("MARKETING", "blebleble", "image1", Collections.emptyList());
-        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
+        Workshops workshops1 = new Workshops("MARKETING", "blebleble", "image1", new ArrayList<>());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", new ArrayList<>());
 
         //when
         workshopsRepo.save(workshops1);
@@ -94,8 +94,8 @@ class WorkshopsServiceTest {
     @Test
     public void addSubCatToWorkshops(){
         //given
-        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", Collections.emptyList());
-        SubCathegory subCathegory = new SubCathegory("Java", Collections.emptyList());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", "image2", new ArrayList<>());
+        SubCathegory subCathegory = new SubCathegory("Java", new ArrayList<>());
          //when
         workshopsRepo.save(workshops2);
         subCatRepo.save(subCathegory);
