@@ -1,6 +1,7 @@
 package com.example.serki.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -16,15 +17,14 @@ public class Workshops  {
     private String imgUrl;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "fk_workshop")
     private List<SubCathegory> workshopsCategories;
 
     public Workshops() {
     }
 
     public Workshops(String name, String description, String imgUrl) {
-        this.name = name;
-        this.description = description;
-        this.imgUrl = imgUrl;
+        this(name, description, imgUrl, new ArrayList<>());
     }
 
     public Workshops(String name, String description, String imgUrl, List<SubCathegory> workshopsCategories) {
@@ -32,11 +32,6 @@ public class Workshops  {
         this.description = description;
         this.imgUrl = imgUrl;
         this.workshopsCategories = workshopsCategories;
-    }
-
-    public Workshops(String name, String description) {
-        this.name = name;
-        this.description = description;
     }
 
     public Workshops(String name, String description, List<SubCathegory> workshopsCathegories) {

@@ -13,7 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 @Component
 @Profile("prod")
@@ -35,19 +35,19 @@ public class DBprod implements CommandLineRunner {
 
         Workshops it = new Workshops("IT", "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "https://www.itprotoday.com/sites/itprotoday.com/files/styles/article_featured_retina/public/programming%20evolution.jpg?itok=WTj9-yNz");
         Workshops marketing = new Workshops("MARKETING", "It was popularised in the 1960s with the release of Letraset sheets", "https://digitalx.pl/wp-content/uploads/2020/12/content-marketing-manager.jpg");
-        Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", Collections.emptyList());
-        Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "", Collections.emptyList());
+        Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", new ArrayList<>());
+        Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "", new ArrayList<>());
 
         Workshops itWorkshops = workshopsRepo.save(it);
         Workshops saveMarketing = workshopsRepo.save(marketing);
         Workshops saveMedic = workshopsRepo.save(medic);
         Workshops saveSales = workshopsRepo.save(sales);
 
-        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
-        SubCathegory csharp = new SubCathegory("C#", Collections.emptyList());
-        SubCathegory js = new SubCathegory("JS", Collections.emptyList());
-        SubCathegory python = new SubCathegory("Python", Collections.emptyList());
-        SubCathegory googleAds = new SubCathegory("Google Ads", Collections.emptyList());
+        SubCathegory java = new SubCathegory("Java", new ArrayList<>());
+        SubCathegory csharp = new SubCathegory("C#", new ArrayList<>());
+        SubCathegory js = new SubCathegory("JS", new ArrayList<>());
+        SubCathegory python = new SubCathegory("Python", new ArrayList<>());
+        SubCathegory googleAds = new SubCathegory("Google Ads", new ArrayList<>());
 
         SubCathegory javaSubCathegory = subCatRepo.save(java);
         subCatRepo.save(csharp);
@@ -68,7 +68,5 @@ public class DBprod implements CommandLineRunner {
         typeOfTrainingsRepo.findAll()
                 .forEach(javaSubCathegory::assignTypeOfTraining);
         subCatRepo.save(javaSubCathegory);
-
-        workshopsRepo.save(itWorkshops);
     }
 }
