@@ -69,11 +69,7 @@ public class TypeOfTraining {
     }
 
     public List<Trainer> getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(List<Trainer> trainer) {
-        this.trainer = trainer;
+        return Collections.unmodifiableList(trainer);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class SubCathegory {
     }
 
     public List<TypeOfTraining> getTypeOfTrainings() {
-        return typeOfTrainings;
+        return Collections.unmodifiableList(typeOfTrainings);
     }
 
     public void setTypeOfTrainings(List<TypeOfTraining> typeOfTrainings) {
@@ -58,5 +58,9 @@ public class SubCathegory {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, typeOfTrainings);
+    }
+
+    public void assignTypeOfTraining(TypeOfTraining typeOfTraining){
+        this.typeOfTrainings.add(typeOfTraining);
     }
 }

@@ -50,7 +50,7 @@ public class DBprod implements CommandLineRunner {
         SubCathegory python = new SubCathegory("Python", Collections.emptyList());
         SubCathegory googleAds = new SubCathegory("Google Ads", Collections.emptyList());
 
-        SubCathegory saveJava = subCatRepo.save(java);
+        SubCathegory javaSubCathegory = subCatRepo.save(java);
         subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
@@ -66,9 +66,9 @@ public class DBprod implements CommandLineRunner {
         typeOfTrainingsRepo.save(advanceJava);
         typeOfTrainingsRepo.save(springJava);
 
-        List<TypeOfTraining> listTotJava = typeOfTrainingsRepo.findAll();
-        saveJava.setTypeOfTrainings(listTotJava);
-        subCatRepo.save(saveJava);
+        typeOfTrainingsRepo.findAll()
+                .forEach(javaSubCathegory::assignTypeOfTraining);
+        subCatRepo.save(javaSubCathegory);
 
         workshopsRepo.save(saveIt);
     }

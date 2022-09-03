@@ -2,7 +2,6 @@ package com.example.serki;
 
 import com.example.serki.DTO.TrainerDTO;
 import com.example.serki.DTO.TypeOfTrainingDTO;
-import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
@@ -26,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -107,17 +107,17 @@ class WorkshopsControllerTest {
     @Test
     public void showTypeOfTrainings() throws Exception{
         // given
-        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
+        Workshops workshops1 = new Workshops("IT", "blebleble", new ArrayList<>());
         workshopsRepo.save(workshops1);
         // and
-        SubCathegory java = new SubCathegory("Java", Collections.emptyList());
+        SubCathegory java = new SubCathegory("Java", new ArrayList<>());
         subCatRepo.save(java);
         List<SubCathegory> subCathegoryList = subCatRepo.findAll();
         // and
         TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
         typeOfTrainingsRepo.save(basicJava);
-        List<TypeOfTraining> typeOfTrainingList = typeOfTrainingsRepo.findAll();
-        java.setTypeOfTrainings(typeOfTrainingList);
+        typeOfTrainingsRepo.findAll()
+                .forEach(java::assignTypeOfTraining);
         workshops1.setWorkshopsCategories(subCathegoryList);
         // when
         String contentAsString = mockMvc.perform(get("/workshop/IT/subCat/Java/typesOfTrainings"))
