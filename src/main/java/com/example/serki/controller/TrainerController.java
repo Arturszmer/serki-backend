@@ -4,7 +4,7 @@ import com.example.serki.service.TrainerService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@CrossOrigin(origins = "", allowedHeaders = "")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/trainers")
 class TrainerController {
     private final TrainerService trainerService;
