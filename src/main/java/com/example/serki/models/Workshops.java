@@ -65,10 +65,6 @@ public class Workshops  {
         return Collections.unmodifiableList(workshopsCategories);
     }
 
-    public void setWorkshopsCategories(List<SubCathegory> workshopsCategories) {
-        this.workshopsCategories = workshopsCategories;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -97,5 +93,9 @@ public class Workshops  {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, imgUrl, workshopsCategories);
+    }
+
+    public void asssignSubCategory(SubCathegory subCathegory){
+        this.workshopsCategories.add(subCathegory);
     }
 }

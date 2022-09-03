@@ -72,10 +72,6 @@ public class TypeOfTraining {
         return Collections.unmodifiableList(trainer);
     }
 
-    public void setTrainer(List<Trainer> trainer) {
-        this.trainer = trainer;
-    }
-
     @Override
     public String toString() {
         return "TypeOfTraining{" +

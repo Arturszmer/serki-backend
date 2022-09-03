@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.List;
 
 @Component
 @Profile("prod")
@@ -39,7 +38,7 @@ public class DBprod implements CommandLineRunner {
         Workshops medic = new Workshops("MEDIC", "Lorem Ipsum passages, and more recently with desktop publishing", "https://wallpaper.dog/large/855191.jpg", Collections.emptyList());
         Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "", Collections.emptyList());
 
-        Workshops saveIt = workshopsRepo.save(it);
+        Workshops itWorkshops = workshopsRepo.save(it);
         Workshops saveMarketing = workshopsRepo.save(marketing);
         Workshops saveMedic = workshopsRepo.save(medic);
         Workshops saveSales = workshopsRepo.save(sales);
@@ -50,13 +49,13 @@ public class DBprod implements CommandLineRunner {
         SubCathegory python = new SubCathegory("Python", Collections.emptyList());
         SubCathegory googleAds = new SubCathegory("Google Ads", Collections.emptyList());
 
-        SubCathegory saveJava = subCatRepo.save(java);
+        SubCathegory javaSubCathegory = subCatRepo.save(java);
         subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
-        List<SubCathegory> listSubIt = subCatRepo.findAll();
-        saveIt.setWorkshopsCategories(listSubIt.stream().toList());
-        workshopsRepo.save(saveIt);
+        subCatRepo.findAll()
+                .forEach(itWorkshops::asssignSubCategory);
+        workshopsRepo.save(itWorkshops);
 
         TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
         TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum");
@@ -66,10 +65,10 @@ public class DBprod implements CommandLineRunner {
         typeOfTrainingsRepo.save(advanceJava);
         typeOfTrainingsRepo.save(springJava);
 
-        List<TypeOfTraining> listTotJava = typeOfTrainingsRepo.findAll();
-        saveJava.setTypeOfTrainings(listTotJava);
-        subCatRepo.save(saveJava);
+        typeOfTrainingsRepo.findAll()
+                .forEach(javaSubCathegory::assignTypeOfTraining);
+        subCatRepo.save(javaSubCathegory);
 
-        workshopsRepo.save(saveIt);
+        workshopsRepo.save(itWorkshops);
     }
 }

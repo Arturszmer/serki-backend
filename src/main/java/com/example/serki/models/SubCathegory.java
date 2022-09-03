@@ -59,4 +59,8 @@ public class SubCathegory {
     public int hashCode() {
         return Objects.hash(id, name, typeOfTrainings);
     }
+
+    public void assignTypeOfTraining(TypeOfTraining typeOfTraining){
+        this.typeOfTrainings.add(typeOfTraining);
+    }
 }
