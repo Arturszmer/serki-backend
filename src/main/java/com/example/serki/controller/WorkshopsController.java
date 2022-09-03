@@ -39,13 +39,13 @@ public class WorkshopsController {
         return created;
     }
 
-    @GetMapping("workshops/{workshopName}/SubCat")
+    @GetMapping("workshops/{workshopName}/subCat")
     @ResponseBody
     public List<SubCatDTO> getWorkshopsSubCat(@PathVariable String workshopName) {
         return workshopsService.getSubCatDTOS(workshopName);
     }
 
-    @PostMapping("/workshop/{workshopName}/SubCat")
+    @PostMapping("/workshop/{workshopName}/subCat")
     public SubCatDTO createSubWorkshops(@RequestBody SubCatDTO subCatDTO,
                                         @PathVariable String workshopName)
             throws NameAlreadyExistException, WorkshopsNotExistException {
@@ -54,13 +54,13 @@ public class WorkshopsController {
 
 
 
-    @GetMapping("/workshop/{workshopName}/SubCat/{subCatName}/typesOfTrainings")
+    @GetMapping("/workshop/{workshopName}/subCat/{subCatName}/typesOfTrainings")
     @ResponseBody
     public List<TypeOfTrainingDTO> getTypeOfSpecificTrainings(@PathVariable String subCatName, @PathVariable String workshopName){
         return subCatService.getTypeOfTrainingDTOS(subCatName, workshopName);
     }
 
-    @PostMapping("/workshop/{workshopName}/SubCat/{subCatName}/typesOfTrainings")
+    @PostMapping("/workshop/{workshopName}/subCat/{subCatName}/typesOfTrainings")
     public TypeOfTrainingDTO createTypeOfTraining(@RequestBody TypeOfTrainingDTO typeOfTrainingDTO,
                                                   @PathVariable String subCatName)
             throws NameAlreadyExistException, SubCatNotExist {
