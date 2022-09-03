@@ -112,13 +112,12 @@ class WorkshopsControllerTest {
         // and
         SubCathegory java = new SubCathegory("Java", new ArrayList<>());
         subCatRepo.save(java);
-        List<SubCathegory> subCathegoryList = subCatRepo.findAll();
+        subCatRepo.findAll().forEach(workshops1::asssignSubCategory);
         // and
         TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
         typeOfTrainingsRepo.save(basicJava);
         typeOfTrainingsRepo.findAll()
                 .forEach(java::assignTypeOfTraining);
-        workshops1.setWorkshopsCategories(subCathegoryList);
         // when
         String contentAsString = mockMvc.perform(get("/workshop/IT/subCat/Java/typesOfTrainings"))
                 .andReturn()

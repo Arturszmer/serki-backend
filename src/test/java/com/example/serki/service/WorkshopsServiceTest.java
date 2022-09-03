@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -50,22 +51,21 @@ class WorkshopsServiceTest {
     @Test
     public void showAllWorkshops(){
         //given
-        Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
-        Workshops workshops2 = new Workshops("MARKETING", "blebleble2", Collections.emptyList());
+        Workshops workshops1 = new Workshops("IT", "blebleble", new ArrayList<>());
 
         //when
         Workshops save1 = workshopsRepo.save(workshops1);
-        save1.setWorkshopsCategories(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
+        save1.asssignSubCategory(new SubCathegory("Java", new ArrayList<>()));
 
         //then
-        assertThat(save1.getWorkshopsCategories()).isEqualTo(Collections.singletonList(new SubCathegory("Java", Collections.emptyList())));
+        assertThat(save1.getWorkshopsCategories().get(0)).isEqualTo(new SubCathegory("Java", new ArrayList<>()));
     }
 
     @Test
     public void showSpecificWorkshopByName(){
         //given
-        Workshops workshops1 = new Workshops("MARKETING", "blebleble", Collections.emptyList());
-        Workshops workshops2 = new Workshops("IT", "blebleble2", Collections.emptyList());
+        Workshops workshops1 = new Workshops("MARKETING", "blebleble", new ArrayList<>());
+        Workshops workshops2 = new Workshops("IT", "blebleble2", new ArrayList<>());
 
         //when
         workshopsRepo.save(workshops1);
@@ -99,8 +99,7 @@ class WorkshopsServiceTest {
          //when
         workshopsRepo.save(workshops2);
         subCatRepo.save(subCathegory);
-        List<SubCathegory> listSubCat = subCatRepo.findAll();
-        workshops2.setWorkshopsCategories(listSubCat.stream().toList());
+        subCatRepo.findAll().forEach(workshops2::asssignSubCategory);
         //then
         Optional<Workshops> workshop = workshopsRepo.findByName("IT");
         assertThat(workshop.get()).isEqualTo(workshops2);
