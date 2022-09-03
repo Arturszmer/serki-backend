@@ -128,21 +128,4 @@ class WorkshopsControllerTest {
         // then
         assertThat(typeOfTrainingDTOS.get(0).getName()).isEqualTo("Basic");
     }
-
-//    @Test
-//    public void showTrainer2() throws Exception {
-//        // given
-//        Trainer trainer = new Trainer("Konstanty", "Java Master");
-//        trainerRepo.save(trainer);
-//
-//        // when
-//        String contentAsString = mockMvc.perform(get("/workshop/{workshopName}/SubCat/{SubCatName}/typesOfTrainings"))
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//        List<TrainerDTO> trainerDTO = Arrays.asList(objectMapper.readValue(contentAsString, TrainerDTO[].class));
-//
-//        // then
-//        assertThat(trainerDTO.get(0).getName()).isEqualTo("Konstanty");
-//    }
 }

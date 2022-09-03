@@ -22,7 +22,7 @@ public class WorkshopsDTO {
     public List<SubCatDTO> getList() {
         return Collections.unmodifiableList(list);
     }
-    
+
     public String getName() {
         return name;
       }
