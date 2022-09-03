@@ -1,6 +1,7 @@
 package com.example.serki;
 
 import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.DTO.WorkshopsDTO;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
@@ -119,13 +120,13 @@ class WorkshopsControllerTest {
         java.setTypeOfTrainings(typeOfTrainingList);
         workshops1.setWorkshopsCategories(subCathegoryList);
         // when
-        String contentAsString = mockMvc.perform(get("/workshop/IT/SubCat/{SubCatName}/typesOfTrainings"))
+        String contentAsString = mockMvc.perform(get("/workshop/IT/subCat/Java/typesOfTrainings"))
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        List<WorkshopsDTO> workshopsDTOS = Arrays.asList(objectMapper.readValue(contentAsString, WorkshopsDTO[].class));
+        List<TypeOfTrainingDTO> typeOfTrainingDTOS = Arrays.asList(objectMapper.readValue(contentAsString, TypeOfTrainingDTO[].class));
         // then
-        assertThat(workshopsDTOS.get(0).getName()).isEqualTo("IT");
+        assertThat(typeOfTrainingDTOS.get(0).getName()).isEqualTo("Basic");
     }
 
 //    @Test

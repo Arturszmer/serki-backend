@@ -1,14 +1,17 @@
 package com.example.serki.DTO;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Collections;
 import java.util.List;
 
 public class WorkshopsDTO {
-    private String name;
-    private String description;
-    private String imgUrl;
-    private List<SubCatDTO> list;
+    private final String name;
+    private final String description;
+    private final String imgUrl;
+    private final List<SubCatDTO> list;
 
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public WorkshopsDTO(String name, String description, String imgUrl, List<SubCatDTO> list) {
         this.name = name;
         this.description = description;
@@ -19,29 +22,10 @@ public class WorkshopsDTO {
     public List<SubCatDTO> getList() {
         return Collections.unmodifiableList(list);
     }
-
-    public void setList(List<SubCatDTO> list) {
-        this.list = list;
-    }
-
-    public WorkshopsDTO(String name, String description, String imgUrl) {
-        this.name = name;
-        this.description = description;
-        this.imgUrl = imgUrl;
-    }
-
-    public WorkshopsDTO(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
+    
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+      }
 
     public String getDescription() {
         return description;
