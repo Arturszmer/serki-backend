@@ -1,30 +1,33 @@
 package com.example.serki.service;
 
-import com.example.serki.models.SubCathegory;
+import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
-import com.example.serki.repository.SubCatRepo;
+import com.example.serki.repository.TrainerRepo;
+import com.example.serki.repository.TrainerUnavailableDaysRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 @SpringBootTest
 @Transactional
-class TypeOfTrainingServiceTest {
-
+public class TypeOfTrainingServiceTest {
     @Autowired
     TypeOfTrainingsRepo typeOfTrainingsRepo;
-
     @Autowired
-    SubCatRepo subCatRepo;
+    TrainerRepo trainerRepo;
+    @Autowired
+    TrainerUnavailableDaysRepo trainerSchedulerepo;
+    @Autowired
+    TypeOfTrainingService typeOfTrainingService;
+    @Autowired
+    TrainerService trainerService;
 
     @BeforeEach
     public void setup(){
@@ -32,31 +35,26 @@ class TypeOfTrainingServiceTest {
     }
 
     @Test
-    public void addNewTypeOfTraining(){
+    public void showUnavailableDaysTrainer(){
         //given
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
-
-        //when
+        TypeOfTraining basicJava = getTypeOfTraining();
+        Trainer trainer = getTrainer();
+        trainerRepo.save(trainer);
+        basicJava.assign(trainer);
         typeOfTrainingsRepo.save(basicJava);
-
+        //when
+        typeOfTrainingService.assignUnavailableDays(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
+        List<LocalDate> unavailableDays = trainerService.getUnavailableDays(trainer.getName());
         //then
-        List<TypeOfTraining> list1 = typeOfTrainingsRepo.findAll();
-        assertThat(list1.size()).isEqualTo(1);
+        assertThat(unavailableDays.get(1)).isEqualTo("2022-10-01");
+
     }
 
-    @Test
-    public void addNewTypeOfTrainingToSubCat(){
-        //given
-        SubCathegory subCathegory = new SubCathegory("Java", Collections.emptyList());
-        SubCathegory subCatJava = subCatRepo.save(subCathegory);
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
-        typeOfTrainingsRepo.save(basicJava);
-        List<TypeOfTraining> typeOfTrainings = typeOfTrainingsRepo.findAll();
+    private static Trainer getTrainer() {
+        return new Trainer("Andrzej Nowak", "Lorem");
+    }
 
-        //when
-        subCatJava.setTypeOfTrainings(typeOfTrainings);
-
-        //then
-        assertThat(basicJava.equals(subCatJava.getTypeOfTrainings()));
+    private static TypeOfTraining getTypeOfTraining() {
+        return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release");
     }
 }
