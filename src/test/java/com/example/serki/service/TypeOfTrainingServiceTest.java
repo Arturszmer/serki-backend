@@ -1,9 +1,12 @@
 package com.example.serki.service;
 
+import com.example.serki.DTO.TrainingPeriodDTO;
 import com.example.serki.models.Trainer;
+import com.example.serki.models.TrainingPeriod;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TrainerUnavailableDaysRepo;
+import com.example.serki.repository.TrainingPeriodRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +31,8 @@ public class TypeOfTrainingServiceTest {
     TypeOfTrainingService typeOfTrainingService;
     @Autowired
     TrainerService trainerService;
+    @Autowired
+    TrainingPeriodRepo trainingPeriodRepo;
 
     @BeforeEach
     public void setup(){
@@ -53,7 +58,10 @@ public class TypeOfTrainingServiceTest {
     @Test
     public void date(){
         //given
-        System.out.println("ddd" + LocalDate.now());
+        TrainingPeriod trainingPeriod = new TrainingPeriod(LocalDate.parse("2022-09-20"), LocalDate.parse("2022-09-22"));
+        Trainer trainer = getTrainer();
+        trainerRepo.save(trainer);
+        trainerService.assignUnavailableDays(trainingPeriod, trainer.getName());
 
     }
 
