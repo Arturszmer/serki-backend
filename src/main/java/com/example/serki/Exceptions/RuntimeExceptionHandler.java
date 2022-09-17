@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class RuntimeExceptionHandler{
+public class RuntimeExceptionHandler {
 
     @ExceptionHandler(value = {WorkshopsNotExistException.class})
-    public ResponseEntity<ErrorMessage> handleNotExistException(WorkshopsNotExistException ex){
+    public ResponseEntity<ErrorMessage> handleNotExistException(WorkshopsNotExistException ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
         errorMessage.setMessage(ex.getMessage());
@@ -17,7 +17,7 @@ public class RuntimeExceptionHandler{
     }
 
     @ExceptionHandler(value = {NameAlreadyExistException.class})
-    public ResponseEntity<ErrorMessage> handleNameExistException(NameAlreadyExistException ex){
+    public ResponseEntity<ErrorMessage> handleNameExistException(NameAlreadyExistException ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
         errorMessage.setMessage(ex.getMessage());
@@ -25,7 +25,7 @@ public class RuntimeExceptionHandler{
     }
 
     @ExceptionHandler(value = {SubCatNotExist.class})
-    public ResponseEntity<ErrorMessage> handleNameExistException(SubCatNotExist ex){
+    public ResponseEntity<ErrorMessage> handleNameExistException(SubCatNotExist ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
         errorMessage.setMessage(ex.getMessage());
@@ -33,7 +33,7 @@ public class RuntimeExceptionHandler{
     }
 
     @ExceptionHandler(value = {TrainerIsAssigned.class})
-    public ResponseEntity<ErrorMessage> handleTrainerIsAssigned(TrainerIsAssigned ex){
+    public ResponseEntity<ErrorMessage> handleTrainerIsAssigned(TrainerIsAssigned ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.BAD_REQUEST.value());
         errorMessage.setMessage(ex.getMessage());
@@ -41,7 +41,7 @@ public class RuntimeExceptionHandler{
     }
 
     @ExceptionHandler(value = {TrainerIsNotExist.class})
-    public ResponseEntity<ErrorMessage> handleTrainerIsNotExist(TrainerIsNotExist ex){
+    public ResponseEntity<ErrorMessage> handleTrainerIsNotExist(TrainerIsNotExist ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
         errorMessage.setMessage(ex.getMessage());
@@ -49,12 +49,18 @@ public class RuntimeExceptionHandler{
     }
 
     @ExceptionHandler(value = {TypeOfTrainingNotExist.class})
-    public ResponseEntity<ErrorMessage> handleTypeOfTrainingNotExist(TypeOfTrainingNotExist ex){
+    public ResponseEntity<ErrorMessage> handleTypeOfTrainingNotExist(TypeOfTrainingNotExist ex) {
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setStatusCode(HttpStatus.NOT_FOUND.value());
         errorMessage.setMessage(ex.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-
+    @ExceptionHandler(value = {TrainingPeriodExist.class})
+    public ResponseEntity<ErrorMessage> handleTrainingPeriodExist(TrainingPeriodExist ex) {
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
+        errorMessage.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_ACCEPTABLE);
+    }
 }

@@ -1,11 +1,9 @@
 package com.example.serki.DTO;
 
-import com.example.serki.models.Trainer;
-import com.example.serki.models.TypeOfTraining;
-import com.example.serki.models.Workshops;
-import com.example.serki.models.SubCathegory;
+import com.example.serki.models.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +53,11 @@ public class Mapper {
                 .stream()
                 .map(this::trainerToDTO)
                 .collect(Collectors.toList());
-        return new TypeOfTrainingDTO(name, price, duration, description, trainers);
+        List<TrainingPeriodDTO> trainingPeriod = typeOfTraining.getTrainingPeriod()
+                .stream()
+                .map(this::trainingPeriodToDTO)
+                .toList();
+        return new TypeOfTrainingDTO(name, price, duration, description, trainers, trainingPeriod);
     }
     public TypeOfTraining typeOfTrainingDTOtoTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO){
         return new TypeOfTraining(typeOfTrainingDTO.getName(),
@@ -65,6 +67,10 @@ public class Mapper {
                 typeOfTrainingDTO.getTrainers()
                         .stream()
                         .map(this::trainerDTOtoTrainer)
+                        .toList(),
+                typeOfTrainingDTO.getTrainingPeriodDTOS()
+                        .stream()
+                        .map(this::trainingPeriodDTOtoTrainingPeriod)
                         .toList());
     }
 
@@ -76,6 +82,17 @@ public class Mapper {
 
     public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
         return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
+    }
+
+    public TrainingPeriodDTO trainingPeriodToDTO(TrainingPeriod trainingPeriod){
+        LocalDate startTraining = trainingPeriod.getStartTraining();
+        LocalDate endTraining = trainingPeriod.getEndTraining();
+        return new TrainingPeriodDTO(startTraining, endTraining);
+    }
+
+    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod (TrainingPeriodDTO trainingPeriodDTO){
+        return new TrainingPeriod(trainingPeriodDTO.getStartTraining(),
+                (trainingPeriodDTO.getEndTraining()));
     }
 }
 

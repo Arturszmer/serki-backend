@@ -3,14 +3,8 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.*;
 import com.example.serki.Exceptions.*;
-import com.example.serki.models.SubCathegory;
-import com.example.serki.models.Trainer;
-import com.example.serki.models.TrainerUnavailableDays;
-import com.example.serki.models.TypeOfTraining;
-import com.example.serki.repository.SubCatRepo;
-import com.example.serki.repository.TrainerRepo;
-import com.example.serki.repository.TrainerUnavailableDaysRepo;
-import com.example.serki.repository.TypeOfTrainingsRepo;
+import com.example.serki.models.*;
+import com.example.serki.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,17 +20,17 @@ public class TypeOfTrainingService {
     private final Mapper mapper;
     private final TypeOfTrainingsRepo typeOfTrainingsRepo;
     private final SubCatRepo subCatRepo;
-    private final TrainerUnavailableDaysRepo trainerUnavailableDaysRepo;
+    private final TrainingPeriodRepo trainingPeriodRepo;
 
     public TypeOfTrainingService(TrainerRepo trainerRepo,
                                  Mapper mapper,
                                  TypeOfTrainingsRepo typeOfTrainingsRepo,
-                                 SubCatRepo subCatRepo, TrainerUnavailableDaysRepo trainerUnavailableDaysRepo) {
+                                 SubCatRepo subCatRepo, TrainingPeriodRepo trainingPeriodRepo) {
         this.trainerRepo = trainerRepo;
         this.mapper = mapper;
         this.typeOfTrainingsRepo = typeOfTrainingsRepo;
         this.subCatRepo = subCatRepo;
-        this.trainerUnavailableDaysRepo = trainerUnavailableDaysRepo;
+        this.trainingPeriodRepo = trainingPeriodRepo;
     }
 
     public List<TypeOfTrainingDTO> typeOfTrainings() {
@@ -68,13 +62,13 @@ public class TypeOfTrainingService {
         TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainerAssignmentDTO.getTypeOfTrainingName())
                 .orElseThrow(TypeOfTrainingNotExist::new);
 
-        isTrainerAsigned(trainerAssignmentDTO, typeOfTraining);
+        isTrainerAssigned(trainerAssignmentDTO, typeOfTraining);
         assignTrainer(trainer, typeOfTraining);
         typeOfTrainingsRepo.save(typeOfTraining);
     }
 
     private void assignTrainer(Trainer trainer, TypeOfTraining typeOfTraining) {
-        typeOfTraining.assign(trainer);
+        typeOfTraining.assignTrainer(trainer);
     }
 
     private void isNameOfTrainingExist(TypeOfTrainingDTO typeOfTrainingDTO, SubCathegory subCathegory) {
@@ -85,7 +79,7 @@ public class TypeOfTrainingService {
         }
     }
 
-    private void isTrainerAsigned(TrainerAssignmentDTO trainerAssignmentDTO, TypeOfTraining typeOfTraining) {
+    private void isTrainerAssigned(TrainerAssignmentDTO trainerAssignmentDTO, TypeOfTraining typeOfTraining) {
         if (typeOfTraining.getTrainer()
                 .stream()
                 .anyMatch(trainerName -> trainerName.getName()
@@ -108,6 +102,26 @@ public class TypeOfTrainingService {
             }
         }
         trainerRepo.save(trainer);
+    }
+
+    public void addTrainingPeriod(TrainingPeriodDTO trainingPeriodDTO,
+                                  String trainingName) {
+
+            TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainingName)
+                    .orElseThrow(TypeOfTrainingNotExist::new);
+
+        isPeriodExist(trainingPeriodDTO, typeOfTraining);
+        typeOfTraining.assignPeriod(mapper.trainingPeriodDTOtoTrainingPeriod(trainingPeriodDTO));
+            typeOfTrainingsRepo.save(typeOfTraining);
+    }
+
+    private void isPeriodExist(TrainingPeriodDTO trainingPeriodDTO, TypeOfTraining typeOfTraining) {
+        if (typeOfTraining.getTrainingPeriod()
+                .stream()
+                .anyMatch(trainingPeriod -> trainingPeriod.getStartTraining()
+                        .equals(trainingPeriodDTO.getStartTraining()))){
+            throw new TrainingPeriodExist();
+        }
     }
 }
 

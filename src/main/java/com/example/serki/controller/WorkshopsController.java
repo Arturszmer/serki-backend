@@ -35,8 +35,7 @@ public class WorkshopsController {
     @PostMapping("/workshops")
     @ResponseBody
     public WorkshopsDTO createWorkshop(@RequestBody WorkshopsDTO workshopsDTO){
-        WorkshopsDTO created = workshopsService.addWorkshop(workshopsDTO);
-        return created;
+        return workshopsService.addWorkshop(workshopsDTO);
     }
 
     @GetMapping("workshops/{workshopName}/subCat")
@@ -69,6 +68,13 @@ public class WorkshopsController {
     @PostMapping("workshops/trainerAssignment")
     public ResponseEntity<Void> addTrainerToTraining(@RequestBody TrainerAssignmentDTO trainerAssignmentDTO) {
         typeOfTrainingService.addTrainerToTraining(trainerAssignmentDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("workshops/trainingPeriodAssignment/{trainingName}")
+    public ResponseEntity<Void> addTrainingPeriod(@RequestBody TrainingPeriodDTO trainingPeriodDTO,
+                                                  @PathVariable String trainingName){
+        typeOfTrainingService.addTrainingPeriod(trainingPeriodDTO, trainingName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

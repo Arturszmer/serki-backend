@@ -40,13 +40,20 @@ public class TypeOfTrainingServiceTest {
         TypeOfTraining basicJava = getTypeOfTraining();
         Trainer trainer = getTrainer();
         trainerRepo.save(trainer);
-        basicJava.assign(trainer);
+        basicJava.assignTrainer(trainer);
         typeOfTrainingsRepo.save(basicJava);
         //when
         typeOfTrainingService.assignUnavailableDays(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
         List<LocalDate> unavailableDays = trainerService.getUnavailableDays(trainer.getName());
         //then
         assertThat(unavailableDays.get(1)).isEqualTo("2022-10-01");
+
+    }
+
+    @Test
+    public void date(){
+        //given
+        System.out.println("ddd" + LocalDate.now());
 
     }
 

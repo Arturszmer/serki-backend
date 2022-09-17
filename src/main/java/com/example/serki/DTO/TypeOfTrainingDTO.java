@@ -10,13 +10,21 @@ public class TypeOfTrainingDTO {
     private double duration;
     private String description;
     private List<TrainerDTO> trainers;
+    private List<TrainingPeriodDTO> trainingPeriodDTOS;
 
-    public TypeOfTrainingDTO(String name, double price, double duration, String description, List<TrainerDTO> trainers) {
+    public TypeOfTrainingDTO(String name,
+                             double price,
+                             double duration,
+                             String description,
+                             List<TrainerDTO> trainers,
+                             List<TrainingPeriodDTO> trainingPeriodDTOS) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
         this.trainers = trainers;
+        this.trainingPeriodDTOS = trainingPeriodDTOS;
+
     }
 
     public String getName() {
@@ -41,6 +49,10 @@ public class TypeOfTrainingDTO {
 
     public List<TrainerDTO> getTrainers() {
         return Collections.unmodifiableList(trainers);
+    }
+
+    public List<TrainingPeriodDTO> getTrainingPeriodDTOS() {
+        return trainingPeriodDTOS;
     }
 
     @Override
