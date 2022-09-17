@@ -1,6 +1,5 @@
 package com.example.serki.service;
 
-
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TrainerDTO;
 import com.example.serki.models.Trainer;
@@ -41,7 +40,6 @@ public class TrainerService {
         List<LocalDate> unavailableDays = new ArrayList<>();
         Trainer trainer = trainerRepo.findByName(name).orElseThrow();
         trainer.getUnavailableDays().forEach(days -> unavailableDays.add(days.getUnavailableDay()));
-        System.out.println("xxxx " + unavailableDays);
         return unavailableDays;
     }
 }

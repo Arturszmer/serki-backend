@@ -1,13 +1,11 @@
 package com.example.serki.repo;
 
 import com.example.serki.models.SubCathegory;
-import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TrainerUnavailableDaysRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,11 +29,6 @@ class TypeOfTrainingRepoTest {
     TrainerUnavailableDaysRepo trainerSchedulerepo;
     @Autowired
     SubCatRepo subCatRepo;
-
-    @BeforeEach
-    public void setup(){
-        typeOfTrainingsRepo.deleteAll();
-    }
 
     @Test
     public void addNewTypeOfTraining(){
@@ -66,23 +59,7 @@ class TypeOfTrainingRepoTest {
         assertThat(basicJava.equals(subCatJava.getTypeOfTrainings()));
     }
 
-    @Test
-    public void transformationFromDurationToDates(){
-        //given
-        TypeOfTraining basicJava = getTypeOfTraining();
-        Trainer trainer = getTrainer();
-        basicJava.assign(trainer);
-        //when
-
-
-        //then
-    }
-
-    private static Trainer getTrainer() {
-        return new Trainer("Andrzej Nowak", "Lorem");
-    }
-
-    private static TypeOfTraining getTypeOfTraining() {
+    private TypeOfTraining getTypeOfTraining() {
         return new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
     }
 }

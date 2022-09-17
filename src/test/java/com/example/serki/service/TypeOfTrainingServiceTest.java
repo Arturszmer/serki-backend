@@ -50,11 +50,11 @@ public class TypeOfTrainingServiceTest {
 
     }
 
-    private static Trainer getTrainer() {
+    private Trainer getTrainer() {
         return new Trainer("Andrzej Nowak", "Lorem");
     }
 
-    private static TypeOfTraining getTypeOfTraining() {
+    private TypeOfTraining getTypeOfTraining() {
         return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release");
     }
 }
