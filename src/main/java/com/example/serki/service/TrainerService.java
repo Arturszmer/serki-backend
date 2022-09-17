@@ -1,15 +1,15 @@
 package com.example.serki.service;
 
-
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TrainerDTO;
 import com.example.serki.models.Trainer;
 import com.example.serki.repository.TrainerRepo;
-import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,5 +34,12 @@ public class TrainerService {
         return trainerRepo.findAll().stream()
                 .map(mapper::trainerToDTO)
                 .toList();
+    }
+
+    public List<LocalDate> getUnavailableDays(String name) {
+        List<LocalDate> unavailableDays = new ArrayList<>();
+        Trainer trainer = trainerRepo.findByName(name).orElseThrow();
+        trainer.getUnavailableDays().forEach(days -> unavailableDays.add(days.getUnavailableDay()));
+        return unavailableDays;
     }
 }

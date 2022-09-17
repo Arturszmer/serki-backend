@@ -5,13 +5,16 @@ import com.example.serki.DTO.*;
 import com.example.serki.Exceptions.*;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.Trainer;
+import com.example.serki.models.TrainerUnavailableDays;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TrainerRepo;
+import com.example.serki.repository.TrainerUnavailableDaysRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,15 +26,17 @@ public class TypeOfTrainingService {
     private final Mapper mapper;
     private final TypeOfTrainingsRepo typeOfTrainingsRepo;
     private final SubCatRepo subCatRepo;
+    private final TrainerUnavailableDaysRepo trainerUnavailableDaysRepo;
 
     public TypeOfTrainingService(TrainerRepo trainerRepo,
                                  Mapper mapper,
                                  TypeOfTrainingsRepo typeOfTrainingsRepo,
-                                 SubCatRepo subCatRepo) {
+                                 SubCatRepo subCatRepo, TrainerUnavailableDaysRepo trainerUnavailableDaysRepo) {
         this.trainerRepo = trainerRepo;
         this.mapper = mapper;
         this.typeOfTrainingsRepo = typeOfTrainingsRepo;
         this.subCatRepo = subCatRepo;
+        this.trainerUnavailableDaysRepo = trainerUnavailableDaysRepo;
     }
 
     public List<TypeOfTrainingDTO> typeOfTrainings() {
@@ -87,6 +92,22 @@ public class TypeOfTrainingService {
                         .equals(trainerAssignmentDTO.getTrainerName()))){
             throw new TrainerIsAssigned();
         }
+    }
+
+    public void assignUnavailableDays(LocalDate trainingStart, double duration, String trainerName) {
+        Trainer trainer = trainerRepo.findByName(trainerName).orElseThrow();
+        int traingDays = duration % 8 > 0 ? (int) duration / 8 + 1: (int) duration / 8;
+        for (int i = 1; i <= traingDays; i++){
+            TrainerUnavailableDays trainerUnavailableDays = new TrainerUnavailableDays();
+            if (i > 1){
+                trainerUnavailableDays.setUnavailableDay(trainingStart.plusDays(i - 1));
+                trainer.assignUnavailableDays(trainerUnavailableDays);
+            } else {
+                trainerUnavailableDays.setUnavailableDay(trainingStart);
+                trainer.assignUnavailableDays(trainerUnavailableDays);
+            }
+        }
+        trainerRepo.save(trainer);
     }
 }
 
