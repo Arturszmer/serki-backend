@@ -30,6 +30,9 @@ public class TypeOfTrainingDTO {
 
     }
 
+    public TypeOfTrainingDTO() {
+    }
+
     public String getName() {
         return name;
     }
@@ -74,5 +77,8 @@ public class TypeOfTrainingDTO {
                 ", duration=" + duration +
                 ", description='" + description + '\'' +
                 '}';
+    }
+    public void assignFrontId(String typeOfTrainingName, String trainingName){
+        this.frontId = typeOfTrainingName + trainingName;
     }
 }

@@ -46,9 +46,10 @@ public class TypeOfTrainingService {
                 .orElseThrow(SubCatNotExist::new);
 
         isNameOfTrainingExist(typeOfTrainingDTO, subCathegory);
+        typeOfTrainingDTO.assignFrontId(typeOfTrainingDTO.getName(), subCatName);
         TypeOfTraining typeOfTraining = mapper.typeOfTrainingDTOtoTypeOfTraining(typeOfTrainingDTO);
         TypeOfTraining saveToRepo = typeOfTrainingsRepo.save(typeOfTraining);
-        subCathegory.getTypeOfTrainings().add(saveToRepo);
+        subCathegory.assignTypeOfTraining(saveToRepo);
         subCatRepo.save(subCathegory);
 
         return mapper.typeOfTrainingToDTO(saveToRepo);
