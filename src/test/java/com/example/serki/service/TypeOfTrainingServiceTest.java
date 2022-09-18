@@ -1,6 +1,5 @@
 package com.example.serki.service;
 
-import com.example.serki.DTO.TrainingPeriodDTO;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TrainingPeriod;
 import com.example.serki.models.TypeOfTraining;
@@ -48,7 +47,7 @@ public class TypeOfTrainingServiceTest {
         basicJava.assignTrainer(trainer);
         typeOfTrainingsRepo.save(basicJava);
         //when
-        typeOfTrainingService.assignUnavailableDays(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
+        typeOfTrainingService.assignUnavailableDaysByDuration(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
         List<LocalDate> unavailableDays = trainerService.getUnavailableDays(trainer.getName());
         //then
         assertThat(unavailableDays.get(1)).isEqualTo("2022-10-01");
@@ -61,7 +60,7 @@ public class TypeOfTrainingServiceTest {
         TrainingPeriod trainingPeriod = new TrainingPeriod(LocalDate.parse("2022-09-20"), LocalDate.parse("2022-09-22"));
         Trainer trainer = getTrainer();
         trainerRepo.save(trainer);
-        trainerService.assignUnavailableDays(trainingPeriod, trainer.getName());
+//        trainerService.assignUnavailableDays(trainingPeriod, trainer.getName());
 
     }
 
@@ -70,6 +69,6 @@ public class TypeOfTrainingServiceTest {
     }
 
     private TypeOfTraining getTypeOfTraining() {
-        return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release");
+        return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release", "JavaBasic");
     }
 }

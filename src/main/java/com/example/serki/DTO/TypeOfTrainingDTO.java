@@ -9,6 +9,7 @@ public class TypeOfTrainingDTO {
     private double price;
     private double duration;
     private String description;
+    private String frontId;
     private List<TrainerDTO> trainers;
     private List<TrainingPeriodDTO> trainingPeriodDTOS;
 
@@ -16,12 +17,14 @@ public class TypeOfTrainingDTO {
                              double price,
                              double duration,
                              String description,
+                             String frontId,
                              List<TrainerDTO> trainers,
                              List<TrainingPeriodDTO> trainingPeriodDTOS) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainers = trainers;
         this.trainingPeriodDTOS = trainingPeriodDTOS;
 
@@ -45,6 +48,14 @@ public class TypeOfTrainingDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getFrontId() {
+        return frontId;
+    }
+
+    public void setFrontId(String frontId) {
+        this.frontId = frontId;
     }
 
     public List<TrainerDTO> getTrainers() {

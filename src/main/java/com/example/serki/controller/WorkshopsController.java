@@ -71,10 +71,17 @@ public class WorkshopsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("workshops/trainingPeriodAssignment/{trainingName}")
+    @PostMapping("workshops/trainingPeriodAssignment/{trainingId}")
     public ResponseEntity<Void> addTrainingPeriod(@RequestBody TrainingPeriodDTO trainingPeriodDTO,
-                                                  @PathVariable String trainingName){
-        typeOfTrainingService.addTrainingPeriod(trainingPeriodDTO, trainingName);
+                                                  @PathVariable String trainingId){
+        typeOfTrainingService.addTrainingPeriod(trainingPeriodDTO, trainingId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("workshops/{workshopName}/subCat/{subCatName}/typesOfTraining/{trainingId}/assignPeriodAndTrainer")
+    public ResponseEntity<Void> assignPeriodAndTrainerToTraining(@RequestBody PeriodAndTrainerAssignDTO periodAndTrainerAssignDTO,
+                                                                  @PathVariable String trainingId){
+        typeOfTrainingService.addPeriodAndTrainer(periodAndTrainerAssignDTO, trainingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

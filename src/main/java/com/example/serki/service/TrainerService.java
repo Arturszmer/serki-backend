@@ -2,9 +2,10 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.TrainingPeriodDTO;
 import com.example.serki.Exceptions.TrainerIsNotExist;
 import com.example.serki.models.Trainer;
-import com.example.serki.models.TrainingPeriod;
+import com.example.serki.models.TrainerUnavailableDays;
 import com.example.serki.repository.TrainerRepo;
 import org.springframework.stereotype.Service;
 
@@ -41,36 +42,30 @@ public class TrainerService {
 
     public List<LocalDate> getUnavailableDays(String name) {
         List<LocalDate> unavailableDays = new ArrayList<>();
-        Trainer trainer = trainerRepo.findByName(name).orElseThrow();
+        Trainer trainer = trainerRepo.findByName(name).orElseThrow(TrainerIsNotExist::new);
+//        if (trainer.getUnavailableDays().isEmpty()){
+//
+//        }
         trainer.getUnavailableDays().forEach(days -> unavailableDays.add(days.getUnavailableDay()));
         return unavailableDays;
     }
 
-    public void assignUnavailableDays(TrainingPeriod trainingPeriod, String trainerName) {
+    public void assignUnavailableDays(TrainingPeriodDTO trainingPeriodDTO, String trainerName) {
 
         Trainer trainer = trainerRepo.findByName(trainerName).orElseThrow(TrainerIsNotExist::new);
-        LocalDate startTraining = trainingPeriod.getStartTraining();
-        LocalDate endTraining = trainingPeriod.getEndTraining();
+        LocalDate startTraining = trainingPeriodDTO.getStartTraining();
+        LocalDate endTraining = trainingPeriodDTO.getEndTraining();
         long daysBetween = ChronoUnit.DAYS.between(startTraining, endTraining);
-        System.out.println("XYX " + daysBetween);
-        for (int i = 0; i <= daysBetween + 1; i++){
-
+        for (int i = 0; i <= daysBetween; i++){
+            TrainerUnavailableDays trainerUnavailableDays = new TrainerUnavailableDays();
+            if (i > 0){
+                trainerUnavailableDays.setUnavailableDay(startTraining.plusDays(i));
+                trainer.assignUnavailableDays(trainerUnavailableDays);
+            } else {
+                trainerUnavailableDays.setUnavailableDay(startTraining);
+                trainer.assignUnavailableDays(trainerUnavailableDays);
+            }
         }
-
+        trainerRepo.save(trainer);
     }
-//    public void assignUnavailableDays(LocalDate trainingStart, double duration, String trainerName) {
-//        Trainer trainer = trainerRepo.findByName(trainerName).orElseThrow();
-//        int traingDays = duration % 8 > 0 ? (int) duration / 8 + 1: (int) duration / 8;
-//        for (int i = 1; i <= traingDays; i++){
-//            TrainerUnavailableDays trainerUnavailableDays = new TrainerUnavailableDays();
-//            if (i > 1){
-//                trainerUnavailableDays.setUnavailableDay(trainingStart.plusDays(i - 1));
-//                trainer.assignUnavailableDays(trainerUnavailableDays);
-//            } else {
-//                trainerUnavailableDays.setUnavailableDay(trainingStart);
-//                trainer.assignUnavailableDays(trainerUnavailableDays);
-//            }
-//        }
-//        trainerRepo.save(trainer);
-//    }
 }

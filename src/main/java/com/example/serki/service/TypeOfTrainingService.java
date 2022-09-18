@@ -20,17 +20,17 @@ public class TypeOfTrainingService {
     private final Mapper mapper;
     private final TypeOfTrainingsRepo typeOfTrainingsRepo;
     private final SubCatRepo subCatRepo;
-    private final TrainingPeriodRepo trainingPeriodRepo;
+    private final TrainerService trainerService;
 
     public TypeOfTrainingService(TrainerRepo trainerRepo,
                                  Mapper mapper,
                                  TypeOfTrainingsRepo typeOfTrainingsRepo,
-                                 SubCatRepo subCatRepo, TrainingPeriodRepo trainingPeriodRepo) {
+                                 SubCatRepo subCatRepo, TrainerService trainerService) {
         this.trainerRepo = trainerRepo;
         this.mapper = mapper;
         this.typeOfTrainingsRepo = typeOfTrainingsRepo;
         this.subCatRepo = subCatRepo;
-        this.trainingPeriodRepo = trainingPeriodRepo;
+        this.trainerService = trainerService;
     }
 
     public List<TypeOfTrainingDTO> typeOfTrainings() {
@@ -88,7 +88,7 @@ public class TypeOfTrainingService {
         }
     }
 
-    public void assignUnavailableDays(LocalDate trainingStart, double duration, String trainerName) {
+    public void assignUnavailableDaysByDuration(LocalDate trainingStart, double duration, String trainerName) {
         Trainer trainer = trainerRepo.findByName(trainerName).orElseThrow();
         int traingDays = duration % 8 > 0 ? (int) duration / 8 + 1: (int) duration / 8;
         for (int i = 1; i <= traingDays; i++){
@@ -105,9 +105,9 @@ public class TypeOfTrainingService {
     }
 
     public void addTrainingPeriod(TrainingPeriodDTO trainingPeriodDTO,
-                                  String trainingName) {
+                                  String trainingId) {
 
-            TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainingName)
+            TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByFrontId(trainingId)
                     .orElseThrow(TypeOfTrainingNotExist::new);
 
         isPeriodExist(trainingPeriodDTO, typeOfTraining);
@@ -122,6 +122,17 @@ public class TypeOfTrainingService {
                         .equals(trainingPeriodDTO.getStartTraining()))){
             throw new TrainingPeriodExist();
         }
+    }
+
+    public void addPeriodAndTrainer(PeriodAndTrainerAssignDTO periodAndTrainerAssignDTO,
+                                    String trainingId) {
+        addTrainingPeriod(periodAndTrainerAssignDTO.getTrainingPeriodDTO(), trainingId);
+        TypeOfTraining training = typeOfTrainingsRepo.findByFrontId(trainingId).orElseThrow();
+        TypeOfTrainingDTO typeOfTrainingDTO = mapper.typeOfTrainingToDTO(training);
+        trainerService.addTrainer(periodAndTrainerAssignDTO.getTrainerDTO());
+        trainerService.assignUnavailableDays(periodAndTrainerAssignDTO.getTrainingPeriodDTO(), periodAndTrainerAssignDTO.getTrainerDTO().getName());
+        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(periodAndTrainerAssignDTO.getTrainerDTO().getName(), typeOfTrainingDTO.getName());
+        addTrainerToTraining(trainerAssignmentDTO);
     }
 }
 

@@ -57,9 +57,9 @@ public class DBprod implements CommandLineRunner {
                 .forEach(itWorkshops::asssignSubCategory);
         workshopsRepo.save(itWorkshops);
 
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
-        TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum");
-        TypeOfTraining springJava = new TypeOfTraining("Spring", 5000.00,  16.0, "Spring PageMaker including versions of Lorem Ipsum");
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release", "JavaBasic");
+        TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum", "JavaAdvance");
+        TypeOfTraining springJava = new TypeOfTraining("Spring", 5000.00,  16.0, "Spring PageMaker including versions of Lorem Ipsum", "JavaSpring");
 
         typeOfTrainingsRepo.save(basicJava);
         typeOfTrainingsRepo.save(advanceJava);

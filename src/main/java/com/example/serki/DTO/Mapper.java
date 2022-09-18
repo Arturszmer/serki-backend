@@ -49,6 +49,7 @@ public class Mapper {
         double price = typeOfTraining.getPrice();
         double duration = typeOfTraining.getDuration();
         String description = typeOfTraining.getDescription();
+        String front_Id = typeOfTraining.getFrontId();
         List<TrainerDTO> trainers = typeOfTraining.getTrainer()
                 .stream()
                 .map(this::trainerToDTO)
@@ -57,13 +58,14 @@ public class Mapper {
                 .stream()
                 .map(this::trainingPeriodToDTO)
                 .toList();
-        return new TypeOfTrainingDTO(name, price, duration, description, trainers, trainingPeriod);
+        return new TypeOfTrainingDTO(name, price, duration, description, front_Id, trainers, trainingPeriod);
     }
     public TypeOfTraining typeOfTrainingDTOtoTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO){
         return new TypeOfTraining(typeOfTrainingDTO.getName(),
                 typeOfTrainingDTO.getPrice(),
                 typeOfTrainingDTO.getDuration(),
                 typeOfTrainingDTO.getDescription(),
+                typeOfTrainingDTO.getFrontId(),
                 typeOfTrainingDTO.getTrainers()
                         .stream()
                         .map(this::trainerDTOtoTrainer)
@@ -77,7 +79,10 @@ public class Mapper {
     public TrainerDTO trainerToDTO(Trainer trainer){
         String name = trainer.getName();
         String bio = trainer.getBio();
-        return new TrainerDTO(name, bio);
+        List<LocalDate> unavailableDays = trainer.getUnavailableDays().stream()
+                .map(TrainerUnavailableDays::getUnavailableDay)
+                .toList();
+        return new TrainerDTO(name, bio, unavailableDays);
     }
 
     public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
@@ -90,9 +95,10 @@ public class Mapper {
         return new TrainingPeriodDTO(startTraining, endTraining);
     }
 
-    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod (TrainingPeriodDTO trainingPeriodDTO){
+    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod(TrainingPeriodDTO trainingPeriodDTO){
         return new TrainingPeriod(trainingPeriodDTO.getStartTraining(),
                 (trainingPeriodDTO.getEndTraining()));
     }
+
 }
 

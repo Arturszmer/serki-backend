@@ -13,6 +13,7 @@ public class TypeOfTraining {
     private double price;
     private double duration;
     private String description;
+    private String frontId;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "fk_workshop3")
     private List<TrainingPeriod> trainingPeriod;
@@ -23,21 +24,24 @@ public class TypeOfTraining {
                           double price,
                           double duration,
                           String description,
+                          String frontId,
                           List<Trainer> trainer,
                           List<TrainingPeriod> trainingPeriod) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainer = trainer;
         this.trainingPeriod = trainingPeriod;
     }
 
-    public TypeOfTraining(String name, double price, double duration, String description) {
+    public TypeOfTraining(String name, double price, double duration, String description, String frontId) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainer = new ArrayList<>();
         this.trainingPeriod = new ArrayList<>();
     }
@@ -76,6 +80,14 @@ public class TypeOfTraining {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getFrontId() {
+        return frontId;
+    }
+
+    public void setFrontId(String frontId) {
+        this.frontId = frontId;
     }
 
     public List<TrainingPeriod> getTrainingPeriod() {
