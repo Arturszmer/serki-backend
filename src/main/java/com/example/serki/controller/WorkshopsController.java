@@ -72,9 +72,9 @@ public class WorkshopsController {
     }
 
     @PostMapping("workshops/trainingPeriodAssignment/{trainingId}")
-    public ResponseEntity<Void> addTrainingPeriod(@RequestBody TrainingPeriodDTO trainingPeriodDTO,
+    public ResponseEntity<Void> addTrainingPeriod(@RequestBody PeriodDTO periodDTO,
                                                   @PathVariable String trainingId){
-        typeOfTrainingService.addTrainingPeriod(trainingPeriodDTO, trainingId);
+        typeOfTrainingService.addTrainingPeriod(periodDTO, trainingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

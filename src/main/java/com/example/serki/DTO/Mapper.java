@@ -54,7 +54,7 @@ public class Mapper {
                 .stream()
                 .map(this::trainerToDTO)
                 .collect(Collectors.toList());
-        List<TrainingPeriodDTO> trainingPeriod = typeOfTraining.getTrainingPeriod()
+        List<PeriodDTO> trainingPeriod = typeOfTraining.getTrainingPeriod()
                 .stream()
                 .map(this::trainingPeriodToDTO)
                 .toList();
@@ -89,15 +89,15 @@ public class Mapper {
         return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
     }
 
-    public TrainingPeriodDTO trainingPeriodToDTO(TrainingPeriod trainingPeriod){
+    public PeriodDTO trainingPeriodToDTO(TrainingPeriod trainingPeriod){
         LocalDate startTraining = trainingPeriod.getStartTraining();
         LocalDate endTraining = trainingPeriod.getEndTraining();
-        return new TrainingPeriodDTO(startTraining, endTraining);
+        return new PeriodDTO(startTraining, endTraining);
     }
 
-    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod(TrainingPeriodDTO trainingPeriodDTO){
-        return new TrainingPeriod(trainingPeriodDTO.getStartTraining(),
-                (trainingPeriodDTO.getEndTraining()));
+    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod(PeriodDTO periodDTO){
+        return new TrainingPeriod(periodDTO.getStartTraining(),
+                (periodDTO.getEndTraining()));
     }
 
 }

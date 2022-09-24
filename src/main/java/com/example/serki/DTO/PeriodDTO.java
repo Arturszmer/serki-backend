@@ -2,12 +2,12 @@ package com.example.serki.DTO;
 
 import java.time.LocalDate;
 
-public class TrainingPeriodDTO {
+public class PeriodDTO {
 
-    private LocalDate startTraining;
-    private LocalDate endTraining;
+    private final LocalDate startTraining;
+    private final LocalDate endTraining;
 
-    public TrainingPeriodDTO(LocalDate startTraining, LocalDate endTraining) {
+    public PeriodDTO(LocalDate startTraining, LocalDate endTraining) {
         this.startTraining = startTraining;
         this.endTraining = endTraining;
     }

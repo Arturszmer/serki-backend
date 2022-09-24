@@ -2,7 +2,7 @@ package com.example.serki.service;
 
 import com.example.serki.DTO.Mapper;
 import com.example.serki.DTO.TrainerDTO;
-import com.example.serki.DTO.TrainingPeriodDTO;
+import com.example.serki.DTO.PeriodDTO;
 import com.example.serki.Exceptions.TrainerIsNotExist;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TrainerUnavailableDays;
@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.LongStream;
 
 @Service
 @Transactional
@@ -43,29 +44,29 @@ public class TrainerService {
     public List<LocalDate> getUnavailableDays(String name) {
         List<LocalDate> unavailableDays = new ArrayList<>();
         Trainer trainer = trainerRepo.findByName(name).orElseThrow(TrainerIsNotExist::new);
-//        if (trainer.getUnavailableDays().isEmpty()){
-//
-//        }
         trainer.getUnavailableDays().forEach(days -> unavailableDays.add(days.getUnavailableDay()));
         return unavailableDays;
     }
 
-    public void assignUnavailableDays(TrainingPeriodDTO trainingPeriodDTO, String trainerName) {
+    public void assignUnavailableDays(PeriodDTO periodDTO, String trainerName) {
 
         Trainer trainer = trainerRepo.findByName(trainerName).orElseThrow(TrainerIsNotExist::new);
-        LocalDate startTraining = trainingPeriodDTO.getStartTraining();
-        LocalDate endTraining = trainingPeriodDTO.getEndTraining();
-        long daysBetween = ChronoUnit.DAYS.between(startTraining, endTraining);
-        for (int i = 0; i <= daysBetween; i++){
-            TrainerUnavailableDays trainerUnavailableDays = new TrainerUnavailableDays();
-            if (i > 0){
-                trainerUnavailableDays.setUnavailableDay(startTraining.plusDays(i));
-                trainer.assignUnavailableDays(trainerUnavailableDays);
-            } else {
-                trainerUnavailableDays.setUnavailableDay(startTraining);
-                trainer.assignUnavailableDays(trainerUnavailableDays);
-            }
-        }
+        LocalDate startTraining = periodDTO.getStartTraining();
+        LocalDate endTraining = periodDTO.getEndTraining();
+        long unavailableDays = ChronoUnit.DAYS.between(startTraining, endTraining) + 1;
+
+        LongStream.rangeClosed(1, unavailableDays)
+                .mapToObj(i -> new TrainerUnavailableDays(startTraining.plusDays(i)))
+                .forEach(trainer::assignUnavailableDays);
+
+//        This comment left for education compare
+
+//        for (int i = 0; i < unavailableDays; i++){
+//            TrainerUnavailableDays trainerUnavailableDays = new TrainerUnavailableDays();
+//                trainerUnavailableDays.setUnavailableDay(startTraining.plusDays(i));
+//                trainer.assignUnavailableDays(trainerUnavailableDays);
+//        }
+
         trainerRepo.save(trainer);
     }
 }

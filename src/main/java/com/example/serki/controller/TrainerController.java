@@ -1,6 +1,6 @@
 package com.example.serki.controller;
 import com.example.serki.DTO.TrainerDTO;
-import com.example.serki.DTO.TrainingPeriodDTO;
+import com.example.serki.DTO.PeriodDTO;
 import com.example.serki.service.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +33,9 @@ class TrainerController {
     }
 
     @PostMapping("/unavailableDaysAssign/{trainerName}")
-    public ResponseEntity<Void> assignUnavailableDaysToTrainer(@RequestBody TrainingPeriodDTO trainingPeriodDTO,
+    public ResponseEntity<Void> assignUnavailableDaysToTrainer(@RequestBody PeriodDTO periodDTO,
                                                                @PathVariable String trainerName){
-        trainerService.assignUnavailableDays(trainingPeriodDTO, trainerName);
+        trainerService.assignUnavailableDays(periodDTO, trainerName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

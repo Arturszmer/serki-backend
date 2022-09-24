@@ -46,7 +46,6 @@ public class TypeOfTraining {
         this.trainingPeriod = new ArrayList<>();
     }
 
-
     public TypeOfTraining() {
     }
 
@@ -62,32 +61,16 @@ public class TypeOfTraining {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public double getDuration() {
         return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getFrontId() {
         return frontId;
-    }
-
-    public void setFrontId(String frontId) {
-        this.frontId = frontId;
     }
 
     public List<TrainingPeriod> getTrainingPeriod() {

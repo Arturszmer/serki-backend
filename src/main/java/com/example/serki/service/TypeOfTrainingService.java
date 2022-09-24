@@ -105,22 +105,22 @@ public class TypeOfTrainingService {
         trainerRepo.save(trainer);
     }
 
-    public void addTrainingPeriod(TrainingPeriodDTO trainingPeriodDTO,
+    public void addTrainingPeriod(PeriodDTO periodDTO,
                                   String trainingId) {
 
             TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByFrontId(trainingId)
                     .orElseThrow(TypeOfTrainingNotExist::new);
 
-        isPeriodExist(trainingPeriodDTO, typeOfTraining);
-        typeOfTraining.assignPeriod(mapper.trainingPeriodDTOtoTrainingPeriod(trainingPeriodDTO));
+        isPeriodExist(periodDTO, typeOfTraining);
+        typeOfTraining.assignPeriod(mapper.trainingPeriodDTOtoTrainingPeriod(periodDTO));
             typeOfTrainingsRepo.save(typeOfTraining);
     }
 
-    private void isPeriodExist(TrainingPeriodDTO trainingPeriodDTO, TypeOfTraining typeOfTraining) {
+    private void isPeriodExist(PeriodDTO periodDTO, TypeOfTraining typeOfTraining) {
         if (typeOfTraining.getTrainingPeriod()
                 .stream()
                 .anyMatch(trainingPeriod -> trainingPeriod.getStartTraining()
-                        .equals(trainingPeriodDTO.getStartTraining()))){
+                        .equals(periodDTO.getStartTraining()))){
             throw new TrainingPeriodExist();
         }
     }
