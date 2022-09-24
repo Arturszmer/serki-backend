@@ -10,7 +10,7 @@ public class PeriodAndTrainerAssignDTO {
         this.trainerDTO = trainerDTO;
     }
 
-    public PeriodDTO getTrainingPeriodDTO() {
+    public PeriodDTO getPeriodDTO() {
         return periodDTO;
     }
 

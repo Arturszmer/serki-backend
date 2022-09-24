@@ -72,7 +72,7 @@ class WorkshopsControllerTest {
         String contentAsString = mvcResult.getResponse().getContentAsString();
         List<Workshops> workshopsList = objectMapper.readValue(contentAsString, new TypeReference<>() {
         });
-        assertThat(workshopsList.size()).isEqualTo(2);
+        assertThat(workshopsList.size()).isEqualTo(1);
     }
 
     @Test
@@ -147,8 +147,9 @@ class WorkshopsControllerTest {
     public void assignPeriodAndTrainerToTraining() throws Exception {
         // given
         addTypeOfTraining();
-        PeriodAndTrainerAssignDTO periodAndTrainerAssignDTO = new PeriodAndTrainerAssignDTO(new PeriodDTO(LocalDate.of(2022, 9, 23),
-                LocalDate.of(2022, 9, 24)), new TrainerDTO("Andrzej", "ble ble"));
+        PeriodAndTrainerAssignDTO periodAndTrainerAssignDTO = new PeriodAndTrainerAssignDTO(
+                new PeriodDTO(LocalDate.of(2022, 9, 23), LocalDate.of(2022, 9, 24)),
+                new TrainerDTO("Andrzej", "ble ble"));
         String jsonString = objectMapper.writeValueAsString(periodAndTrainerAssignDTO);
         // when
         this.mockMvc.perform(post("/workshops/IT/subCat/Java/typesOfTraining/JavaBasic/assignPeriodAndTrainer")

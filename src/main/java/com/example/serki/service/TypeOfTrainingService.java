@@ -127,11 +127,11 @@ public class TypeOfTrainingService {
 
     public void addPeriodAndTrainer(PeriodAndTrainerAssignDTO periodAndTrainerAssignDTO,
                                     String trainingId) {
-        addTrainingPeriod(periodAndTrainerAssignDTO.getTrainingPeriodDTO(), trainingId);
+        addTrainingPeriod(periodAndTrainerAssignDTO.getPeriodDTO(), trainingId);
         TypeOfTraining training = typeOfTrainingsRepo.findByFrontId(trainingId).orElseThrow();
         TypeOfTrainingDTO typeOfTrainingDTO = mapper.typeOfTrainingToDTO(training);
         trainerService.addTrainer(periodAndTrainerAssignDTO.getTrainerDTO());
-        trainerService.assignUnavailableDays(periodAndTrainerAssignDTO.getTrainingPeriodDTO(), periodAndTrainerAssignDTO.getTrainerDTO().getName());
+        trainerService.assignUnavailableDays(periodAndTrainerAssignDTO.getPeriodDTO(), periodAndTrainerAssignDTO.getTrainerDTO().getName());
         TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(periodAndTrainerAssignDTO.getTrainerDTO().getName(), typeOfTrainingDTO.getName());
         addTrainerToTraining(trainerAssignmentDTO);
     }

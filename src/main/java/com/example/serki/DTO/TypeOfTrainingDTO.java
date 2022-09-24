@@ -61,7 +61,7 @@ public class TypeOfTrainingDTO {
         return Collections.unmodifiableList(trainers);
     }
 
-    public List<PeriodDTO> getTrainingPeriodDTOS() {
+    public List<PeriodDTO> getPeriodDTOS() {
         return periodDTOS;
     }
 

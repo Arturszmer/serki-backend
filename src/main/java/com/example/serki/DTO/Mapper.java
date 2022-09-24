@@ -70,7 +70,7 @@ public class Mapper {
                         .stream()
                         .map(this::trainerDTOtoTrainer)
                         .toList(),
-                typeOfTrainingDTO.getTrainingPeriodDTOS()
+                typeOfTrainingDTO.getPeriodDTOS()
                         .stream()
                         .map(this::trainingPeriodDTOtoTrainingPeriod)
                         .toList());
