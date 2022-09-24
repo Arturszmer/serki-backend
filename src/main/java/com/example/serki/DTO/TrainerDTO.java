@@ -10,6 +10,9 @@ public class TrainerDTO {
     private String bio;
     private List<LocalDate> unavailableDays = new ArrayList<>();
 
+    public TrainerDTO() {
+    }
+
     public TrainerDTO(String name, String bio){
         this.name=name;
         this.bio=bio;
@@ -21,20 +24,15 @@ public class TrainerDTO {
         this.unavailableDays = unavailableDays;
     }
 
-    public TrainerDTO() {
-    }
-
     public String getName(){ return name;}
-    public String setName(){return name;}
 
     public String getBio(){ return bio;}
-    public String setBio(){return bio;}
 
     public List<LocalDate> getUnavailableDays() {
         return unavailableDays;
     }
 
-    public void setUnavailableDays(List<LocalDate> unavailableDays) {
+    public void assignUnavailableDays(List<LocalDate> unavailableDays) {
         this.unavailableDays = unavailableDays;
     }
 }

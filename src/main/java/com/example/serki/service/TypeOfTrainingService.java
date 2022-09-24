@@ -76,7 +76,7 @@ public class TypeOfTrainingService {
         if (subCathegory.getTypeOfTrainings().stream()
                 .anyMatch(subcat -> subcat.getName()
                         .equals(typeOfTrainingDTO.getName()))) {
-            throw new NameAlreadyExistException();
+            throw new NameAlreadyExist();
         }
     }
 

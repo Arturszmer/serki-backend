@@ -5,13 +5,13 @@ import java.util.List;
 
 public class TypeOfTrainingDTO {
 
-    private String name;
-    private double price;
-    private double duration;
-    private String description;
+    private final String name;
+    private final double price;
+    private final double duration;
+    private final String description;
     private String frontId;
-    private List<TrainerDTO> trainers;
-    private List<PeriodDTO> periodDTOS;
+    private final List<TrainerDTO> trainers;
+    private final List<PeriodDTO> periodDTOS;
 
     public TypeOfTrainingDTO(String name,
                              double price,
@@ -30,15 +30,8 @@ public class TypeOfTrainingDTO {
 
     }
 
-    public TypeOfTrainingDTO() {
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getPrice() {
