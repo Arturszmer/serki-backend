@@ -13,25 +13,38 @@ public class TypeOfTraining {
     private double price;
     private double duration;
     private String description;
+    private String frontId;
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "fk_workshop3")
+    private List<TrainingPeriod> trainingPeriod;
     @ManyToMany
     private List<Trainer> trainer;
 
-    public TypeOfTraining(String name, double price, double duration, String description, List<Trainer> trainer) {
+    public TypeOfTraining(String name,
+                          double price,
+                          double duration,
+                          String description,
+                          String frontId,
+                          List<Trainer> trainer,
+                          List<TrainingPeriod> trainingPeriod) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainer = trainer;
+        this.trainingPeriod = trainingPeriod;
     }
 
-    public TypeOfTraining(String name, double price, double duration, String description) {
+    public TypeOfTraining(String name, double price, double duration, String description, String frontId) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainer = new ArrayList<>();
+        this.trainingPeriod = new ArrayList<>();
     }
-
 
     public TypeOfTraining() {
     }
@@ -48,24 +61,20 @@ public class TypeOfTraining {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public double getDuration() {
         return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getFrontId() {
+        return frontId;
+    }
+
+    public List<TrainingPeriod> getTrainingPeriod() {
+        return Collections.unmodifiableList(trainingPeriod);
     }
 
     public List<Trainer> getTrainer() {
@@ -97,7 +106,10 @@ public class TypeOfTraining {
         return Objects.hash(id, name, price, duration, description, trainer);
     }
 
-    public void assign(Trainer trainer) {
+    public void assignTrainer(Trainer trainer) {
         this.trainer.add(trainer);
+    }
+    public void assignPeriod(TrainingPeriod trainingPeriod){
+        this.trainingPeriod.add(trainingPeriod);
     }
 }

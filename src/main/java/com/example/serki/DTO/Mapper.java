@@ -1,11 +1,9 @@
 package com.example.serki.DTO;
 
-import com.example.serki.models.Trainer;
-import com.example.serki.models.TypeOfTraining;
-import com.example.serki.models.Workshops;
-import com.example.serki.models.SubCathegory;
+import com.example.serki.models.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,31 +49,56 @@ public class Mapper {
         double price = typeOfTraining.getPrice();
         double duration = typeOfTraining.getDuration();
         String description = typeOfTraining.getDescription();
+        String front_Id = typeOfTraining.getFrontId();
         List<TrainerDTO> trainers = typeOfTraining.getTrainer()
                 .stream()
                 .map(this::trainerToDTO)
                 .collect(Collectors.toList());
-        return new TypeOfTrainingDTO(name, price, duration, description, trainers);
+        List<PeriodDTO> trainingPeriod = typeOfTraining.getTrainingPeriod()
+                .stream()
+                .map(this::trainingPeriodToDTO)
+                .toList();
+        return new TypeOfTrainingDTO(name, price, duration, description, front_Id, trainers, trainingPeriod);
     }
     public TypeOfTraining typeOfTrainingDTOtoTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO){
         return new TypeOfTraining(typeOfTrainingDTO.getName(),
                 typeOfTrainingDTO.getPrice(),
                 typeOfTrainingDTO.getDuration(),
                 typeOfTrainingDTO.getDescription(),
+                typeOfTrainingDTO.getFrontId(),
                 typeOfTrainingDTO.getTrainers()
                         .stream()
                         .map(this::trainerDTOtoTrainer)
+                        .toList(),
+                typeOfTrainingDTO.getPeriodDTOS()
+                        .stream()
+                        .map(this::trainingPeriodDTOtoTrainingPeriod)
                         .toList());
     }
 
     public TrainerDTO trainerToDTO(Trainer trainer){
         String name = trainer.getName();
         String bio = trainer.getBio();
-        return new TrainerDTO(name, bio);
+        List<LocalDate> unavailableDays = trainer.getUnavailableDays().stream()
+                .map(TrainerUnavailableDays::getUnavailableDay)
+                .toList();
+        return new TrainerDTO(name, bio, unavailableDays);
     }
 
     public Trainer trainerDTOtoTrainer(TrainerDTO trainerDTO){
         return new Trainer(trainerDTO.getName(), trainerDTO.getBio());
     }
+
+    public PeriodDTO trainingPeriodToDTO(TrainingPeriod trainingPeriod){
+        LocalDate startTraining = trainingPeriod.getStartTraining();
+        LocalDate endTraining = trainingPeriod.getEndTraining();
+        return new PeriodDTO(startTraining, endTraining);
+    }
+
+    public TrainingPeriod trainingPeriodDTOtoTrainingPeriod(PeriodDTO periodDTO){
+        return new TrainingPeriod(periodDTO.getStartTraining(),
+                (periodDTO.getEndTraining()));
+    }
+
 }
 

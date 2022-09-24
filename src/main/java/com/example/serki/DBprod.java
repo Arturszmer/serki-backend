@@ -39,27 +39,24 @@ public class DBprod implements CommandLineRunner {
         Workshops sales = new Workshops("SALES", "PageMaker including versions of Lorem Ipsum", "", new ArrayList<>());
 
         Workshops itWorkshops = workshopsRepo.save(it);
-        Workshops saveMarketing = workshopsRepo.save(marketing);
-        Workshops saveMedic = workshopsRepo.save(medic);
-        Workshops saveSales = workshopsRepo.save(sales);
+        workshopsRepo.save(marketing);
+        workshopsRepo.save(medic);
+        workshopsRepo.save(sales);
 
         SubCathegory java = new SubCathegory("Java", new ArrayList<>());
-        SubCathegory csharp = new SubCathegory("C#", new ArrayList<>());
         SubCathegory js = new SubCathegory("JS", new ArrayList<>());
         SubCathegory python = new SubCathegory("Python", new ArrayList<>());
-        SubCathegory googleAds = new SubCathegory("Google Ads", new ArrayList<>());
 
         SubCathegory javaSubCathegory = subCatRepo.save(java);
-        subCatRepo.save(csharp);
         subCatRepo.save(js);
         subCatRepo.save(python);
         subCatRepo.findAll()
                 .forEach(itWorkshops::asssignSubCategory);
         workshopsRepo.save(itWorkshops);
 
-        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release");
-        TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum");
-        TypeOfTraining springJava = new TypeOfTraining("Spring", 5000.00,  16.0, "Spring PageMaker including versions of Lorem Ipsum");
+        TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release", "JavaBasic");
+        TypeOfTraining advanceJava = new TypeOfTraining("Advance", 6500.00,  50.0, "PageMaker including versions of Lorem Ipsum", "JavaAdvance");
+        TypeOfTraining springJava = new TypeOfTraining("Spring", 5000.00,  16.0, "Spring PageMaker including versions of Lorem Ipsum", "JavaSpring");
 
         typeOfTrainingsRepo.save(basicJava);
         typeOfTrainingsRepo.save(advanceJava);

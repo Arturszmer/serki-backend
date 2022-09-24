@@ -1,9 +1,11 @@
 package com.example.serki.service;
 
 import com.example.serki.models.Trainer;
+import com.example.serki.models.TrainingPeriod;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TrainerUnavailableDaysRepo;
+import com.example.serki.repository.TrainingPeriodRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,8 @@ public class TypeOfTrainingServiceTest {
     TypeOfTrainingService typeOfTrainingService;
     @Autowired
     TrainerService trainerService;
+    @Autowired
+    TrainingPeriodRepo trainingPeriodRepo;
 
     @BeforeEach
     public void setup(){
@@ -40,13 +44,23 @@ public class TypeOfTrainingServiceTest {
         TypeOfTraining basicJava = getTypeOfTraining();
         Trainer trainer = getTrainer();
         trainerRepo.save(trainer);
-        basicJava.assign(trainer);
+        basicJava.assignTrainer(trainer);
         typeOfTrainingsRepo.save(basicJava);
         //when
-        typeOfTrainingService.assignUnavailableDays(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
+        typeOfTrainingService.assignUnavailableDaysByDuration(LocalDate.parse("2022-09-30"), basicJava.getDuration(), trainer.getName());
         List<LocalDate> unavailableDays = trainerService.getUnavailableDays(trainer.getName());
         //then
         assertThat(unavailableDays.get(1)).isEqualTo("2022-10-01");
+
+    }
+
+    @Test
+    public void date(){
+        //given
+        TrainingPeriod trainingPeriod = new TrainingPeriod(LocalDate.parse("2022-09-20"), LocalDate.parse("2022-09-22"));
+        Trainer trainer = getTrainer();
+        trainerRepo.save(trainer);
+//        trainerService.assignUnavailableDays(trainingPeriod, trainer.getName());
 
     }
 
@@ -55,6 +69,6 @@ public class TypeOfTrainingServiceTest {
     }
 
     private TypeOfTraining getTypeOfTraining() {
-        return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release");
+        return new TypeOfTraining("Basic", 3800.00,  9.0, "popularised in the 1990s with the release", "JavaBasic");
     }
 }

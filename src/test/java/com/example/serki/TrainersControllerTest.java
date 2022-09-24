@@ -1,5 +1,6 @@
 package com.example.serki;
 
+import com.example.serki.DTO.PeriodDTO;
 import com.example.serki.DTO.TrainerAssignmentDTO;
 import com.example.serki.models.Trainer;
 import com.example.serki.models.TypeOfTraining;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,14 +113,39 @@ public class TrainersControllerTest {
         assertThat(trainersAssignedToTraining(trainingName))
                 .containsExactlyInAnyOrder("Artur");
     }
+
+    @Test
+    public void assignUnavailableDays() throws Exception {
+        // given
+        String trainerName = "Andrzej";
+        aTrainerWithName(trainerName);
+
+        // and
+        PeriodDTO periodDTO = new PeriodDTO(LocalDate.of(2022, 9, 23),
+                LocalDate.of(2022, 9, 24));
+        String jsonString = objectMapper.writeValueAsString(periodDTO);
+
+        // when
+        this.mockMvc.perform(post("/trainers/unavailableDaysAssign/Andrzej")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonString))
+                .andExpect(status().isOk());
+
+        // then
+        Optional<Trainer> trainer = trainerRepo.findByName("Andrzej");
+        assertThat(trainer.map(m -> m.getUnavailableDays().size()).get()).isEqualTo(2);
+
+    }
+
     private void aTrainingWithName(String trainingName) {
-        TypeOfTraining typeOfTraining = new TypeOfTraining(trainingName,10,10,"fff");
+        TypeOfTraining typeOfTraining = new TypeOfTraining(trainingName, 3800.00,  32.0, "popularised in the 1960s with the release", "JavaBasic");
         typeOfTrainingsRepo.save(typeOfTraining);
     }
     private void aTrainerWithName(String trainerName) {
         Trainer trainer = new Trainer(trainerName, "nie taki młody przyszłościowy programista");
         trainerRepo.save(trainer);
     }
+
     private List<String> trainersAssignedToTraining(String trainingName) {
         return typeOfTrainingsRepo.findByName(trainingName).stream()
                 .flatMap(t -> t.getTrainer()
@@ -126,4 +153,5 @@ public class TrainersControllerTest {
                         .map(Trainer::getName))
                 .toList();
     }
+
 }

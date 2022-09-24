@@ -5,26 +5,33 @@ import java.util.List;
 
 public class TypeOfTrainingDTO {
 
-    private String name;
-    private double price;
-    private double duration;
-    private String description;
-    private List<TrainerDTO> trainers;
+    private final String name;
+    private final double price;
+    private final double duration;
+    private final String description;
+    private String frontId;
+    private final List<TrainerDTO> trainers;
+    private final List<PeriodDTO> periodDTOS;
 
-    public TypeOfTrainingDTO(String name, double price, double duration, String description, List<TrainerDTO> trainers) {
+    public TypeOfTrainingDTO(String name,
+                             double price,
+                             double duration,
+                             String description,
+                             String frontId,
+                             List<TrainerDTO> trainers,
+                             List<PeriodDTO> periodDTOS) {
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.frontId = frontId;
         this.trainers = trainers;
+        this.periodDTOS = periodDTOS;
+
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getPrice() {
@@ -39,8 +46,16 @@ public class TypeOfTrainingDTO {
         return description;
     }
 
+    public String getFrontId() {
+        return frontId;
+    }
+
     public List<TrainerDTO> getTrainers() {
         return Collections.unmodifiableList(trainers);
+    }
+
+    public List<PeriodDTO> getPeriodDTOS() {
+        return periodDTOS;
     }
 
     @Override
@@ -51,5 +66,8 @@ public class TypeOfTrainingDTO {
                 ", duration=" + duration +
                 ", description='" + description + '\'' +
                 '}';
+    }
+    public void assignFrontId(String typeOfTrainingName, String trainingName){
+        this.frontId = typeOfTrainingName + trainingName;
     }
 }

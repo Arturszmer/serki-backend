@@ -60,6 +60,6 @@ class TypeOfTrainingRepoTest {
     }
 
     private TypeOfTraining getTypeOfTraining() {
-        return new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1990s with the release");
+        return new TypeOfTraining("Basic", 3800.00,  32.0, "popularised in the 1960s with the release", "JavaBasic");
     }
 }
