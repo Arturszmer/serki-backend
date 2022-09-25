@@ -11,7 +11,7 @@ public class TypeOfTrainingDTO {
     private final String description;
     private String frontId;
     private final List<TrainerDTO> trainers;
-    private final List<PeriodDTO> periodDTOS;
+    private final PeriodDTO periodDTOS;
 
     public TypeOfTrainingDTO(String name,
                              double price,
@@ -19,7 +19,7 @@ public class TypeOfTrainingDTO {
                              String description,
                              String frontId,
                              List<TrainerDTO> trainers,
-                             List<PeriodDTO> periodDTOS) {
+                             PeriodDTO periodDTOS) {
         this.name = name;
         this.price = price;
         this.duration = duration;
@@ -54,7 +54,7 @@ public class TypeOfTrainingDTO {
         return Collections.unmodifiableList(trainers);
     }
 
-    public List<PeriodDTO> getPeriodDTOS() {
+    public PeriodDTO getPeriodDTOS() {
         return periodDTOS;
     }
 

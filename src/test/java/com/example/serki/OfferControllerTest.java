@@ -2,6 +2,8 @@ package com.example.serki;
 
 import com.example.serki.DTO.OfferDTO;
 import com.example.serki.DTO.PeriodDTO;
+import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.mail.Mails;
 import com.example.serki.models.*;
 import com.example.serki.repository.*;
@@ -53,12 +55,11 @@ public class OfferControllerTest {
         // given
         String trainerName = "Andrzej";
         addTypeOfTraining(trainerName);
-        List<PeriodDTO> javaBasicPeriod = List.of(new PeriodDTO(LocalDate.of(2022, 9, 15),
-                LocalDate.of(2022, 9, 22)));
-        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com", trainerName,
-                javaBasicPeriod,
-                "Basic",
-                new BigDecimal(3800));
+        PeriodDTO javaBasicPeriod = new PeriodDTO(LocalDate.of(2022, 9, 15),
+                LocalDate.of(2022, 9, 22));
+        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com",
+                List.of(new TypeOfTrainingDTO("Basic", 3500, 65, "fwafsd", "JavaBasic",
+                        List.of(new TrainerDTO("Andrzej", "bbbb")), javaBasicPeriod)));
         String jsonString = objectMapper.writeValueAsString(offerDTO);
 
         // when
@@ -78,7 +79,7 @@ public class OfferControllerTest {
         TrainingPeriod trainingPeriod = new TrainingPeriod(LocalDate.of(2022, 9, 15), LocalDate.of(2022, 9, 22));
         trainingPeriodRepo.save(trainingPeriod);
         TypeOfTraining basicJava = new TypeOfTraining("Basic", 3800.00,  32.0, "desc", "JavaBasic",
-                List.of(trainer), List.of(trainingPeriod));
+                List.of(trainer), trainingPeriod);
         typeOfTrainingsRepo.save(basicJava);
         SubCathegory java = new SubCathegory("Java", List.of(basicJava));
         subCatRepo.save(java);

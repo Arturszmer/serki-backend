@@ -14,9 +14,8 @@ public class TypeOfTraining {
     private double duration;
     private String description;
     private String frontId;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "fk_workshop3")
-    private List<TrainingPeriod> trainingPeriod;
+
+    private TrainingPeriod trainingPeriod;
     @ManyToMany
     private List<Trainer> trainer;
 
@@ -26,7 +25,7 @@ public class TypeOfTraining {
                           String description,
                           String frontId,
                           List<Trainer> trainer,
-                          List<TrainingPeriod> trainingPeriod) {
+                          TrainingPeriod trainingPeriod) {
         this.name = name;
         this.price = price;
         this.duration = duration;
@@ -43,7 +42,6 @@ public class TypeOfTraining {
         this.description = description;
         this.frontId = frontId;
         this.trainer = new ArrayList<>();
-        this.trainingPeriod = new ArrayList<>();
     }
 
     public TypeOfTraining() {
@@ -73,8 +71,12 @@ public class TypeOfTraining {
         return frontId;
     }
 
-    public List<TrainingPeriod> getTrainingPeriod() {
-        return Collections.unmodifiableList(trainingPeriod);
+    public TrainingPeriod getTrainingPeriod() {
+        return trainingPeriod;
+    }
+
+    public void setTrainingPeriod(TrainingPeriod trainingPeriod) {
+        this.trainingPeriod = trainingPeriod;
     }
 
     public List<Trainer> getTrainer() {
@@ -108,8 +110,5 @@ public class TypeOfTraining {
 
     public void assignTrainer(Trainer trainer) {
         this.trainer.add(trainer);
-    }
-    public void assignPeriod(TrainingPeriod trainingPeriod){
-        this.trainingPeriod.add(trainingPeriod);
     }
 }

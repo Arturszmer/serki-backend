@@ -54,13 +54,13 @@ public class Mapper {
                 .stream()
                 .map(this::trainerToDTO)
                 .collect(Collectors.toList());
-        List<PeriodDTO> trainingPeriod = typeOfTraining.getTrainingPeriod()
-                .stream()
-                .map(this::trainingPeriodToDTO)
-                .toList();
+        PeriodDTO trainingPeriod = new PeriodDTO(typeOfTraining.getTrainingPeriod().getStartTraining(),
+                typeOfTraining.getTrainingPeriod().getEndTraining());
         return new TypeOfTrainingDTO(name, price, duration, description, front_Id, trainers, trainingPeriod);
     }
     public TypeOfTraining typeOfTrainingDTOtoTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO){
+        TrainingPeriod trainingPeriod = new TrainingPeriod(typeOfTrainingDTO.getPeriodDTOS().getStartTraining(),
+                typeOfTrainingDTO.getPeriodDTOS().getEndTraining());
         return new TypeOfTraining(typeOfTrainingDTO.getName(),
                 typeOfTrainingDTO.getPrice(),
                 typeOfTrainingDTO.getDuration(),
@@ -70,10 +70,7 @@ public class Mapper {
                         .stream()
                         .map(this::trainerDTOtoTrainer)
                         .toList(),
-                typeOfTrainingDTO.getPeriodDTOS()
-                        .stream()
-                        .map(this::trainingPeriodDTOtoTrainingPeriod)
-                        .toList());
+                trainingPeriod);
     }
 
     public TrainerDTO trainerToDTO(Trainer trainer){

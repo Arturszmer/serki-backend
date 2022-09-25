@@ -1,8 +1,9 @@
 package com.example.serki.service;
 
-import com.example.serki.DTO.Mapper;
-import com.example.serki.DTO.OfferDTO;
-import com.example.serki.DTO.PeriodDTO;
+import com.example.serki.DTO.*;
+import com.example.serki.models.Trainer;
+import com.example.serki.models.TrainingPeriod;
+import com.example.serki.models.TypeOfTraining;
 import com.example.serki.repository.SubCatRepo;
 import com.example.serki.repository.TrainerRepo;
 import com.example.serki.repository.TypeOfTrainingsRepo;
@@ -12,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class OfferMailService {
@@ -27,35 +29,52 @@ public class OfferMailService {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("serkiinqoo@gmail.com");
         simpleMailMessage.setTo(offerDTO.getEmail());
-        simpleMailMessage.setSubject(subject(offerDTO));
+        simpleMailMessage.setSubject(subject());
         simpleMailMessage.setText(message(offerDTO));
         mailSender.send(simpleMailMessage);
     }
 
-    private String subject(OfferDTO offerDTO){
-        String trainingName = offerDTO.getTypeOfTrainingName();
+    private String subject(){
         return """
-                Your offer from Inqoo - %s training
-                """.formatted(trainingName);
+                Your offer from Inqoo
+                """;
+    }
+
+    private String courseMessage(List<TypeOfTrainingDTO> trainings){
+        String result = "";
+        for (TypeOfTrainingDTO training : trainings){
+            String trainers = "";
+            for (TrainerDTO trainerDTO : training.getTrainers()){
+                trainers += trainerDTO.getName() + " \n";
+            }
+            result += """
+        Training name: %s
+        Start: %s
+        End: %s
+        Trainer name: %s
+        Price: %s
+        
+        """.formatted(training.getName(),
+                    training.getPeriodDTOS().getStartTraining(),
+                    training.getPeriodDTOS().getEndTraining(),
+                    trainers,
+                    training.getPrice());
+        }
+        return result;
     }
 
     private String message(OfferDTO offerDTO){
-        String trainingName = offerDTO.getTypeOfTrainingName();
-        String start = offerDTO.getPeriodDTO().stream().map(PeriodDTO::getStartTraining).findFirst().get().toString();
-        String end = offerDTO.getPeriodDTO().stream().map(PeriodDTO::getEndTraining).findFirst().get().toString();
-        String trainerName = offerDTO.getTrainerName();
-        String price = offerDTO.getPrice().toString();
-
-        return """
+        String mes = """
                 Hello, 
-                you have choosen %s course, the dates:
-                Start: %s
-                End: %s
-                Trainer name: %s
-                Price: %s
-                
-                Best regards
-                Inqoo Team
-                """.formatted(trainingName, start, end, trainerName, price);
+                your choosen courses:
+                """
+                + courseMessage(offerDTO.getTraining()) +
+                """
+                                        
+                        Best regards
+                        Inqoo Team
+                        """;
+        System.out.println(mes);
+        return mes;
     }
 }

@@ -140,7 +140,7 @@ class WorkshopsControllerTest {
             
         // then
         Optional<TypeOfTraining> javaBasic = typeOfTrainingsRepo.findByFrontId("JavaBasic");
-        assertThat(javaBasic.map(m -> m.getTrainingPeriod().size()).get()).isEqualTo(1);
+        assertThat(javaBasic.map(m -> m.getTrainingPeriod()).get()).isEqualTo(1);
     }
 
     @Test

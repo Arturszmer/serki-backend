@@ -112,15 +112,12 @@ public class TypeOfTrainingService {
                     .orElseThrow(TypeOfTrainingNotExist::new);
 
         isPeriodExist(periodDTO, typeOfTraining);
-        typeOfTraining.assignPeriod(mapper.trainingPeriodDTOtoTrainingPeriod(periodDTO));
+        typeOfTraining.setTrainingPeriod(mapper.trainingPeriodDTOtoTrainingPeriod(periodDTO));
             typeOfTrainingsRepo.save(typeOfTraining);
     }
 
     private void isPeriodExist(PeriodDTO periodDTO, TypeOfTraining typeOfTraining) {
-        if (typeOfTraining.getTrainingPeriod()
-                .stream()
-                .anyMatch(trainingPeriod -> trainingPeriod.getStartTraining()
-                        .equals(periodDTO.getStartTraining()))){
+        if (typeOfTraining.getTrainingPeriod().getStartTraining().equals(periodDTO.getStartTraining())){
             throw new TrainingPeriodExist();
         }
     }

@@ -2,6 +2,8 @@ package com.example.serki;
 
 import com.example.serki.DTO.OfferDTO;
 import com.example.serki.DTO.PeriodDTO;
+import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
@@ -77,10 +79,9 @@ public class DBprod implements CommandLineRunner {
         PeriodDTO periodDTO = new PeriodDTO(LocalDate.of(2022, 9, 25),
                 LocalDate.of(2022, 9, 26));
 
-        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com","Andrzej",
-                List.of(periodDTO),
-                "IT",
-                new BigDecimal(3800));
+        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com",
+                List.of(new TypeOfTrainingDTO("Basic", 3500, 65, "fwafsd", "JavaBasic",
+                List.of(new TrainerDTO("Andrzej", "bbbb")), periodDTO)));
 
         offerMailService.prepareOffer(offerDTO);
     }
