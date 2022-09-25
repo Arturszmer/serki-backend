@@ -3,18 +3,18 @@ package com.example.serki.DTO;
 public class TrainerAssignmentDTO {
 
     private final String trainerName;
-    private final String typeOfTrainingName;
+    private final String trainingId;
 
-    public TrainerAssignmentDTO(String trainerName, String typeOfTrainingName) {
+    public TrainerAssignmentDTO(String trainerName, String trainingId) {
         this.trainerName = trainerName;
-        this.typeOfTrainingName = typeOfTrainingName;
+        this.trainingId = trainingId;
     }
 
     public String getTrainerName() {
         return trainerName;
     }
 
-    public String getTypeOfTrainingName() {
-        return typeOfTrainingName;
+    public String getTrainingId() {
+        return trainingId;
     }
 }

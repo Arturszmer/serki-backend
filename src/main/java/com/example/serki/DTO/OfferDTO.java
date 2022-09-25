@@ -4,14 +4,17 @@ import java.util.List;
 
 public class OfferDTO {
 
-    private final String email;
-    private final List<TypeOfTrainingDTO> typeOfTrainingDTOS;
+    private String email;
+    private List<TypeOfTrainingDTO> typeOfTrainingDTOS;
 
     public OfferDTO(String email,
                     List<TypeOfTrainingDTO> typeOfTrainingDTOS) {
         this.email = email;
         this.typeOfTrainingDTOS = typeOfTrainingDTOS;
 
+    }
+
+    public OfferDTO() {
     }
 
     public String getEmail() {

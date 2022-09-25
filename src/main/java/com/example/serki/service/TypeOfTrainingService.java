@@ -60,7 +60,7 @@ public class TypeOfTrainingService {
 
         Trainer trainer = trainerRepo.findByName(trainerAssignmentDTO.getTrainerName())
                 .orElseThrow(TrainerIsNotExist::new);
-        TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByName(trainerAssignmentDTO.getTypeOfTrainingName())
+        TypeOfTraining typeOfTraining = typeOfTrainingsRepo.findByFrontId(trainerAssignmentDTO.getTrainingId())
                 .orElseThrow(TypeOfTrainingNotExist::new);
 
         isTrainerAssigned(trainerAssignmentDTO, typeOfTraining);
