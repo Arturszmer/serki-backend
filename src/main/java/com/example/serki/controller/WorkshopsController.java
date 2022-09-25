@@ -84,4 +84,6 @@ public class WorkshopsController {
         typeOfTrainingService.addPeriodAndTrainer(periodAndTrainerAssignDTO, trainingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
