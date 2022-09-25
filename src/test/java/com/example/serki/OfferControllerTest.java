@@ -2,6 +2,8 @@ package com.example.serki;
 
 import com.example.serki.DTO.OfferDTO;
 import com.example.serki.DTO.PeriodDTO;
+import com.example.serki.DTO.TrainerDTO;
+import com.example.serki.DTO.TypeOfTrainingDTO;
 import com.example.serki.mail.Mails;
 import com.example.serki.models.*;
 import com.example.serki.repository.*;
@@ -15,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,12 +54,15 @@ public class OfferControllerTest {
         // given
         String trainerName = "Andrzej";
         addTypeOfTraining(trainerName);
-        List<PeriodDTO> javaBasicPeriod = List.of(new PeriodDTO(LocalDate.of(2022, 9, 15),
-                LocalDate.of(2022, 9, 22)));
-        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com", trainerName,
-                javaBasicPeriod,
-                "Basic",
-                new BigDecimal(3800));
+        PeriodDTO periodDTO = new PeriodDTO(LocalDate.of(2022, 9, 25),
+                LocalDate.of(2022, 9, 26));
+
+        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com", List.of(new TypeOfTrainingDTO("Basic",
+                3500,
+                36, "fawss wwww",
+                "JavaBasic",
+                List.of(new TrainerDTO("Andrzej", "bgfs"), new TrainerDTO("Mariusz", "hhhh")),
+                List.of(periodDTO))));
         String jsonString = objectMapper.writeValueAsString(offerDTO);
 
         // when

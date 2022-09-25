@@ -16,6 +16,6 @@ public class Mails {
 
     public boolean containsMessageWith(String trainingName) {
        return simpleMailMessages.stream()
-               .anyMatch(simpleMailMessage -> Objects.requireNonNull(simpleMailMessage.getText()).contains("you have choosen " + trainingName));
+               .anyMatch(simpleMailMessage -> Objects.requireNonNull(simpleMailMessage.getText()).contains("Training name: " + trainingName));
     }
 }
