@@ -1,28 +1,29 @@
 package com.example.serki.DTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OfferDTO {
 
+    private final String email;
     private final String trainerName;
     private final List<PeriodDTO> periodDTO;
-    private final String workshopName;
-    private final String subCatName;
     private final String typeOfTrainingName;
-    private final double price;
+    private final BigDecimal price;
 
-    public OfferDTO(String trainerName,
+    public OfferDTO(String email, String trainerName,
                     List<PeriodDTO> periodDTO,
-                    String workshopName,
-                    String subCatName,
                     String typeOfTrainingName,
-                    double price) {
+                    BigDecimal price) {
+        this.email = email;
         this.trainerName = trainerName;
         this.periodDTO = periodDTO;
-        this.workshopName = workshopName;
-        this.subCatName = subCatName;
         this.typeOfTrainingName = typeOfTrainingName;
         this.price = price;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getTrainerName() {
@@ -33,19 +34,11 @@ public class OfferDTO {
         return periodDTO;
     }
 
-    public String getWorkshopName() {
-        return workshopName;
-    }
-
-    public String getSubCatName() {
-        return subCatName;
-    }
-
     public String getTypeOfTrainingName() {
         return typeOfTrainingName;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 }

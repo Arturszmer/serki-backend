@@ -161,7 +161,6 @@ class WorkshopsControllerTest {
         assertThat(trainer.map(m -> m.getUnavailableDays().size()).get()).isEqualTo(2);
     }
 
-
     private void addTypeOfTraining() {
         Workshops workshops1 = new Workshops("IT", "blebleble", Collections.emptyList());
         workshopsRepo.save(workshops1);

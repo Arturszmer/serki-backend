@@ -1,11 +1,14 @@
 package com.example.serki;
 
+import com.example.serki.DTO.OfferDTO;
+import com.example.serki.DTO.PeriodDTO;
 import com.example.serki.models.SubCathegory;
 import com.example.serki.models.TypeOfTraining;
 import com.example.serki.models.Workshops;
 import com.example.serki.repository.TypeOfTrainingsRepo;
 import com.example.serki.repository.WorkshopsRepo;
 import com.example.serki.repository.SubCatRepo;
+import com.example.serki.service.OfferMailService;
 import com.example.serki.service.SubCatService;
 import com.example.serki.service.WorkshopsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Profile("prod")
@@ -29,6 +35,8 @@ public class DBprod implements CommandLineRunner {
     WorkshopsService workshopsService;
     @Autowired
     SubCatService subCatService;
+    @Autowired
+    OfferMailService offerMailService;
 
     @Override
     public void run(String... args) {
@@ -65,5 +73,15 @@ public class DBprod implements CommandLineRunner {
         typeOfTrainingsRepo.findAll()
                 .forEach(javaSubCathegory::assignTypeOfTraining);
         subCatRepo.save(javaSubCathegory);
+
+        PeriodDTO periodDTO = new PeriodDTO(LocalDate.of(2022, 9, 25),
+                LocalDate.of(2022, 9, 26));
+
+        OfferDTO offerDTO = new OfferDTO("arturszmer@gmail.com","Andrzej",
+                List.of(periodDTO),
+                "IT",
+                new BigDecimal(3800));
+
+        offerMailService.prepareOffer(offerDTO);
     }
 }
