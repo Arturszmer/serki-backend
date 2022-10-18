@@ -38,4 +38,5 @@ class TrainerController {
         trainerService.assignUnavailableDays(periodDTO, trainerName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

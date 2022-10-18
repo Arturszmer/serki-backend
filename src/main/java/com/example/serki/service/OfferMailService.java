@@ -19,6 +19,7 @@ public class OfferMailService {
 
     public void prepareOffer(OfferDTO offerDTO) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        System.out.println(offerDTO.getTypeOfTrainingDTOS() + "xxcccss");
         simpleMailMessage.setFrom("serkiinqoo@gmail.com");
         simpleMailMessage.setTo(offerDTO.getEmail());
         simpleMailMessage.setSubject(subject());
@@ -28,13 +29,14 @@ public class OfferMailService {
 
     private String subject(){
         return """
-                Your offer from Inqoo - %s training
+                Your offer from Inqoo
                 """;
     }
 
     private String courseMessage(List<TypeOfTrainingDTO> trainings){
         String result = "";
         for (TypeOfTrainingDTO training : trainings){
+            System.out.println(training + "xxyyxx");
             String trainers = "";
             String trainingStart = "";
             String trainingEnd = "";

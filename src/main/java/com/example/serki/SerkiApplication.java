@@ -10,5 +10,5 @@ public class SerkiApplication {
     public static void main(String[] args) {
         SpringApplication.run(SerkiApplication.class, args);
     }
-    
+
 }
