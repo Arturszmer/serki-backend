@@ -46,7 +46,7 @@ public class TrainersControllerTest {
         String trainingName = "Js";
         aTrainingWithName(trainingName);
         // and
-        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, trainingName);
+        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, "JavaBasic");
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
 
         // when
@@ -98,7 +98,7 @@ public class TrainersControllerTest {
         String trainingName = "Js";
         aTrainingWithName(trainingName);
         // and
-        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, trainingName);
+        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(trainerName, "JavaBasic");
         String jsonString = objectMapper.writeValueAsString(trainerAssignmentDTO);
         // and
         this.mockMvc.perform(post("/workshops/trainerAssignment")

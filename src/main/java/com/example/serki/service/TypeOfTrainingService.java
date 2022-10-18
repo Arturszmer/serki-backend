@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,13 +29,6 @@ public class TypeOfTrainingService {
         this.typeOfTrainingsRepo = typeOfTrainingsRepo;
         this.subCatRepo = subCatRepo;
         this.trainerService = trainerService;
-    }
-
-    public List<TypeOfTrainingDTO> typeOfTrainings() {
-        return typeOfTrainingsRepo.findAll()
-                .stream()
-                .map(mapper::typeOfTrainingToDTO)
-                .collect(Collectors.toList());
     }
 
     public TypeOfTrainingDTO addTypeOfTraining(TypeOfTrainingDTO typeOfTrainingDTO, String subCatName) {
@@ -132,7 +123,7 @@ public class TypeOfTrainingService {
         TypeOfTrainingDTO typeOfTrainingDTO = mapper.typeOfTrainingToDTO(training);
         trainerService.addTrainer(periodAndTrainerAssignDTO.getTrainerDTO());
         trainerService.assignUnavailableDays(periodAndTrainerAssignDTO.getPeriodDTO(), periodAndTrainerAssignDTO.getTrainerDTO().getName());
-        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(periodAndTrainerAssignDTO.getTrainerDTO().getName(), typeOfTrainingDTO.getName());
+        TrainerAssignmentDTO trainerAssignmentDTO = new TrainerAssignmentDTO(periodAndTrainerAssignDTO.getTrainerDTO().getName(), typeOfTrainingDTO.getFrontId());
         addTrainerToTraining(trainerAssignmentDTO);
     }
 }
